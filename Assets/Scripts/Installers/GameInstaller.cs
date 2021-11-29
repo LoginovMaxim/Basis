@@ -1,12 +1,20 @@
+using Data;
+using Monos;
 using UnityEngine;
 using Zenject;
 
-public class GameInstaller : MonoInstaller
+namespace Installers
 {
-    [SerializeField] private MonoUpdater MonoUpdaterPrefab;
-    
-    public override void InstallBindings()
+    public class GameInstaller : MonoInstaller
     {
-        Container.Bind<MonoUpdater>().FromComponentInNewPrefab(MonoUpdaterPrefab).AsSingle().NonLazy();
+        [SerializeField] private MonoUpdater MonoUpdaterPrefab;
+    
+        public override void InstallBindings()
+        {
+            Container.Bind<MonoUpdater>().FromComponentInNewPrefab(MonoUpdaterPrefab).AsSingle().NonLazy();
+        
+            Container.BindInterfacesAndSelfTo<DataStorage<PlayerMeta>>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<DataStorage<PlayerCurrency>>().AsSingle().NonLazy();
+        }
     }
 }

@@ -2,15 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Assembler
+namespace Assemblers
 {
     public abstract class BaseAssembler : MonoBehaviour
     {
         protected Queue<IAssemblerPart> AssemblerParts;
 
-        public BaseAssembler()
+        protected void InitializeAssemblerParts(params IAssemblerPart[] assemblerParts)
         {
             AssemblerParts = new Queue<IAssemblerPart>();
+            foreach (var assemblerPart in assemblerParts)
+            {
+                AssemblerParts.Enqueue(assemblerPart);
+            }
         }
 
         private void Start()

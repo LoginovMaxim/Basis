@@ -1,4 +1,4 @@
-﻿namespace Assembler
+﻿namespace Assemblers
 {
     public interface IAssemblerPart
     {
