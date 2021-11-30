@@ -2,7 +2,7 @@
 
 namespace Services
 {
-    public abstract class Service : BaseAssemblerPart, IService
+    public abstract class Service : AssemblerPart, IService
     {
         public bool IsPaused => _isPaused;
 

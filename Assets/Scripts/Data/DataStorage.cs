@@ -14,10 +14,6 @@ namespace Data
         public void Initialize()
         {
             Load();
-            
-            if (_data == null)
-                return;
-            
             _data.DataChanged += Save;
         }
         
@@ -28,22 +24,16 @@ namespace Data
             
             var dataPath = Path.Combine(Application.persistentDataPath, typeof(T) + ".json");
             _data = LoadObject<T>(dataPath) ?? (T) Activator.CreateInstance(typeof(T));
-            
-            Debug.Log($"Load {dataPath}");
         }
 
         private void Save()
         {
             var dataPath = Path.Combine(Application.persistentDataPath, typeof(T) + ".json");
             SaveObject(_data, dataPath);
-            
-            Debug.Log($"Save {dataPath}");
         }
         
         private void SaveObject(T data, string saveFilePath)
         {
-            //var testData = new TestData();
-            
             if (ContainsFile(saveFilePath))
                 File.Delete(saveFilePath);
             

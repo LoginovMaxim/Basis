@@ -8,33 +8,33 @@ namespace Data
     {
         public event Action DataChanged;
 
-        public int Gold
+        public int Soft
         {
-            get => _gold;
+            get => soft;
             set
             {
-                if (_gold == value)
+                if (soft == value)
                     return;
 
-                _gold = value;
+                soft = value;
                 DataChanged?.Invoke();
             }
         }
         
-        public int Crystal
+        public int Hard
         {
-            get => _crystal;
+            get => hard;
             set
             {
-                if (_crystal == value)
+                if (hard == value)
                     return;
 
-                _crystal = value;
+                hard = value;
                 DataChanged?.Invoke();
             }
         }
 
-        [SerializeField] private int _gold;
-        [SerializeField] private int _crystal;
+        [SerializeField] private int soft;
+        [SerializeField] private int hard;
     }
 }
