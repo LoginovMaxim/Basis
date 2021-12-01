@@ -16,23 +16,6 @@ namespace ViewModels
             {
                 Data = CSVReader.GetDictionary(LocalizationCsvFilePath)
             };
-            
-            /*_localizationData = new LocalizationData()
-            {
-                Data = new Dictionary<string, Dictionary<Language, string>>
-                {
-                    {"SoftCurrencyLabel", new Dictionary<Language, string>
-                    {
-                        {Language.EN, "Gold"},
-                        {Language.RU, "Золото"},
-                    }},
-                    {"HardCurrencyLabel", new Dictionary<Language, string>
-                    {
-                        {Language.EN, "Crystals"},
-                        {Language.RU, "Кристаллы"},
-                    }},
-                }
-            };*/
         }
     }
 }
