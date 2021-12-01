@@ -7,35 +7,65 @@ namespace ViewModels
     public class PlayerProfileViewModel : LocalizableViewModel
     {
         [Binding]
-        public string SoftCurrencyLabel
+        public string LevelText
         {
-            get => _softCurrencyLabel;
+            get => _levelText;
             set
             {
-                if (_softCurrencyLabel == value)
+                if (_levelText == value)
                     return;
 
-                _softCurrencyLabel = value;
-                OnPropertyChanged(nameof(SoftCurrencyLabel));
+                _levelText = value;
+                OnPropertyChanged(nameof(LevelText));
             }
         }
         
         [Binding]
-        public string HardCurrencyLabel
+        public string ExperienceText
         {
-            get => _hardCurrencyLabel;
+            get => _experienceText;
             set
             {
-                if (_hardCurrencyLabel == value)
+                if (_experienceText == value)
                     return;
 
-                _hardCurrencyLabel = value;
-                OnPropertyChanged(nameof(HardCurrencyLabel));
+                _experienceText = value;
+                OnPropertyChanged(nameof(ExperienceText));
+            }
+        }
+        
+        [Binding]
+        public string SoftCurrencyText
+        {
+            get => _softCurrencyText;
+            set
+            {
+                if (_softCurrencyText == value)
+                    return;
+
+                _softCurrencyText = value;
+                OnPropertyChanged(nameof(SoftCurrencyText));
+            }
+        }
+        
+        [Binding]
+        public string HardCurrencyText
+        {
+            get => _hardCurrencyText;
+            set
+            {
+                if (_hardCurrencyText == value)
+                    return;
+
+                _hardCurrencyText = value;
+                OnPropertyChanged(nameof(HardCurrencyText));
             }
         }
 
-        private string _softCurrencyLabel;
-        private string _hardCurrencyLabel;
+        private string _levelText;
+        private string _experienceText;
+        private string _softCurrencyText;
+        private string _hardCurrencyText;
         
         public class Factory : PlaceholderFactory<PlayerProfileViewModel> { }
     }

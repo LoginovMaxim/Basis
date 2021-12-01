@@ -1,4 +1,5 @@
-﻿using Assemblers;
+﻿using System.Threading.Tasks;
+using Assemblers;
 using Monos;
 
 namespace ViewModels
@@ -18,7 +19,7 @@ namespace ViewModels
             _localizationDataProvider = localizationDataProvider;
         }
 
-        protected override void LaunchProcess()
+        protected override Task LaunchProcess()
         {
             var localizableViewModels = _viewModelFinder.GetViewModels<LocalizableViewModel>();
 
@@ -26,6 +27,8 @@ namespace ViewModels
             {
                 localizableViewModel.TranslateViewModel(_localizationDataProvider.LocalizationData, _language);
             }
+            
+            return Task.CompletedTask;
         }
     }
 }

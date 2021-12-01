@@ -1,20 +1,14 @@
-﻿namespace Assemblers
+﻿using System.Threading.Tasks;
+
+namespace Assemblers
 {
     public abstract class AssemblerPart : IAssemblerPart
     {
-        public AssemblerStep AssemblerStep => _assemblerStep;
-
-        private AssemblerStep _assemblerStep;
-        
-        public void Launch()
+        public Task Launch()
         {
-            SetAssemblerStep(AssemblerStep.Processing);
-            LaunchProcess();
-            SetAssemblerStep(AssemblerStep.Assembled);
+            return LaunchProcess();
         }
 
-        protected abstract void LaunchProcess();
-
-        private void SetAssemblerStep(AssemblerStep assemblerStep) => _assemblerStep = assemblerStep;
+        protected abstract Task LaunchProcess();
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace ViewModels
+﻿using System;
+
+namespace ViewModels
 {
     public abstract class LocalizableViewModel : ViewModel, ILocalizable
     {
@@ -11,8 +13,9 @@
                 
                 if (!localizationData.Data.ContainsKey(property.Name))
                     continue;
-                
-                if (!localizationData.Data[property.Name].TryGetValue(language, out var translateProperty))
+
+                var languageName = Enum.GetName(typeof(Language), language);
+                if (!localizationData.Data[property.Name].TryGetValue(languageName, out var translateProperty))
                     continue;
 
                 property.SetValue(this, translateProperty);

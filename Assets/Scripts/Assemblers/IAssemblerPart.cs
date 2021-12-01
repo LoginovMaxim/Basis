@@ -1,9 +1,9 @@
-﻿namespace Assemblers
+﻿using System.Threading.Tasks;
+
+namespace Assemblers
 {
     public interface IAssemblerPart
     {
-        AssemblerStep AssemblerStep { get; }
-
-        void Launch();
+        Task Launch();
     }
 }

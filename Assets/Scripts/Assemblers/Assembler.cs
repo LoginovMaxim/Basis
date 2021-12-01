@@ -1,40 +1,26 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
+using Zenject;
 
 namespace Assemblers
 {
-    public abstract class Assembler : MonoBehaviour
+    public abstract class Assembler : IInitializable
     {
-        public Queue<IAssemblerPart> AssemblerParts { get; private set; }
+        private Queue<IAssemblerPart> _assemblerParts;
 
         protected void InitializeAssemblerParts(params IAssemblerPart[] assemblerParts)
         {
-            AssemblerParts = new Queue<IAssemblerPart>();
+            _assemblerParts = new Queue<IAssemblerPart>();
             foreach (var assemblerPart in assemblerParts)
             {
-                AssemblerParts.Enqueue(assemblerPart);
+                _assemblerParts.Enqueue(assemblerPart);
             }
         }
 
-        private void Start()
+        public async void Initialize()
         {
-            StartCoroutine(PrecessingAssemblers());
-        }
-
-        private IEnumerator PrecessingAssemblers()
-        {
-            while (AssemblerParts.Count > 0)
+            while (_assemblerParts.Count > 0)
             {
-                var currentAssemblerPart = AssemblerParts.Dequeue();
-                currentAssemblerPart.Launch();
-                
-                while (currentAssemblerPart.AssemblerStep == AssemblerStep.Processing)
-                {
-                    yield return null;
-                }
-                
-                yield return null;
+                await _assemblerParts.Dequeue().Launch();
             }
         }
     }

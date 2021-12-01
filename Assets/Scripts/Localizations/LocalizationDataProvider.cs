@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Utils;
 
 namespace ViewModels
 {
     public class LocalizationDataProvider : ILocalizationDataProvider
     {
+        private const string LocalizationCsvFilePath = "LocalizationData - Meta";
+        
         public LocalizationData LocalizationData => _localizationData;
 
         private LocalizationData _localizationData;
@@ -11,6 +13,11 @@ namespace ViewModels
         public LocalizationDataProvider()
         {
             _localizationData = new LocalizationData()
+            {
+                Data = CSVReader.GetDictionary(LocalizationCsvFilePath)
+            };
+            
+            /*_localizationData = new LocalizationData()
             {
                 Data = new Dictionary<string, Dictionary<Language, string>>
                 {
@@ -25,7 +32,7 @@ namespace ViewModels
                         {Language.RU, "Кристаллы"},
                     }},
                 }
-            };
+            };*/
         }
     }
 }
