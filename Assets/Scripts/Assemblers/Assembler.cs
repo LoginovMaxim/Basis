@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using Zenject;
+using System.Threading.Tasks;
+using UnityEngine;
 
 namespace Assemblers
 {
-    public abstract class Assembler : IInitializable
+    public abstract class Assembler : MonoBehaviour
     {
         private Queue<IAssemblerPart> _assemblerParts;
 
@@ -16,11 +17,17 @@ namespace Assemblers
             }
         }
 
-        public async void Initialize()
+        public async void Start()
+        {
+            await Launch();
+        }
+
+        private async Task Launch()
         {
             while (_assemblerParts.Count > 0)
             {
-                await _assemblerParts.Dequeue().Launch();
+                var currentAssemblerPart = _assemblerParts.Dequeue();
+                await currentAssemblerPart.Launch();
             }
         }
     }

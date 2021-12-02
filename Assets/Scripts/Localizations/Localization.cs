@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Assemblers;
 using Monos;
+using UnityEngine;
 
 namespace ViewModels
 {
@@ -9,7 +10,7 @@ namespace ViewModels
         private readonly ViewModelFinder _viewModelFinder;
         private readonly ILocalizationDataProvider _localizationDataProvider;
 
-        private Language _language = Language.RU;
+        private Language _language = Language.EN;
         
         public Localization(
             ViewModelFinder viewModelFinder,
@@ -19,16 +20,16 @@ namespace ViewModels
             _localizationDataProvider = localizationDataProvider;
         }
 
-        protected override Task LaunchProcess()
+        public override async Task Launch()
         {
+            await _localizationDataProvider.Load();
+            
             var localizableViewModels = _viewModelFinder.GetViewModels<LocalizableViewModel>();
 
             foreach (var localizableViewModel in localizableViewModels)
             {
                 localizableViewModel.TranslateViewModel(_localizationDataProvider.LocalizationData, _language);
             }
-            
-            return Task.CompletedTask;
         }
     }
 }

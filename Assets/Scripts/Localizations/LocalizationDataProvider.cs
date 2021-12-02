@@ -1,21 +1,20 @@
-﻿using Utils;
+﻿using System.Threading.Tasks;
+using Utils;
 
 namespace ViewModels
 {
     public class LocalizationDataProvider : ILocalizationDataProvider
     {
-        private const string LocalizationCsvFilePath = "LocalizationData - Meta";
+        private const string LocalizationAddressableKey = "LocalizationData - Meta";
         
         public LocalizationData LocalizationData => _localizationData;
 
         private LocalizationData _localizationData;
-
-        public LocalizationDataProvider()
+        
+        public async Task Load()
         {
-            _localizationData = new LocalizationData()
-            {
-                Data = CSVReader.GetDictionary(LocalizationCsvFilePath)
-            };
+            var data = await CSVReader.GetDictionaryAsBundle(LocalizationAddressableKey);
+            _localizationData = new LocalizationData {Data = data};
         }
     }
 }

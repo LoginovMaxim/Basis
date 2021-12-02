@@ -4,11 +4,6 @@ namespace Assemblers
 {
     public abstract class AssemblerPart : IAssemblerPart
     {
-        public Task Launch()
-        {
-            return LaunchProcess();
-        }
-
-        protected abstract Task LaunchProcess();
+        public abstract Task Launch();
     }
 }

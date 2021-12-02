@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 482f547abbcd5384095798b16aa6e01d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MetaAssemblerPrefab: {fileID: 9092158189502022879, guid: f9d0d2f8177170f429863667f7f1dd0b, type: 3}
+  _metaAssemblerPrefab: {fileID: 2563855663731198506, guid: c128e733eb3e92d43af32b81d43a314f, type: 3}
 --- !u!114 &463865503
 MonoBehaviour:
   m_ObjectHideFlags: 0
