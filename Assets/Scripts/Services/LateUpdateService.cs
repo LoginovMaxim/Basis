@@ -17,6 +17,5 @@ namespace Services
         {
             _monoUpdater.LateUpdated -= Run;
         }
-        
     }
 }

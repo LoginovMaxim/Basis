@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Assemblers;
 using Monos;
-using UnityEngine;
 
-namespace ViewModels
+namespace Localizations
 {
     public class Localization : AssemblerPart
     {

@@ -2,19 +2,22 @@ using UnityEngine;
 using ViewModels;
 using Zenject;
 
-public class MetaViewModelsInstaller : MonoInstaller
+namespace Installers
 {
-    [Header("PlayerProfileViewModel")] 
-    [SerializeField] private PlayerProfileViewModel PlayerProfileViewModelPrefab;
-    [SerializeField] private Transform PlayerProfileViewModelParent;
-    
-    public override void InstallBindings()
+    public class MetaViewModelsInstaller : MonoInstaller
     {
-        Container
-            .BindInterfacesAndSelfTo<PlayerProfileViewModel>()
-            .FromComponentInNewPrefab(PlayerProfileViewModelPrefab)
-            .UnderTransform(PlayerProfileViewModelParent)
-            .AsSingle()
-            .NonLazy();
+        [Header("PlayerProfileViewModel")] 
+        [SerializeField] private PlayerProfileViewModel PlayerProfileViewModelPrefab;
+        [SerializeField] private Transform PlayerProfileViewModelParent;
+    
+        public override void InstallBindings()
+        {
+            Container
+                .BindInterfacesAndSelfTo<PlayerProfileViewModel>()
+                .FromComponentInNewPrefab(PlayerProfileViewModelPrefab)
+                .UnderTransform(PlayerProfileViewModelParent)
+                .AsSingle()
+                .NonLazy();
+        }
     }
 }

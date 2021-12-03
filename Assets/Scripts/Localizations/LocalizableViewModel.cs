@@ -1,6 +1,7 @@
 ﻿using System;
+using ViewModels;
 
-namespace ViewModels
+namespace Localizations
 {
     public abstract class LocalizableViewModel : ViewModel, ILocalizable
     {

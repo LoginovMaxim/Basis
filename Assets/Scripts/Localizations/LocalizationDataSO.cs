@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ViewModels
+namespace Localizations
 {
     [CreateAssetMenu(fileName = "LocalizationData", menuName = "LocalizationData", order = 0)]
     public class LocalizationDataSO : ScriptableObject

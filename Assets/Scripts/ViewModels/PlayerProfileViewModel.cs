@@ -1,4 +1,5 @@
-﻿using UnityWeld.Binding;
+﻿using Localizations;
+using UnityWeld.Binding;
 using Zenject;
 
 namespace ViewModels

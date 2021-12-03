@@ -1,4 +1,6 @@
 using Data;
+using FSM;
+using Localizations;
 using Monos;
 using UnityEngine;
 using ViewModels;
@@ -17,6 +19,8 @@ namespace Installers
             Container.Bind<MonoUpdater>().FromComponentInNewPrefab(MonoUpdaterPrefab).AsSingle().NonLazy();
             Container.Bind<ViewModelFinder>().FromComponentInNewPrefab(ViewModelFinderPrefab).AsSingle().NonLazy();
 
+            Container.BindFactory<UpdateType, StateMachine, StateMachine.Factory>().AsTransient().NonLazy();
+            
             BindData();
             
             Container.Bind<ILocalizationDataProvider>().To<LocalizationDataProvider>().AsSingle().NonLazy();

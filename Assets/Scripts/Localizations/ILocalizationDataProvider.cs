@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace ViewModels
+namespace Localizations
 {
     public interface ILocalizationDataProvider
     {

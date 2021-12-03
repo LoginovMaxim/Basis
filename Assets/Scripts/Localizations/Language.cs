@@ -1,4 +1,4 @@
-﻿namespace ViewModels
+﻿namespace Localizations
 {
     public enum Language
     {

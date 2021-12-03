@@ -1,4 +1,5 @@
-﻿using ViewModels;
+﻿using Localizations;
+using ViewModels;
 using Zenject;
 
 namespace Assemblers

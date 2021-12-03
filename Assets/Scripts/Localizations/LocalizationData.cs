@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ViewModels
+namespace Localizations
 {
     [Serializable]
     public class LocalizationData

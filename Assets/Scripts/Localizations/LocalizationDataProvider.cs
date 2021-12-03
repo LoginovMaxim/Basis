@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Utils;
 
-namespace ViewModels
+namespace Localizations
 {
     public class LocalizationDataProvider : ILocalizationDataProvider
     {
