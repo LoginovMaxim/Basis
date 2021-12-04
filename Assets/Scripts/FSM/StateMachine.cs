@@ -9,9 +9,6 @@ namespace FSM
     {
         private readonly MonoUpdater _monoUpdater;
         
-        //public Dictionary<string, State> States => _states;
-        //public State CurrentState => _currentState;
-
         private Dictionary<string, State> _states;
         private State _currentState;
 

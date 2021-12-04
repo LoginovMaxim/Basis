@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace FSM
 {
@@ -6,9 +7,10 @@ namespace FSM
     {
         string StateCode { get; }
 
-        IState SetEnterAction(Action action);
-        IState SetUpdateAction(Action action);
-        IState SetExitAction(Action action);
+        void SetEnter(Action action);
+        void SetUpdate(Action action);
+        void SetExit(Action action);
+        void SetTransitions(List<ITransition> transitions);
 
         bool TrySwitchOtherState(out string otherStateCode);
         

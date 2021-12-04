@@ -15,28 +15,29 @@ namespace FSM
 
         private List<ITransition> _transitions;
         
-        public State(string stateCode, List<ITransition> transitions)
+        public State(string stateCode)
         {
             _stateCode = stateCode;
-            _transitions = transitions;
         }
         
-        public IState SetEnterAction(Action enterAction)
+        public void SetEnter(Action enterAction)
         {
             _enterAction = enterAction;
-            return this;
         }
 
-        public IState SetUpdateAction(Action updateAction)
+        public void SetUpdate(Action updateAction)
         {
             _updateAction = updateAction;
-            return this;
         }
 
-        public IState SetExitAction(Action exitAction)
+        public void SetExit(Action exitAction)
         {
             _exitAction = exitAction;
-            return this;
+        }
+
+        public void SetTransitions(List<ITransition> transitions)
+        {
+            _transitions = transitions;
         }
 
         public bool TrySwitchOtherState(out string otherStateCode)

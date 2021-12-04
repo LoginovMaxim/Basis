@@ -1,5 +1,5 @@
 ﻿using Localizations;
-using ViewModels;
+using Services;
 using Zenject;
 
 namespace Assemblers
@@ -8,10 +8,12 @@ namespace Assemblers
     {
         [Inject]
         public void Inject(
-            Localization localization)
+            Localization localization,
+            TestService testService)
         {
             InitializeAssemblerParts(
-                localization);
+                localization,
+                testService);
         }
     }
 }

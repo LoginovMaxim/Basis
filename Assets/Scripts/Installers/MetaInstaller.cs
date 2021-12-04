@@ -1,6 +1,7 @@
 using Assemblers;
 using FSM;
 using Localizations;
+using Services;
 using UnityEngine;
 using ViewModels;
 using Zenject;
@@ -13,9 +14,11 @@ namespace Installers
         
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<TestMachine>().AsSingle().NonLazy();
+            //Container.BindInterfacesAndSelfTo<TestMachine>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<TestService>().AsSingle().NonLazy();
             
             Container.BindInterfacesAndSelfTo<Localization>().AsSingle().NonLazy();
+            
             Container.Bind<MetaAssembler>().FromComponentInNewPrefab(_metaAssemblerPrefab).AsSingle().NonLazy();
         }
     }
