@@ -9,11 +9,13 @@ namespace Assemblers
         [Inject]
         public void Inject(
             Localization localization,
-            TestService testService)
+            TestService testService,
+            MetaScreensService metaScreensService)
         {
             InitializeAssemblerParts(
                 localization,
-                testService);
+                testService,
+                metaScreensService);
         }
     }
 }

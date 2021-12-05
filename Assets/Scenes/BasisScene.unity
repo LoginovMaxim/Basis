@@ -167,8 +167,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36ce0dfaac3cd8343a67f34612610f10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PlayerProfileViewModelPrefab: {fileID: 1676980572275349448, guid: a62509121224ab94287ca85a06c41f1c, type: 3}
-  PlayerProfileViewModelParent: {fileID: 2054545693}
+  _playerProfileViewModelPrefab: {fileID: 1676980572275349448, guid: a62509121224ab94287ca85a06c41f1c, type: 3}
+  _playerProfileViewModelParent: {fileID: 2054545693}
+  _mainScreenViewModelPrefab: {fileID: 8863631041706246065, guid: 44c040ff7d2d4be4189fdedb55ddaa1e, type: 3}
+  _mainScreenViewModelParent: {fileID: 2054545693}
+  _conquestScreenViewModelPrefab: {fileID: 2634118221893652055, guid: d550a29c8238c954a946aaed2fa44fb0, type: 3}
+  _bankScreenViewModelParent: {fileID: 2054545693}
+  _shopScreenViewModelPrefab: {fileID: 4467667605800986070, guid: 36417278b86168f448315cc7be5b8564, type: 3}
+  _shopScreenViewModelParent: {fileID: 2054545693}
 --- !u!114 &463865504
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,6 +9,8 @@ namespace ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public bool IsActive => gameObject.activeSelf;
+        
         public void SetActive(bool isActive)
         {
             gameObject.SetActive(isActive);

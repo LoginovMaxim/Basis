@@ -3,7 +3,6 @@ using FSM;
 using Localizations;
 using Monos;
 using UnityEngine;
-using ViewModels;
 using Zenject;
 
 namespace Installers
