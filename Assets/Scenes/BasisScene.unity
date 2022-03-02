@@ -171,8 +171,6 @@ MonoBehaviour:
   _playerProfileViewModelParent: {fileID: 2054545693}
   _mainScreenViewModelPrefab: {fileID: 8863631041706246065, guid: 44c040ff7d2d4be4189fdedb55ddaa1e, type: 3}
   _mainScreenViewModelParent: {fileID: 2054545693}
-  _conquestScreenViewModelPrefab: {fileID: 2634118221893652055, guid: d550a29c8238c954a946aaed2fa44fb0, type: 3}
-  _bankScreenViewModelParent: {fileID: 2054545693}
   _shopScreenViewModelPrefab: {fileID: 4467667605800986070, guid: 36417278b86168f448315cc7be5b8564, type: 3}
   _shopScreenViewModelParent: {fileID: 2054545693}
 --- !u!114 &463865504
