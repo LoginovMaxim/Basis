@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace CoreECS
+namespace Ecs
 {
     public sealed class MonoEntity : MonoLinkBase
     {

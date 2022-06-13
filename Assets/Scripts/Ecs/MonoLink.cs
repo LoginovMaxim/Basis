@@ -1,6 +1,6 @@
 ﻿using Leopotam.Ecs;
 
-namespace CoreECS
+namespace Ecs
 {
     public abstract class MonoLink<T> : MonoLinkBase where T : struct
     {
