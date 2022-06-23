@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using App.Assemblers;
 using App.Monos;
@@ -8,7 +7,6 @@ using App.UI.Services;
 using Ecs.Common.Events;
 using Ecs.Common.Systems;
 using Leopotam.Ecs;
-using UnityEngine;
 using Utils;
 using VisualEffects;
 using Zenject;
@@ -105,6 +103,7 @@ namespace Ecs
         private void BuildSystems(EcsSystems ecsSystems, List<EcsSystemData> systems)
         {
             var systemsCount = systems.Count;
+            
             for (var i = 0; i < systemsCount; i++)
             {
                 var order = int.MaxValue;

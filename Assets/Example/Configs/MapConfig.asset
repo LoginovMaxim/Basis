@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: 3460557568140672813, guid: f56e58d6be61ff04dacfe96ded3e19e1, type: 3}
   _mapSize: 50
-  _offsetSpeed: 0.1
+  _offsetSpeed: 0.2
   _mapPerlinParameters:
   - Amplitude: 8
     Frequency: 2
