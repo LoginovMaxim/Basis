@@ -7,8 +7,8 @@ namespace Example.Ecs.Configs
     public sealed class MapConfig : ScriptableObject, IMapConfigProvider
     {
         [SerializeField] private GameObject _cubePrefab;
-        [SerializeField] private int _mapSize;
-        [SerializeField] private float _offsetSpeed;
+        [SerializeField] [Range(5, 50)] private int _mapSize;
+        [SerializeField] [Range(-1, 1)] private float _offsetSpeed;
         [SerializeField] private MapPerlinParameters[] _mapPerlinParameters;
         
         #region IMapConfigProvider
