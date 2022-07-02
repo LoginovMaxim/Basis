@@ -1,5 +1,11 @@
 {
   "dependencies": {
+    "com.harlequin.basis": {
+      "version": "file:Basis",
+      "depth": 0,
+      "source": "embedded",
+      "dependencies": {}
+    },
     "com.leopotam.ecs": {
       "version": "https://github.com/Leopotam/ecs.git",
       "depth": 0,
@@ -13,6 +19,12 @@
       "source": "git",
       "dependencies": {},
       "hash": "127d6a8f02ec987ac724a7fc671b1d5d00b0ea56"
+    },
+    "com.mathijsbakker.extenject": {
+      "version": "file:../Assets/Plugins/Zenject",
+      "depth": 0,
+      "source": "local",
+      "dependencies": {}
     },
     "com.unity.collab-proxy": {
       "version": "1.15.17",
