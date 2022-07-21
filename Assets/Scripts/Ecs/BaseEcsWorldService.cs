@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using App.Assemblers;
+using App.Fsm;
 using App.Monos;
 using App.Services;
 using App.UI.Services;
@@ -29,7 +30,8 @@ namespace Ecs
         
         private ISystemController _systemController;
 
-        protected BaseEcsWorldService(IMonoUpdater monoUpdater) : base(monoUpdater)
+        protected BaseEcsWorldService(IMonoUpdater monoUpdater) : 
+            base(monoUpdater, UpdateType.Update | UpdateType.FixedUpdate)
         {
         }
 

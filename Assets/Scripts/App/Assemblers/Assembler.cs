@@ -1,28 +1,43 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
+using Utils;
 
 namespace App.Assemblers
 {
     public abstract class Assembler
     {
-        private Queue<IAssemblerPart> _assemblerParts;
-
-        protected async Task InitializeAssemblerParts(params IAssemblerPart[] assemblerParts)
+        private readonly Queue<IAssemblerPart> _assemblerParts = new();
+        
+        protected async Task LaunchAssemblerPartsAsync(params IAssemblerPart[] assemblerParts)
         {
-            _assemblerParts = new Queue<IAssemblerPart>();
             foreach (var assemblerPart in assemblerParts)
             {
                 _assemblerParts.Enqueue(assemblerPart);
             }
 
-            await LaunchAsync();
-        }
-
-        private async Task LaunchAsync()
-        {
             while (_assemblerParts.Count > 0)
             {
-                await _assemblerParts.Dequeue().Launch();
+                var assemblerPart = _assemblerParts.Peek();
+                try
+                {
+                    Debug.Log($"Launching service: {assemblerPart.GetType()}");
+                    await assemblerPart.Launch();
+                }
+                catch (Exception e)
+                {
+                    Debug.Log($"Service {assemblerPart.GetType()} was error launch.".WithColor(LoggerColor.Red) +
+                              $"\nMessage {e.Message}." +
+                              $"\nStacktrace: {e.StackTrace}.");
+
+                    await Task.Delay(100);
+                    continue;
+                }
+                
+                _assemblerParts.Dequeue();
+                Debug.Log($"Service: {assemblerPart.GetType()} launched successfully".WithColor(LoggerColor.Green));
             }
         }
     }

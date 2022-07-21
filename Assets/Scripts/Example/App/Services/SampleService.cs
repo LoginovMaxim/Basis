@@ -1,5 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using App.Assemblers;
+using App.Fsm;
 using App.Monos;
 using App.Services;
 using UnityEngine;
@@ -8,7 +10,8 @@ namespace Example.App.Services
 {
     public sealed class SampleService : UpdatableService, ISampleService, IAssemblerPart
     {
-        public SampleService(IMonoUpdater monoUpdater) : base(monoUpdater)
+        public SampleService(IMonoUpdater monoUpdater) : 
+            base(monoUpdater, UpdateType.Update | UpdateType.LateUpdate)
         {
         }
 

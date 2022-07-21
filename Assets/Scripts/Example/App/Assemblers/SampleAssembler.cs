@@ -1,5 +1,4 @@
 ﻿using App.Assemblers;
-using App.Services;
 using Example.App.Services;
 using Example.Ecs;
 using Zenject;
@@ -10,12 +9,7 @@ namespace Example.App.Assemblers
     {
         [Inject] public async void Inject(SampleService sampleService, SampleEcsWorldService sampleEcsWorldService)
         {
-            await InitializeAssemblerParts(sampleService, sampleEcsWorldService);
-
-            if (sampleService is IUpdatableService updatableService)
-            {
-                updatableService.Pause();
-            }
+            await LaunchAssemblerPartsAsync(sampleService, sampleEcsWorldService);
         }
     }
 }

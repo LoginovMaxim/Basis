@@ -9,12 +9,22 @@ namespace App.Services
         private readonly IMonoUpdater _monoUpdater;
         private bool _isPause = true;
         
-        protected UpdatableService(IMonoUpdater monoUpdater)
+        protected UpdatableService(IMonoUpdater monoUpdater, UpdateType updateType)
         {
             _monoUpdater = monoUpdater;
-            _monoUpdater.Subscribe(UpdateType.Update, OnUpdate);
-            _monoUpdater.Subscribe(UpdateType.FixedUpdate, OnFixedUpdate);
-            _monoUpdater.Subscribe(UpdateType.LateUpdate, OnLateUpdate);
+            
+            if (updateType.HasFlag(UpdateType.Update))
+            {
+                _monoUpdater.Subscribe(UpdateType.Update, OnUpdate);
+            }
+            if (updateType.HasFlag(UpdateType.FixedUpdate))
+            {
+                _monoUpdater.Subscribe(UpdateType.FixedUpdate, OnFixedUpdate);
+            }
+            if (updateType.HasFlag(UpdateType.LateUpdate))
+            {
+                _monoUpdater.Subscribe(UpdateType.LateUpdate, OnLateUpdate);
+            }
         }
 
         protected void Start()

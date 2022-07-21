@@ -1,4 +1,5 @@
-﻿using Example.App.Assemblers;
+﻿using App.Assemblers;
+using Example.App.Assemblers;
 using Example.App.Services;
 using Example.Ecs;
 using Example.Ecs.Configs;

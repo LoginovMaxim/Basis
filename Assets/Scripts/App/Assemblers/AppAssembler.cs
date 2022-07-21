@@ -5,10 +5,10 @@ namespace App.Assemblers
 {
     public sealed class AppAssembler : Assembler
     {
-        [Inject] public void Inject(
+        [Inject] public async void Inject(
             Localization localization)
         {
-            InitializeAssemblerParts(
+            await LaunchAssemblerPartsAsync(
                 localization);
         }
     }
