@@ -1,4 +1,5 @@
-﻿using Ecs;
+﻿using App.Fsm;
+using Ecs;
 using Example.App.Assemblers;
 using Example.App.Services;
 using Example.Ecs;
@@ -22,7 +23,7 @@ namespace Example.Installers
             
             // services
             Container.Bind<SampleService>().AsSingle().NonLazy();
-            Container.BindEcsService<MainWorld, SampleEcsService>();
+            Container.BindEcsService<MainWorld, SampleEcsService>(UpdateType.Update);
             
             // assembler
             Container.Bind<SampleAssembler>().AsSingle().NonLazy();

@@ -26,8 +26,9 @@ namespace Example.Ecs
             IEffectEmitter effectEmitter,
             IMapConfigProvider mapConfigProvider,
             IWorld world, 
-            IMonoUpdater monoUpdater) : 
-            base(world, monoUpdater, UpdateType.Update)
+            IMonoUpdater monoUpdater,
+            UpdateType updateType) : 
+            base(world, monoUpdater, updateType)
         {
             _prefabFactory = prefabFactory;
             _screenService = screenService;
