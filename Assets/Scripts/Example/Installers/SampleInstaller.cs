@@ -22,7 +22,7 @@ namespace Example.Installers
             Container.Bind<MainWorld>().AsSingle().NonLazy();
             
             // services
-            Container.Bind<SampleService>().AsSingle().NonLazy();
+            Container.BindService<SampleService>(UpdateType.Update | UpdateType.FixedUpdate);
             Container.BindEcsService<MainWorld, SampleEcsService>(UpdateType.Update);
             
             // assembler

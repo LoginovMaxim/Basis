@@ -10,8 +10,8 @@ namespace Example.App.Services
 {
     public sealed class SampleService : UpdatableService, ISampleService, IAssemblerPart
     {
-        public SampleService(IMonoUpdater monoUpdater) : 
-            base(monoUpdater, UpdateType.Update | UpdateType.LateUpdate)
+        public SampleService(IMonoUpdater monoUpdater, UpdateType updateType) : 
+            base(monoUpdater, updateType)
         {
         }
 
