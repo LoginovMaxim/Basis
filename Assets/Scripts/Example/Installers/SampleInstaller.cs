@@ -1,8 +1,9 @@
-﻿using App.Assemblers;
+﻿using Ecs;
 using Example.App.Assemblers;
 using Example.App.Services;
 using Example.Ecs;
 using Example.Ecs.Configs;
+using Utils;
 using Zenject;
 
 namespace Example.Installers
@@ -15,10 +16,13 @@ namespace Example.Installers
         {
             // configs
             Container.BindInterfacesTo<MapConfig>().FromScriptableObject(MapConfig).AsSingle();
+
+            // ecs worlds
+            Container.Bind<MainWorld>().AsSingle().NonLazy();
             
             // services
             Container.Bind<SampleService>().AsSingle().NonLazy();
-            Container.Bind<SampleEcsWorldService>().AsSingle().NonLazy();
+            Container.BindEcsService<MainWorld, SampleEcsService>();
             
             // assembler
             Container.Bind<SampleAssembler>().AsSingle().NonLazy();
