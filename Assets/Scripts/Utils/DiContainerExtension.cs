@@ -1,4 +1,6 @@
-﻿using App.Fsm;
+﻿using System.Collections.Generic;
+using App.Assemblers;
+using App.Fsm;
 using App.Services;
 using Ecs;
 using Zenject;
@@ -18,7 +20,18 @@ namespace Utils
             where TEcsService : IEcsService
         {
             var world = container.Resolve<TWorld>();
+            if (world == null)
+            {
+                container.Bind<TWorld>().AsSingle().NonLazy();
+                world = container.Resolve<TWorld>();
+            }
             return container.Bind<TEcsService>().AsSingle().WithArguments(world, updateType).NonLazy();
+        }
+        
+        public static IfNotBoundBinder BindAssembler<TAssembler>(this DiContainer container, List<IAssemblerPart> assemblerPart)
+            where TAssembler : Assembler
+        {
+            return container.BindInterfacesAndSelfTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
         }
     }
 }

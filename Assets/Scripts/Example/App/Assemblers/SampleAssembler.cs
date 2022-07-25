@@ -1,15 +1,12 @@
-﻿using App.Assemblers;
-using Example.App.Services;
-using Example.Ecs;
-using Zenject;
+﻿using System.Collections.Generic;
+using App.Assemblers;
 
 namespace Example.App.Assemblers
 {
-    public sealed class SampleAssembler : Assembler
+    public sealed class SampleAssembler : Assembler, ISampleAssembler
     {
-        [Inject] public async void Inject(SampleService sampleService, SampleEcsService sampleEcsService)
+        public SampleAssembler(List<IAssemblerPart> assemblerParts) : base(assemblerParts)
         {
-            await LaunchAssemblerPartsAsync(sampleService, sampleEcsService);
         }
     }
 }

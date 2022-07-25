@@ -1,25 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
 using Utils;
 
 namespace App.Assemblers
 {
-    public abstract class Assembler
+    public abstract class Assembler : IAssembler, IDisposable
     {
         private readonly Queue<IAssemblerPart> _assemblerParts = new();
-        
-        protected async Task LaunchAssemblerPartsAsync(params IAssemblerPart[] assemblerParts)
+        private readonly CancellationTokenSource _tokenSource = new();
+
+        private int _servicesCount;
+        private int _currentStepCount;
+        private float _progress;
+
+        protected Assembler(List<IAssemblerPart> assemblerParts)
+        {
+#pragma warning disable CS4014
+            LaunchAssemblerPartsAsync(assemblerParts);
+#pragma warning restore CS4014
+        }
+
+        private async Task LaunchAssemblerPartsAsync(List<IAssemblerPart> assemblerParts)
         {
             foreach (var assemblerPart in assemblerParts)
             {
                 _assemblerParts.Enqueue(assemblerPart);
             }
-
+            
+            _servicesCount = _assemblerParts.Count;
+            
             while (_assemblerParts.Count > 0)
             {
+                if (_tokenSource.IsCancellationRequested)
+                {
+                    return;
+                }
+                
                 var assemblerPart = _assemblerParts.Peek();
                 try
                 {
@@ -37,8 +56,32 @@ namespace App.Assemblers
                 }
                 
                 _assemblerParts.Dequeue();
+                _currentStepCount++;
+                _progress = (float) _servicesCount / _currentStepCount;
                 Debug.Log($"Service: {assemblerPart.GetType()} launched successfully".WithColor(LoggerColor.Green));
             }
         }
+
+        private void Dispose()
+        {
+            _tokenSource.Cancel();
+        }
+
+        #region IAssembler
+
+        int IAssembler.ServicesCount => _servicesCount;
+        int IAssembler.CurrentStepCount => _currentStepCount;
+        float IAssembler.Progress => _progress;
+        
+        #endregion
+        
+        #region IDisposable
+
+        void IDisposable.Dispose()
+        {
+            Dispose();
+        }
+
+        #endregion
     }
 }
