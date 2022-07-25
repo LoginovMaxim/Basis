@@ -9,10 +9,10 @@ namespace Utils
 {
     public static class DiContainerExtension
     {
-        public static IfNotBoundBinder BindService<TUpdatableService>(this DiContainer container, UpdateType updateType)
+        public static IfNotBoundBinder BindService<TUpdatableService>(this DiContainer container, UpdateType updateType, bool isImmediateStart = false)
             where TUpdatableService : IUpdatableService
         {
-            return container.Bind<TUpdatableService>().AsSingle().WithArguments(updateType).NonLazy();
+            return container.Bind<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
         }
         
         public static IfNotBoundBinder BindEcsService<TWorld, TEcsService>(this DiContainer container, UpdateType updateType) 

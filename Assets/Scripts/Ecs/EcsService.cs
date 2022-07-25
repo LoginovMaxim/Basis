@@ -17,7 +17,7 @@ namespace Ecs
         private EcsSystems _systems;
 
         protected EcsService(IWorld world, IMonoUpdater monoUpdater, UpdateType updateType) : 
-            base(monoUpdater, updateType)
+            base(monoUpdater, updateType, false)
         {
             _world = world.World;
         }

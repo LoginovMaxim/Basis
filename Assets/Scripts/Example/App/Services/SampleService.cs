@@ -9,14 +9,14 @@ namespace Example.App.Services
 {
     public sealed class SampleService : UpdatableService, ISampleService, IAssemblerPart
     {
-        public SampleService(IMonoUpdater monoUpdater, UpdateType updateType) : 
-            base(monoUpdater, updateType)
+        public SampleService(IMonoUpdater monoUpdater, UpdateType updateType, bool isImmediateStart) : 
+            base(monoUpdater, updateType, isImmediateStart)
         {
         }
 
         public async Task Launch()
         {
-            await Task.Delay(1000);
+            await Task.Delay(2000);
             Start();
         }
         

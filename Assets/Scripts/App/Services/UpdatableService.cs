@@ -9,7 +9,7 @@ namespace App.Services
         private readonly IMonoUpdater _monoUpdater;
         private bool _isPause = true;
         
-        protected UpdatableService(IMonoUpdater monoUpdater, UpdateType updateType)
+        protected UpdatableService(IMonoUpdater monoUpdater, UpdateType updateType, bool isImmediateStart)
         {
             _monoUpdater = monoUpdater;
             
@@ -24,6 +24,11 @@ namespace App.Services
             if (updateType.HasFlag(UpdateType.LateUpdate))
             {
                 _monoUpdater.Subscribe(UpdateType.LateUpdate, OnLateUpdate);
+            }
+
+            if (isImmediateStart)
+            {
+                Start();
             }
         }
 
