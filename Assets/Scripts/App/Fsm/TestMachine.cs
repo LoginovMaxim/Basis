@@ -12,68 +12,36 @@ namespace App.Fsm
             Jump
         }
         
+        private readonly Transition IdleTransition = new (TestMachineState.Idle, () => Input.GetKeyDown(KeyCode.I));
+        private readonly Transition MoveTransition = new (TestMachineState.Move, () => Input.GetKeyDown(KeyCode.W));
+        private readonly Transition JumpTransition = new (TestMachineState.Jump, () => Input.GetKeyDown(KeyCode.Space));
+        
         private readonly IStateMachine _stateMachine;
 
         public TestMachine(StateMachine.Factory stateMachineFactory)
         {
             _stateMachine = stateMachineFactory.Create();
 
-            var idleState = new State(TestMachineState.Idle.ToString());
-            idleState.SetEnter(() =>
-            {
-                Debug.Log($"Enter {idleState.StateCode}");
-            });
-            idleState.SetUpdate(() =>
-            {
-                Debug.Log($"Update {idleState.StateCode}");
-            });
-            idleState.SetExit(() =>
-            {
-                Debug.Log($"Exit {idleState.StateCode}");
-            });
-            idleState.SetTransitions(new List<ITransition>
-            {
-                new Transition(TestMachineState.Move.ToString(), () => Input.GetKeyDown(KeyCode.W)),
-                new Transition(TestMachineState.Jump.ToString(), () => Input.GetKeyDown(KeyCode.Space))
-            });
+            var idleState = new State(TestMachineState.Move);
+            idleState
+                .SetEnter(() => Debug.Log($"Enter {idleState.StateCode}"))
+                .SetUpdate(() => Debug.Log($"Update {idleState.StateCode}"))
+                .SetExit(() => Debug.Log($"Exit {idleState.StateCode}"))
+                .SetTransitions(new List<ITransition> { MoveTransition, JumpTransition });
             
-            var moveState = new State(TestMachineState.Move.ToString());
-            moveState.SetEnter(() =>
-            {
-                Debug.Log($"Enter {moveState.StateCode}");
-            });
-            moveState.SetUpdate(() =>
-            {
-                Debug.Log($"Update {moveState.StateCode}");
-            });
-            moveState.SetExit(() =>
-            {
-                Debug.Log($"Exit {moveState.StateCode}");
-            });
-            moveState.SetTransitions(new List<ITransition>
-            {
-                new Transition(TestMachineState.Idle.ToString(), () => Input.GetKeyDown(KeyCode.I)),
-                new Transition(TestMachineState.Jump.ToString(), () => Input.GetKeyDown(KeyCode.Space))
-            });
+            var moveState = new State(TestMachineState.Move);
+            moveState
+                .SetEnter(() => Debug.Log($"Enter {moveState.StateCode}"))
+                .SetUpdate(() => Debug.Log($"Update {moveState.StateCode}"))
+                .SetExit(() => Debug.Log($"Exit {moveState.StateCode}"))
+                .SetTransitions(new List<ITransition> { IdleTransition, JumpTransition });
             
-            var jumpState = new State(TestMachineState.Jump.ToString());
-            jumpState.SetEnter(() =>
-            {
-                Debug.Log($"Enter {jumpState.StateCode}");
-            });
-            jumpState.SetUpdate(() =>
-            {
-                Debug.Log($"Update {jumpState.StateCode}");
-            });
-            jumpState.SetExit(() =>
-            {
-                Debug.Log($"Exit {jumpState.StateCode}");
-            });
-            jumpState.SetTransitions(new List<ITransition>
-            {
-                new Transition(TestMachineState.Idle.ToString(), () => Input.GetKeyDown(KeyCode.I)),
-                new Transition(TestMachineState.Move.ToString(), () => Input.GetKeyDown(KeyCode.W))
-            });
+            var jumpState = new State(TestMachineState.Jump);
+            jumpState
+                .SetEnter(() => Debug.Log($"Enter {jumpState.StateCode}"))
+                .SetUpdate(() => Debug.Log($"Update {jumpState.StateCode}"))
+                .SetExit(() => Debug.Log($"Exit {jumpState.StateCode}"))
+                .SetTransitions(new List<ITransition> { IdleTransition, MoveTransition });
             
             _stateMachine.AddState(idleState);
             _stateMachine.AddState(moveState);

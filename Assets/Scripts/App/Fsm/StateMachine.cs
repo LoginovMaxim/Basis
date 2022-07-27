@@ -9,7 +9,7 @@ namespace App.Fsm
     {
         private readonly IMonoUpdater _monoUpdater;
         
-        private Dictionary<string, State> _states = new();
+        private Dictionary<ValueType, State> _states = new();
         private State _currentState;
         
         public StateMachine(IMonoUpdater monoUpdater)
@@ -23,12 +23,12 @@ namespace App.Fsm
             _states.Add(state.StateCode, state);
         }
 
-        private void SetInitialState(string stateCode)
+        private void SetInitialState(ValueType stateCode)
         {
             SwitchState(stateCode);
         }
 
-        private void SwitchState(string stateCode)
+        private void SwitchState(ValueType stateCode)
         {
             if (!_states.ContainsKey(stateCode))
             {
@@ -69,7 +69,7 @@ namespace App.Fsm
             AddState(state);
         }
 
-        void IStateMachine.SetInitialState(string stateCode)
+        void IStateMachine.SetInitialState(ValueType stateCode)
         {
             SetInitialState(stateCode);
         }

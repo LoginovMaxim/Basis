@@ -5,14 +5,14 @@ namespace App.Fsm
 {
     public interface IState
     {
-        string StateCode { get; }
+        ValueType StateCode { get; }
 
-        void SetEnter(Action action);
-        void SetUpdate(Action action);
-        void SetExit(Action action);
+        IState SetEnter(Action action);
+        IState SetUpdate(Action action);
+        IState SetExit(Action action);
         void SetTransitions(List<ITransition> transitions);
 
-        bool TrySwitchOtherState(out string otherStateCode);
+        bool TrySwitchOtherState(out ValueType otherStateCode);
         
         void OnEnter();
         void OnUpdate();

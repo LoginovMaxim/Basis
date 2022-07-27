@@ -4,13 +4,13 @@ namespace App.Fsm
 {
     public class Transition : ITransition
     {
-        public string TransitionStateCode => _transitionStateCode;
+        public ValueType TransitionStateCode => _transitionStateCode;
         
-        private string _transitionStateCode;
+        private ValueType _transitionStateCode;
 
         private Func<bool> _func;
         
-        public Transition(string transitionStateCode, Func<bool> func)
+        public Transition(ValueType transitionStateCode, Func<bool> func)
         {
             _transitionStateCode = transitionStateCode;
             _func = func;

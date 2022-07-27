@@ -5,9 +5,9 @@ namespace App.Fsm
 {
     public class State : IState
     {
-        public string StateCode => _stateCode;
+        public ValueType StateCode => _stateCode;
 
-        private string _stateCode;
+        private ValueType _stateCode;
         
         private Action _enterAction;
         private Action _updateAction;
@@ -15,24 +15,27 @@ namespace App.Fsm
 
         private List<ITransition> _transitions;
         
-        public State(string stateCode)
+        public State(ValueType stateCode)
         {
             _stateCode = stateCode;
         }
         
-        public void SetEnter(Action enterAction)
+        public IState SetEnter(Action enterAction)
         {
             _enterAction = enterAction;
+            return this;
         }
 
-        public void SetUpdate(Action updateAction)
+        public IState SetUpdate(Action updateAction)
         {
             _updateAction = updateAction;
+            return this;
         }
 
-        public void SetExit(Action exitAction)
+        public IState SetExit(Action exitAction)
         {
             _exitAction = exitAction;
+            return this;
         }
 
         public void SetTransitions(List<ITransition> transitions)
@@ -40,10 +43,9 @@ namespace App.Fsm
             _transitions = transitions;
         }
 
-        public bool TrySwitchOtherState(out string otherStateCode)
+        public bool TrySwitchOtherState(out ValueType otherStateCode)
         {
-            otherStateCode = string.Empty;
-            
+            otherStateCode = default;
             foreach (var transition in _transitions)
             {
                 if (!transition.IsTransition())

@@ -1,8 +1,10 @@
-﻿namespace App.Fsm
+﻿using System;
+
+namespace App.Fsm
 {
     public interface ITransition
     {
-        string TransitionStateCode { get; }
+        ValueType TransitionStateCode { get; }
         bool IsTransition();
     }
 }
