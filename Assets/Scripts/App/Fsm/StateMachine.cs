@@ -9,26 +9,21 @@ namespace App.Fsm
     {
         private readonly IMonoUpdater _monoUpdater;
         
-        private Dictionary<string, State> _states;
+        private Dictionary<string, State> _states = new();
         private State _currentState;
-
-        private UpdateType _updateType;
         
-        public StateMachine(UpdateType updateType, IMonoUpdater monoUpdater)
+        public StateMachine(IMonoUpdater monoUpdater)
         {
-            _updateType = updateType;
             _monoUpdater = monoUpdater;
-            _monoUpdater.Subscribe(_updateType, OnUpdate);
-            
-            _states = new Dictionary<string, State>();
+            _monoUpdater.Subscribe(UpdateType.Update, OnUpdate);
         }
 
-        public void AddState(State state)
+        private void AddState(State state)
         {
             _states.Add(state.StateCode, state);
         }
 
-        public void SetInitialState(string stateCode)
+        private void SetInitialState(string stateCode)
         {
             SwitchState(stateCode);
         }
@@ -61,12 +56,35 @@ namespace App.Fsm
             
             SwitchState(otherStateCode);
         }
-
-        public virtual void Dispose()
+        
+        protected virtual void Dispose()
         {
-            _monoUpdater.Unsubscribe(_updateType, OnUpdate);
+            _monoUpdater.Unsubscribe(UpdateType.Update, OnUpdate);
         }
 
-        public class Factory : PlaceholderFactory<UpdateType, StateMachine> { }
+        #region IStateMachine
+
+        void IStateMachine.AddState(State state)
+        {
+            AddState(state);
+        }
+
+        void IStateMachine.SetInitialState(string stateCode)
+        {
+            SetInitialState(stateCode);
+        }
+
+        #endregion
+
+        #region IDisposable
+        
+        void IDisposable.Dispose()
+        {
+            Dispose();
+        }
+
+        #endregion
+
+        public class Factory : PlaceholderFactory<StateMachine> { }
     }
 }

@@ -27,7 +27,7 @@ namespace Installers
             Container.BindInterfacesTo<PrefabFactory>().FromComponentInNewPrefab(PrefabFactory).AsSingle().NonLazy();
             Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
 
-            Container.BindFactory<UpdateType, StateMachine, StateMachine.Factory>().AsTransient().NonLazy();
+            Container.BindFactory<StateMachine, StateMachine.Factory>().AsTransient().NonLazy();
             
             BindData();
             

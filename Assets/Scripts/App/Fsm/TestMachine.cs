@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace App.Fsm
 {
-    public class TestMachine
+    public sealed class TestMachine
     {
         private enum TestMachineState
         {
@@ -16,7 +16,7 @@ namespace App.Fsm
 
         public TestMachine(StateMachine.Factory stateMachineFactory)
         {
-            _stateMachine = stateMachineFactory.Create(UpdateType.Update);
+            _stateMachine = stateMachineFactory.Create();
 
             var idleState = new State(TestMachineState.Idle.ToString());
             idleState.SetEnter(() =>
