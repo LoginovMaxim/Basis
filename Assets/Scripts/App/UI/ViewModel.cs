@@ -1,26 +1,13 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace App.UI
 {
-    public abstract class ViewModel : MonoBehaviour, INotifyPropertyChanged
+    public abstract class ViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public bool IsActive => gameObject.activeSelf;
-        
-        public void SetActive(bool isActive)
-        {
-            gameObject.SetActive(isActive);
-        }
-        
-        public void SetParent(Transform parent)
-        {
-            transform.parent = parent;
-        }
-        
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

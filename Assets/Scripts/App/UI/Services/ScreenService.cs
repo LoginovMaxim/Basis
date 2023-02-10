@@ -1,21 +1,25 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using App.UI.Screens;
+using App.Fsm;
+using App.Monos;
 using App.UI.Screens.Logics;
 using App.UI.Signals;
+using UnityEngine;
 using Zenject;
 
 namespace App.UI.Services
 {
-    public sealed class ScreenService : IScreenService
+    public abstract class ScreenService<TScreen> : IScreenService where TScreen : IScreen
     {
-        private readonly List<IScreen> _screens;
+        private readonly List<TScreen> _screens;
+        private readonly IMonoUpdater _monoUpdater;
         private readonly SignalBus _signalBus;
-        
-        private IScreen _previousScreen;
-        private IScreen _currentScreen;
 
-        public ScreenService(List<IScreen> screens, SignalBus signalBus)
+        private TScreen _currentScreen;
+        private Stack<int> _stackScreenIds = new Stack<int>();
+
+        protected ScreenService(List<TScreen> screens, SignalBus signalBus)
         {
             _screens = screens;
             _screens.ForEach(screen =>
@@ -25,52 +29,55 @@ namespace App.UI.Services
 
             _signalBus = signalBus;
             _signalBus.Subscribe<SwitchScreenSignal>(x => OnChangeScreenButtonClicked(x.ScreenId));
-            
+
             _currentScreen = _screens[0];
             _currentScreen.SetActive(true);
+            _stackScreenIds.Push(_currentScreen.Id);
         }
 
-        private void OnChangeScreenButtonClicked(ScreenId screenId)
+        protected void OnChangeScreenButtonClicked(int screenId)
         {
-            if (screenId == ScreenId.Back)
+            if (screenId == -1)
             {
                 OnBackScreenButtonClicked();
                 return;
             }
             
-            var screen = _screens.FirstOrDefault(screen => screen.ScreenId == screenId);
+            var screen = _screens.FirstOrDefault(screen => screen.Id == screenId);
             if (screen == null)
             {
                 return;
             }
 
-            _previousScreen = _currentScreen;
             _currentScreen.SetActive(false);
             _currentScreen = screen;
-            _currentScreen.Update();
             _currentScreen.SetActive(true);
+            
+            if (_stackScreenIds.Count > 0 && _stackScreenIds.Peek() == _currentScreen.Id)
+            {
+                return;
+            }
+            
+            _stackScreenIds.Push(_currentScreen.Id);
         }
 
         private void OnBackScreenButtonClicked()
         {
-            if (_previousScreen == null || _previousScreen == _currentScreen)
+            if (_stackScreenIds.Count < 2)
             {
                 return;
             }
 
-            var currentScreen = _currentScreen;
-            _currentScreen.SetActive(false);
-            _currentScreen = _previousScreen;
-            _currentScreen.Update();
-            _currentScreen.SetActive(true);
-            _previousScreen = currentScreen;
+            _stackScreenIds.Pop();
+            var lastScreenId = _stackScreenIds.Pop();
+            OnChangeScreenButtonClicked(lastScreenId);
         }
 
         #region IMetaScreenService
 
         public IScreen CurrentScreen => _currentScreen;
         
-        void IScreenService.OnChangeScreenButtonClicked(ScreenId screenId)
+        void IScreenService.OnChangeScreenButtonClicked(int screenId)
         {
             OnChangeScreenButtonClicked(screenId);
         }

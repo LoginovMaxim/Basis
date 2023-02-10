@@ -2,29 +2,41 @@
 
 namespace App.UI.Screens.Logics
 {
-    public abstract class BaseScreen : IScreen
+    public abstract class BaseScreen<TScreenViewModel> : IScreen where TScreenViewModel : IScreenViewModel
     {
-        private ScreenViewModel _screenViewModel;
-
-        protected abstract ScreenId ScreenId { get; }
+        protected readonly TScreenViewModel ScreenViewModel;
+        private readonly int _id;
         
-        protected void SetViewModel(ScreenViewModel screenViewModel)
+        protected BaseScreen(TScreenViewModel screenViewModel, int id)
         {
-            _screenViewModel = screenViewModel;
+            ScreenViewModel = screenViewModel;
+            _id = id;
         }
-        
+
+        public string GetName()
+        {
+            return ScreenViewModel.ToString();
+        }
+
         protected virtual void Update()
         {
         }
         
         private void SetActive(bool isActive)
         {
-            _screenViewModel.SetActive(isActive);
+            ScreenViewModel.SetActive(isActive);
+
+            if (!isActive)
+            {
+                return;
+            }
+            
+            Update();
         }
         
         #region IScreen
 
-        ScreenId IScreen.ScreenId => ScreenId;
+        int IScreen.Id => _id;
 
         void IScreen.SetActive(bool isActive)
         {

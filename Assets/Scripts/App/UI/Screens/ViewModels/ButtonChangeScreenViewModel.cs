@@ -5,15 +5,15 @@ using Zenject;
 
 namespace App.UI.Screens.ViewModels
 {
-    [Binding] public class ButtonChangeScreenViewModel : ViewModel
+    [Binding] public abstract class ButtonChangeScreenMonoViewModel : MonoViewModel
     {
-        [SerializeField] private ScreenId _screenId;
-
+        protected abstract int ScreenId { get; }
+        
         private SignalBus _signalBus;
         
         [Binding] public void OnChangeScreenButtonClicked()
         {
-            _signalBus.Fire(new SwitchScreenSignal(_screenId));
+            _signalBus.Fire(new SwitchScreenSignal(ScreenId));
         }
 
         public void InjectSignalBus(SignalBus signalBus)

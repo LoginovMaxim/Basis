@@ -1,12 +1,10 @@
-﻿using App.UI.Screens;
-
-namespace App.UI.Signals
+﻿namespace App.UI.Signals
 {
     public class SwitchScreenSignal
     {
-        public readonly ScreenId ScreenId;
+        public readonly int ScreenId;
 
-        public SwitchScreenSignal(ScreenId screenId)
+        public SwitchScreenSignal(int screenId)
         {
             ScreenId = screenId;
         }

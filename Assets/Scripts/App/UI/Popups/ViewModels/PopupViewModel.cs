@@ -4,7 +4,7 @@ using Zenject;
 
 namespace App.UI.Popups.ViewModels
 {
-    [Binding] public abstract class PopupViewModel : ViewModel
+    [Binding] public abstract class PopupViewModel : MonoViewModel
     {
         [Inject] private readonly SignalBus _signalBus;
         

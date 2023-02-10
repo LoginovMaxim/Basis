@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,61 +8,92 @@ namespace App.Monos
 {
     public class SceneLoader : MonoBehaviour, ISceneLoader
     {
-        private void ReloadScene()
+        public void LoadScene(string sceneName, LoadSceneMode loadSceneMode, Action onComplete)
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
-        
-        private void LoadScene(string sceneName)
-        {
-            StartCoroutine(LoadingScene(sceneName));
-        }
-        
-        private void LoadScene(int sceneIndex)
-        {
-            StartCoroutine(LoadingScene(sceneIndex));
-        }
-        
-        private IEnumerator LoadingScene(string sceneName)
-        {
-            yield return Loading(SceneManager.LoadSceneAsync(sceneName));
-        }
-        
-        private IEnumerator LoadingScene(int index)
-        {
-            yield return Loading(SceneManager.LoadSceneAsync(index));
+            StartCoroutine(LoadingScene(sceneName, loadSceneMode, onComplete));
         }
 
-        private IEnumerator Loading(AsyncOperation asyncOperation)
+        public void UnloadScene(string sceneName, Action onComplete)
         {
+            StartCoroutine(UnloadingScene(sceneName, onComplete));
+        }
+
+        public async Task LoadSceneAsync(string scenePath, bool isActiveScene, LoadSceneMode loadSceneMode)
+        {
+            var sceneName = scenePath.Split('/');
+            var asyncOperation = SceneManager.LoadSceneAsync(scenePath, loadSceneMode);
             asyncOperation.allowSceneActivation = false;
+            
+            if (isActiveScene)
+            {
+                asyncOperation.completed += operation =>
+                {
+                    SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName[sceneName.Length - 1]));
+                };
+            }
+
+            while (true)
+            {
+                if (asyncOperation.progress >= 0.9f)
+                {
+                    break;
+                }
+
+                await Task.Yield();
+            }
+
+            asyncOperation.allowSceneActivation = true;
+        }
+
+        public async Task UnloadAdditiveSceneAsync(string scenePath)
+        {
+            var asyncOperation = SceneManager.UnloadSceneAsync(scenePath);
+            while (true)
+            {
+                if (asyncOperation.progress >= 0.9f)
+                {
+                    break;
+                }
+
+                await Task.Yield();
+            }
+        }
+
+        private IEnumerator LoadingScene(string scenePath, LoadSceneMode loadSceneMode, Action onComplete)
+        {
+            var sceneName = scenePath.Split('/');
+            var asyncOperation = SceneManager.LoadSceneAsync(scenePath, loadSceneMode);
+            asyncOperation.completed += _ =>
+            {
+                SceneManager.SetActiveScene(SceneManager.GetSceneByName(sceneName[sceneName.Length - 1]));
+                onComplete?.Invoke();
+            };
+            
+            asyncOperation.allowSceneActivation = false;
+            while (true)
+            {
+                if (asyncOperation.progress >= 0.9f)
+                {
+                    break;
+                }
+                
+                yield return null;
+            }
+
+            asyncOperation.allowSceneActivation = true;
+        }
+
+        private IEnumerator UnloadingScene(string scenePath, Action onComplete)
+        {
+            var asyncOperation = SceneManager.UnloadSceneAsync(scenePath);
+            asyncOperation.completed += _ => onComplete?.Invoke();
 
             while (!asyncOperation.isDone)
             {
                 yield return null;
             }
-
-            asyncOperation.allowSceneActivation = true;
-            yield return null;
+            
+            asyncOperation.allowSceneActivation = false;
         }
-
-        #region ISceneLoader
-        
-        void ISceneLoader.ReloadScene()
-        {
-            ReloadScene();
-        }
-        
-        void ISceneLoader.LoadScene(string sceneName)
-        {
-            LoadScene(sceneName);
-        }
-
-        void ISceneLoader.LoadScene(int sceneIndex)
-        {
-            LoadScene(sceneIndex);
-        }
-
-        #endregion
     }
 }

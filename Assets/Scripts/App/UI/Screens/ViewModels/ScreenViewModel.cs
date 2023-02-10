@@ -6,16 +6,16 @@ using Zenject;
 
 namespace App.UI.Screens.ViewModels
 {
-    [Binding] public abstract class ScreenViewModel : LocalizableViewModel
+    [Binding] public abstract class ScreenViewModel : MonoViewModel, IScreenViewModel
     {
-        [Inject] private readonly SignalBus _signalBus;
+        [Inject] protected SignalBus SignalBus;
         
-        private List<ButtonChangeScreenViewModel> _buttonViewModels;
+        private List<ButtonChangeScreenMonoViewModel> _buttonViewModels;
         
-        private void Awake()
+        protected virtual void Start()
         {
-            _buttonViewModels = GetComponentsInChildren<ButtonChangeScreenViewModel>().ToList();
-            _buttonViewModels.ForEach(button => button.InjectSignalBus(_signalBus));
+            _buttonViewModels = GetComponentsInChildren<ButtonChangeScreenMonoViewModel>().ToList();
+            _buttonViewModels.ForEach(button => button.InjectSignalBus(SignalBus));
         }
     }
 }

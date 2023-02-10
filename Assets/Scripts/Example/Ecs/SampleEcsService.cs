@@ -14,14 +14,12 @@ namespace Example.Ecs
     public sealed class SampleEcsService : EcsService
     {
         private readonly IPrefabFactory _prefabFactory;
-        private readonly IScreenService _screenService;
         private readonly IPopupService _popupService;
         private readonly IEffectEmitter _effectEmitter;
         private readonly IMapConfigProvider _mapConfigProvider;
         
         public SampleEcsService(
             IPrefabFactory prefabFactory,
-            IScreenService screenService,
             IPopupService popupService,
             IEffectEmitter effectEmitter,
             IMapConfigProvider mapConfigProvider,
@@ -31,7 +29,6 @@ namespace Example.Ecs
             base(world, monoUpdater, updateType)
         {
             _prefabFactory = prefabFactory;
-            _screenService = screenService;
             _popupService = popupService;
             _effectEmitter = effectEmitter;
             _mapConfigProvider = mapConfigProvider;
@@ -60,7 +57,6 @@ namespace Example.Ecs
         protected override void AddSystemInjects()
         {
             AddSystemInject(_prefabFactory);
-            AddSystemInject(_screenService);
             AddSystemInject(_popupService);
             AddSystemInject(_effectEmitter);
             AddSystemInject(_mapConfigProvider);

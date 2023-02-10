@@ -6,6 +6,6 @@ namespace App.UI.Services
     public interface IScreenService
     {
         IScreen CurrentScreen { get; }
-        void OnChangeScreenButtonClicked(ScreenId screenId);
+        void OnChangeScreenButtonClicked(int screenId);
     }
 }

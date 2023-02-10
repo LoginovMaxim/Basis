@@ -1,34 +1,49 @@
-﻿using System.Threading.Tasks;
-using App.Assemblers;
-using App.Monos;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace App.Localizations
 {
-    public class Localization : IAssemblerPart
+    public sealed class Localization : ILocalization
     {
-        private readonly IGameObjectFinder _gameObjectFinder;
-        private readonly ILocalizationDataProvider _localizationDataProvider;
-
-        private Language _language = Language.EN;
+        public static Localization Instance { get; private set; }
         
-        public Localization(
-            IGameObjectFinder gameObjectFinder,
-            ILocalizationDataProvider localizationDataProvider)
+        private Language _language = Language.EN;
+        private Dictionary<string, Dictionary<string, string>> _table;
+
+        public Localization()
         {
-            _gameObjectFinder = gameObjectFinder;
-            _localizationDataProvider = localizationDataProvider;
+            Instance = this;
         }
 
-        public async Task Launch()
+        private string GetString(string key)
         {
-            await _localizationDataProvider.Load();
-            
-            var localizableViewModels = _gameObjectFinder.GetGameObjects<LocalizableViewModel>();
-
-            foreach (var localizableViewModel in localizableViewModels)
-            {
-                localizableViewModel.TranslateViewModel(_localizationDataProvider.LocalizationData, _language);
-            }
+            return _table[_language.ToString()][key];
         }
+
+        #region ILocalization
+
+        public Action OnLanguageChanged { get; set; }
+        Language ILocalization.Language => _language;
+        Dictionary<string, Dictionary<string, string>> ILocalization.Table => _table;
+        List<string> ILocalization.Keys => _table[Language.EN.ToString()].Keys.ToList();
+        
+        void ILocalization.InitializeLocalizationTable(Dictionary<string, Dictionary<string, string>> table)
+        {
+            _table = table;
+        }
+
+        string ILocalization.GetString(string key)
+        {
+            return GetString(key);
+        }
+
+        void ILocalization.SetLanguage(Language language)
+        {
+            _language = language;
+            OnLanguageChanged?.Invoke();
+        }
+
+        #endregion
     }
 }

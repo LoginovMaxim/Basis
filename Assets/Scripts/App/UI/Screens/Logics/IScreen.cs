@@ -2,9 +2,9 @@
 {
     public interface IScreen
     {
-        ScreenId ScreenId { get; }
-        
+        int Id { get; }
         void SetActive(bool isActive);
+        string GetName();
         void Update();
     }
 }
