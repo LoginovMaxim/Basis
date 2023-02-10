@@ -4,7 +4,6 @@ using App.Data;
 using App.Fsm;
 using App.Localizations;
 using App.Monos;
-using App.Services;
 using Ecs;
 using Example.App.Assemblers;
 using UnityEngine;
@@ -12,7 +11,7 @@ using Utils;
 using VisualEffects;
 using Zenject;
 
-namespace Installers
+namespace App.Installers
 {
     public sealed class AppInstaller : MonoInstaller
     {

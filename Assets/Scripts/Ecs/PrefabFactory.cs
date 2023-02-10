@@ -13,25 +13,21 @@ namespace Ecs
 			_world = world;
 		}
 
-		private void Spawn(SpawnComponent spawnComponent)
+		private EcsEntity Spawn(SpawnComponent spawnComponent, Transform parent)
 		{
-			var gameObject = Instantiate(spawnComponent.Prefab, spawnComponent.Position, spawnComponent.Rotation, spawnComponent.Parent);
-			gameObject.transform.localScale = spawnComponent.Scale;
+			var gameObject = Instantiate(spawnComponent.Prefab, spawnComponent.Position, spawnComponent.Rotation, parent);
 
 			var monoEntity = gameObject.GetComponent<MonoEntity>();
 			if (monoEntity == null)
 			{
-				return;
+				return default;
 			}
 
 			var ecsEntity = _world.NewEntity();
 			monoEntity.Make(ref ecsEntity);
-			
-			var monoChildrenEntities = gameObject.GetComponentsInChildren<MonoEntity>(true);
-			foreach (var monoChildrenEntity in monoChildrenEntities)
-			{
-				monoChildrenEntity.Make(ref ecsEntity);
-			}
+			gameObject.AddComponent<ConvertedEntityComponent>();
+
+			return ecsEntity;
 		}
 
 		private void Despawn(EcsEntity entity)
@@ -46,8 +42,14 @@ namespace Ecs
 
 			foreach (var monoEntity in monoEntities)
 			{
+				if (monoEntity.TryGetComponent<ConvertedEntityComponent>(out var convertedEntityComponent))
+				{
+					continue;
+				}
+				
 				var ecsEntity = _world.NewEntity();
 				monoEntity.Make(ref ecsEntity);
+				monoEntity.gameObject.AddComponent<ConvertedEntityComponent>();
 			}
 		}
 
@@ -58,9 +60,9 @@ namespace Ecs
 			SetWorld(world);
 		}
 
-		void IPrefabFactory.Spawn(SpawnComponent spawnComponent)
+		EcsEntity IPrefabFactory.Spawn(SpawnComponent spawnComponent, Transform parent)
 		{
-			Spawn(spawnComponent);
+			return Spawn(spawnComponent, parent);
 		}
 
 		void IPrefabFactory.Despawn(EcsEntity entity)

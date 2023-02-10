@@ -6,7 +6,7 @@ using App.UI.Signals;
 using UnityEngine;
 using Zenject;
 
-namespace Installers
+namespace App.Installers
 {
     public sealed class PopupInstaller : MonoInstaller
     {

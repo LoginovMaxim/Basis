@@ -2,7 +2,7 @@
 using UnityEngine;
 using Zenject;
 
-namespace Installers
+namespace App.Installers
 {
     public sealed class ScreenInstaller : MonoInstaller
     {
