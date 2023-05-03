@@ -1,24 +1,31 @@
 {
   "dependencies": {
+    "com.goodcat.ecslite.multiple-shared": {
+      "version": "https://github.com/GoodCatGames/ecslite-multiple-shared.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "9f64f320049fa3bf9ae59b602cbbb73dbec53f24"
+    },
     "com.harlequin.basis": {
       "version": "file:Basis",
       "depth": 0,
       "source": "embedded",
       "dependencies": {}
     },
-    "com.leopotam.ecs": {
-      "version": "https://github.com/Leopotam/ecs.git",
+    "com.leopotam.ecslite": {
+      "version": "https://github.com/Leopotam/ecslite.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "91cc7e390fa0eb4fc88a5cf111df88b1f45af37e"
+      "hash": "6b83a518237d3083f013fc0e0ab7580046c24aca"
     },
-    "com.leopotam.ecs-unityintegration": {
-      "version": "https://github.com/Leopotam/ecs-unityintegration.git",
+    "com.leopotam.ecslite.unityeditor": {
+      "version": "https://github.com/Leopotam/ecslite-unityeditor.git",
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "127d6a8f02ec987ac724a7fc671b1d5d00b0ea56"
+      "hash": "65affd1090e235d8441582903dd95f7e86587849"
     },
     "com.mathijsbakker.extenject": {
       "version": "file:../Assets/Plugins/Zenject",

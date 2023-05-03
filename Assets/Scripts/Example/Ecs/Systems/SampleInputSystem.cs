@@ -1,31 +1,40 @@
 ﻿using Example.Ecs.Events;
-using Leopotam.Ecs;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Example.Ecs.Systems
 {
     public sealed class SampleInputSystem : IEcsRunSystem
     {
-        private readonly EcsWorld _world = null;
-        
-        public void Run()
+        public void Run(IEcsSystems systems)
         {
+            
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                _world.NewEntity().Get<OnKeyPressedEvent>().KeyCode = KeyCode.W;
+                CreateInputEntity(systems, KeyCode.W);
             }
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                _world.NewEntity().Get<OnKeyPressedEvent>().KeyCode = KeyCode.S;
+                CreateInputEntity(systems, KeyCode.S);
             }
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
-                _world.NewEntity().Get<OnKeyPressedEvent>().KeyCode = KeyCode.A;
+                CreateInputEntity(systems, KeyCode.A);
             }
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
             {
-                _world.NewEntity().Get<OnKeyPressedEvent>().KeyCode = KeyCode.D;
+                CreateInputEntity(systems, KeyCode.D);
             }
+        }
+
+        private void CreateInputEntity(IEcsSystems systems, KeyCode keyCode)
+        {
+            var world = systems.GetWorld();
+            var keyPressedEvents = world.GetPool<OnKeyPressedEvent>();
+            
+            var entity = world.NewEntity(); 
+            ref var keyPressedEvent = ref keyPressedEvents.Add(entity);
+            keyPressedEvent.KeyCode = keyCode;
         }
     }
 }

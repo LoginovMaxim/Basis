@@ -1,10 +1,10 @@
-﻿using Leopotam.Ecs;
+﻿using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Ecs
 {
     public abstract class MonoLinkBase : MonoBehaviour
     {
-        public abstract void Make(ref EcsEntity entity);
+        public abstract void Make(ref EcsPackedEntityWithWorld entity);
     }
 }

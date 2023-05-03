@@ -1,8 +1,9 @@
-﻿using VisualEffects;
+﻿using System;
+using VisualEffects;
 
 namespace Ecs.Common.Components
 {
-    public struct EffectTagComponent
+    [Serializable] public struct EffectTagComponent
     {
         public EffectId EffectId;
     }

@@ -1,12 +1,13 @@
-﻿using Leopotam.Ecs;
+﻿using GoodCat.EcsLite.Shared;
+using Leopotam.EcsLite;
 
 namespace Ecs.Common.Systems
 {
-    public sealed class ConvertAllMonoEntitiesSystem : IEcsInitSystem
+    public sealed class ConvertAllMonoEntitiesSystem : IEcsRunSystem
     {
-        private IPrefabFactory _prefabFactory;
-        
-        public void Init()
+        [EcsInject] private readonly IPrefabFactory _prefabFactory;
+
+        public void Run(IEcsSystems systems)
         {
             _prefabFactory.ConvertAllMonoEntitiesInScene();
         }

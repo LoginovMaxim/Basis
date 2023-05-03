@@ -1,4 +1,4 @@
-﻿using Leopotam.Ecs;
+﻿using Leopotam.EcsLite;
 
 namespace Ecs
 {
@@ -6,7 +6,7 @@ namespace Ecs
     {
         private EcsWorld _world;
 
-        public World()
+        protected World()
         {
             _world = new EcsWorld();
         }

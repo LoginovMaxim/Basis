@@ -36,30 +36,27 @@ namespace Example.Ecs
 
         protected override void AddSystems()
         {
-            AddSystem(-1000, new ConvertAllMonoEntitiesSystem(), true);
+            AddSystem(-1000, new ConvertAllMonoEntitiesSystem());
             AddSystem(1000, new SpawnSystem());
             AddSystem(1000, new EmitEffectSystem());
             AddSystem(0, new TimerSystem());
             AddSystem(-1000, new SampleInputSystem());
             AddSystem(0, new MapSystem());
+            
+            AddSystem(10000, new OneFrameSystem<OnTriggerEnterEvent>());
+            AddSystem(10000, new OneFrameSystem<OnTriggerStayEvent>());
+            AddSystem(10000, new OneFrameSystem<OnEmitEffectRequested>());
+            AddSystem(10000, new OneFrameSystem<OnMouseButtonDownEvent>());
+            AddSystem(10000, new OneFrameSystem<OnMouseButtonUpEvent>());
+            AddSystem(10000, new OneFrameSystem<OnKeyPressedEvent>());
         }
 
-        protected override void AddOneFrameSystems()
+        protected override void AddInjects()
         {
-            AddOneFrameSystem<OnTriggerEnterEvent>();
-            AddOneFrameSystem<OnTriggerStayEvent>();
-            AddOneFrameSystem<OnEmitEffectRequested>();
-            AddOneFrameSystem<OnMouseButtonDownEvent>();
-            AddOneFrameSystem<OnMouseButtonUpEvent>();
-            AddOneFrameSystem<OnKeyPressedEvent>();
-        }
-
-        protected override void AddSystemInjects()
-        {
-            AddSystemInject(_prefabFactory);
-            AddSystemInject(_popupService);
-            AddSystemInject(_effectEmitter);
-            AddSystemInject(_mapConfigProvider);
+            AddInject(_prefabFactory);
+            AddInject(_popupService);
+            AddInject(_effectEmitter);
+            AddInject(_mapConfigProvider);
         }
     }
 }

@@ -1,21 +1,23 @@
 ﻿using Ecs.Common.Events;
-using Leopotam.Ecs;
+using GoodCat.EcsLite.Shared;
+using Leopotam.EcsLite;
 using VisualEffects;
 
 namespace Ecs.Common.Systems
 {
     public sealed class EmitEffectSystem : IEcsRunSystem
     {
-        private readonly EcsWorld _world = null;
-        private readonly EcsFilter<OnEmitEffectRequested> _filter = null;
+        [EcsInject] private readonly IEffectEmitter _effectEmitter;
 
-        private IEffectEmitter _effectEmitter;
-        
-        public void Run()
+        public void Run(IEcsSystems systems)
         {
-            foreach (var e in _filter)
+            var world = systems.GetWorld();
+            var emitEffectFilter = world.Filter<OnEmitEffectRequested>().End();
+            var emitEffectRequests = world.GetPool<OnEmitEffectRequested>();
+            
+            foreach (var entity in emitEffectFilter)
             {
-                ref var emitEffect = ref _filter.Get1(e);
+                ref var emitEffect = ref emitEffectRequests.Get(entity);
                 _effectEmitter.Emit(emitEffect.EffectId, emitEffect.Position, emitEffect.Color);
             }
         }

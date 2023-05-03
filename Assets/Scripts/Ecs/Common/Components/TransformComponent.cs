@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Ecs.Common.Components
 {
-    [Serializable]
-    public struct TransformComponent
+    [Serializable] public struct TransformComponent
     {
         public Transform Transform;
     }

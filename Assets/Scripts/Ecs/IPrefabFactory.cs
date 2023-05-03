@@ -1,5 +1,5 @@
 ﻿using Ecs.Common.Components;
-using Leopotam.Ecs;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Ecs
@@ -8,9 +8,9 @@ namespace Ecs
     {
         void SetWorld(EcsWorld world);
 
-        EcsEntity Spawn(SpawnComponent spawnComponent, Transform parent = null);
+        EcsPackedEntityWithWorld Spawn(SpawnComponent spawnComponent, Transform parent = null);
 
-        void Despawn(EcsEntity entity);
+        void Despawn(EcsPackedEntityWithWorld entity);
 
         void ConvertAllMonoEntitiesInScene();
     }

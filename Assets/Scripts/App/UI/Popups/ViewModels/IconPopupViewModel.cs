@@ -6,7 +6,6 @@ namespace App.UI.Popups.ViewModels
 {
     [Binding] public sealed class IconPopupViewModel : PopupViewModel
     {
-        
         [Binding] public Sprite Sprite
         {
             get

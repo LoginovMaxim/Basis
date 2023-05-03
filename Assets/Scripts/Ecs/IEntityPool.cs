@@ -1,5 +1,5 @@
 ﻿using Ecs.Common.Components;
-using Leopotam.Ecs;
+using Leopotam.EcsLite;
 
 namespace Ecs
 {
@@ -7,8 +7,7 @@ namespace Ecs
     {
         IPoolObject PoolObject { get; }
         void Initialize(SpawnComponent spawnComponent, int poolSize);
-        EcsEntity Spawn(SpawnData spawnData);
-        EcsEntity GetReadySpawnEntity();
-        void Despawn(EcsEntity entity);
+        EcsPackedEntityWithWorld Spawn(SpawnData spawnData);
+        void Despawn(EcsPackedEntityWithWorld entity);
     }
 }

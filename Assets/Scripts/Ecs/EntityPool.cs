@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Ecs.Common.Components;
-using Leopotam.Ecs;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Ecs
@@ -12,7 +13,7 @@ namespace Ecs
         private readonly TPoolObject _poolObject;
         private readonly Transform _parent;
 
-        private List<EcsEntity> _entityPool = new List<EcsEntity>();
+        private List<EcsPackedEntityWithWorld> _entityPool = new List<EcsPackedEntityWithWorld>();
         private SpawnComponent _spawnComponent;
         private int _poolSize;
 
@@ -36,11 +37,17 @@ namespace Ecs
             }
         }
 
-        private EcsEntity Spawn(SpawnData spawnData)
+        private EcsPackedEntityWithWorld Spawn(SpawnData spawnData)
         {
             foreach (var entity in _entityPool)
             {
-                var gameObject = entity.Get<GameObjectComponent>().GameObject;
+                if (!entity.Unpack(out var world, out var unpackedEntity))
+                {
+                    continue;
+                }
+
+                var gameObjectPool = world.GetPool<GameObjectComponent>();
+                ref var gameObject = ref gameObjectPool.Get(unpackedEntity).GameObject;
                 if (gameObject == null)
                 {
                     Debug.Break();
@@ -52,7 +59,8 @@ namespace Ecs
                     continue;
                 }
                 
-                ref var transform = ref entity.Get<TransformComponent>().Transform;
+                var transformPool = world.GetPool<TransformComponent>();
+                ref var transform = ref transformPool.Get(unpackedEntity).Transform;
                 transform.position = spawnData.Position;
                 transform.rotation = spawnData.Rotation;
                 transform.localScale = spawnData.Scale;
@@ -60,58 +68,51 @@ namespace Ecs
                 gameObject.layer = spawnData.Layer;
                 gameObject.SetActive(true);
 
-                if (entity.Has<RigidbodyComponent>())
+                var rigidbodyPool = world.GetPool<RigidbodyComponent>();
+                if (rigidbodyPool.Has(unpackedEntity))
                 {
-                    ref var rigidbody = ref entity.Get<RigidbodyComponent>().Rigidbody;
+                    ref var rigidbody = ref rigidbodyPool.Get(unpackedEntity).Rigidbody;
                     rigidbody.velocity = Vector3.zero;
                 }
                 
                 return entity;
             }
-            
-            var newEntity = _prefabFactory.Spawn(_spawnComponent, _parent);
-            _entityPool.Add(newEntity);
-            
-            ref var newTransform = ref _entityPool.Last().Get<TransformComponent>().Transform;
-            newTransform.position = spawnData.Position;
-            newTransform.rotation = spawnData.Rotation;
-            newTransform.localScale = spawnData.Scale;
-            
-            ref var newGameObject = ref _entityPool.Last().Get<GameObjectComponent>().GameObject;
-            newGameObject.layer = spawnData.Layer;
-            
-            return newEntity;
+
+            return Create(spawnData);
         }
 
-        private EcsEntity GetReadySpawnEntity()
+        private EcsPackedEntityWithWorld Create(SpawnData spawnData)
         {
-            foreach (var entity in _entityPool)
+            var entity = _prefabFactory.Spawn(_spawnComponent, _parent);
+
+            if (!entity.Unpack(out var world, out var unpackedEntity))
             {
-                var gameObject = entity.Get<GameObjectComponent>().GameObject;
-                if (gameObject == null)
-                {
-                    Debug.Break();
-                    Debug.Log("Pool entity missing gameObject");
-                }
-
-                if (gameObject.activeSelf)
-                {
-                    continue;
-                }
-
-                return entity;
+                throw new Exception($"Cannot unpack created entity {entity}");
             }
             
-            var newEntity = _prefabFactory.Spawn(_spawnComponent, _parent);
-            _entityPool.Add(newEntity);
+            var transformPool = world.GetPool<TransformComponent>();
+            ref var transform = ref transformPool.Get(unpackedEntity).Transform;
+            transform.position = spawnData.Position;
+            transform.rotation = spawnData.Rotation;
+            transform.localScale = spawnData.Scale;
             
-            newEntity.Get<GameObjectComponent>().GameObject.SetActive(false);
-            return newEntity;
+            var gameObjectPool = world.GetPool<GameObjectComponent>();
+            ref var gameObject = ref gameObjectPool.Get(unpackedEntity).GameObject;
+            gameObject.layer = spawnData.Layer;
+            
+            _entityPool.Add(entity);
+            return entity;
         }
 
-        private void Despawn(EcsEntity entity)
+        private void Despawn(EcsPackedEntityWithWorld entity)
         {
-            var gameObject = entity.Get<GameObjectComponent>().GameObject;
+            if (!entity.Unpack(out var world, out var unpackedEntity))
+            {
+                throw new Exception($"Cannot unpack entity {entity} for despawn");
+            }
+
+            var gameObjectPool = world.GetPool<GameObjectComponent>();
+            ref var gameObject = ref gameObjectPool.Get(unpackedEntity).GameObject;
             gameObject.SetActive(false);
         }
 
@@ -124,17 +125,12 @@ namespace Ecs
             Initialize(spawnComponent, poolSize);
         }
 
-        EcsEntity IEntityPool.Spawn(SpawnData spawnData)
+        EcsPackedEntityWithWorld IEntityPool.Spawn(SpawnData spawnData)
         {
             return Spawn(spawnData);
         }
 
-        EcsEntity IEntityPool.GetReadySpawnEntity()
-        {
-            return GetReadySpawnEntity();
-        }
-
-        void IEntityPool.Despawn(EcsEntity entity)
+        void IEntityPool.Despawn(EcsPackedEntityWithWorld entity)
         {
             Despawn(entity);
         }

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Leopotam.Ecs;
-using Utils;
+using GoodCat.EcsLite.Shared;
+using Leopotam.EcsLite;
 
 namespace Ecs
 {
@@ -16,26 +16,17 @@ namespace Ecs
         }
 
         protected abstract void AddSystems();
-
-        protected abstract void AddOneFrameSystems();
-
-        protected abstract void AddSystemInjects();
+        protected abstract void AddInjects();
         
-        protected void AddSystem(int order, IEcsSystem system, bool isOnlyInitSystem = false)
+        protected void AddSystem(int order, IEcsSystem system)
         {
             CorrectOrderSystem(_orderSystems, ref order);
-            var systemName = !isOnlyInitSystem ? TypeUtils.GetConcreteTypeName($"{system.GetType()}") : string.Empty;
-            _orderSystems.Add(new EcsOrderSystem(order, system, systemName));
-        }
-        
-        protected void AddOneFrameSystem<T>() where T: struct
-        {
-            _systems.OneFrame<T>();
+            _orderSystems.Add(new EcsOrderSystem(order, system));
         }
 
-        protected void AddSystemInject(object injectObject)
+        protected void AddInject(object shared)
         {
-            _systems.Inject(injectObject);
+            _systems.InjectShared(shared);
         }
 
         private void CorrectOrderSystem(List<EcsOrderSystem> systems, ref int order)
@@ -63,14 +54,9 @@ namespace Ecs
             AddSystems();
         }
 
-        void IEcsSetup.AddOneFrameSystems()
+        void IEcsSetup.AddInjects()
         {
-            AddOneFrameSystems();
-        }
-
-        void IEcsSetup.AddSystemInjects()
-        {
-            AddSystemInjects();
+            AddInjects();
         }
 
         #endregion

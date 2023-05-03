@@ -27,18 +27,6 @@ namespace Bindings
             get => _localizationKey;
             set => _localizationKey = value;
         }
-
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                _localization.SetLanguage(Language.EN);
-            }
-            else if (Input.GetKeyDown(KeyCode.R))
-            {
-                _localization.SetLanguage(Language.RU);
-            }
-        }
         
         public override void Connect()
         {

@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Ecs.Common.Components
 {
-    [Serializable]
-    public struct RigidbodyComponent
+    [Serializable] public struct RigidbodyComponent
     {
         public Rigidbody2D Rigidbody;
     }

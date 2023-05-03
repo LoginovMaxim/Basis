@@ -1,12 +1,11 @@
-﻿using Leopotam.Ecs;
+﻿using Leopotam.EcsLite;
 
 namespace Ecs
 {
     public sealed class MonoEntity : MonoLinkBase
     {
-        public EcsEntity Entity => _entity;
+        public EcsPackedEntityWithWorld Entity { get; private set; }
         
-        private EcsEntity _entity;
         private MonoLinkBase[] _monoLinks;
 
         public MonoLink<T> Get<T>() where T : struct
@@ -22,9 +21,9 @@ namespace Ecs
             return null;
         }
 
-        public override void Make(ref EcsEntity entity)
+        public override void Make(ref EcsPackedEntityWithWorld entity)
         {
-            _entity = entity;
+            Entity = entity;
 
             _monoLinks = GetComponents<MonoLinkBase>();
             foreach (MonoLinkBase monoLink in _monoLinks)

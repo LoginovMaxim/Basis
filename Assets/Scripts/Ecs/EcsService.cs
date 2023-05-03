@@ -4,16 +4,16 @@ using App.Assemblers;
 using App.Fsm;
 using App.Monos;
 using App.Services;
-using Leopotam.Ecs;
-using Utils;
+using GoodCat.EcsLite.Shared;
+using Leopotam.EcsLite;
 
 namespace Ecs
 {
     public abstract class EcsService : UpdatableService, IEcsService, IAssemblerPart
     {
-        private readonly EcsWorld _world;
         private readonly List<EcsOrderSystem> _orderSystems = new();
         
+        private EcsWorld _world;
         private EcsSystems _systems;
 
         protected EcsService(IWorld world, IMonoUpdater monoUpdater, UpdateType updateType) : 
@@ -27,33 +27,25 @@ namespace Ecs
             InitSystems();
             AddSystems();
             BuildSystems();
-            AddOneFrameSystems();
-            InjectSystemController();
-            AddSystemInjects();
+            AddInjects();
+            InitInjects();
             InitSystem();
             Start();
             return Task.CompletedTask;
         }
 
         protected abstract void AddSystems();
-        protected abstract void AddOneFrameSystems();
-        protected abstract void AddSystemInjects();
+        protected abstract void AddInjects();
         
-        protected void AddSystem(int order, IEcsSystem system, bool isOnlyInitSystem = false)
+        protected void AddSystem(int order, IEcsSystem system)
         {
             CorrectOrderSystem(_orderSystems, ref order);
-            var systemName = !isOnlyInitSystem ? TypeUtils.GetConcreteTypeName($"{system.GetType()}") : string.Empty;
-            _orderSystems.Add(new EcsOrderSystem(order, system, systemName));
-        }
-        
-        protected void AddOneFrameSystem<T>() where T: struct
-        {
-            _systems.OneFrame<T>();
+            _orderSystems.Add(new EcsOrderSystem(order, system));
         }
 
-        protected void AddSystemInject(object injectObject)
+        protected void AddInject<T>(T shared) where T : class
         {
-            _systems.Inject(injectObject);
+            _systems.InjectShared(shared);
         }
 
         private void InitSystems()
@@ -61,7 +53,7 @@ namespace Ecs
             _systems?.Destroy();
             _systems = null;
             _systems = new EcsSystems(_world);
-            Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
+            //Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
         }
 
         private void CorrectOrderSystem(List<EcsOrderSystem> systems, ref int order)
@@ -97,22 +89,14 @@ namespace Ecs
                     index = j;
                 }
                 
-                if (string.IsNullOrEmpty(_orderSystems[index].SystemName))
-                {
-                    _systems.Add(_orderSystems[index].EcsSystem);
-                }
-                else
-                {
-                    _systems.Add(_orderSystems[index].EcsSystem, _orderSystems[index].SystemName);
-                }
-
+                _systems.Add(_orderSystems[index].EcsSystem);
                 _orderSystems.Remove(_orderSystems[index]);
             }
         }
 
-        private void InjectSystemController()
+        private void InitInjects()
         {
-            AddSystemInject(new SystemController(_systems));
+            _systems.InitShared();
         }
 
         private void InitSystem()
@@ -139,8 +123,17 @@ namespace Ecs
         {
             base.Dispose();
 
-            _systems?.Destroy();
-            _systems = null;
+            if (_systems != null) 
+            {
+                _systems.Destroy ();
+                _systems = null;
+            }
+            
+            if (_world != null) 
+            {
+                _world.Destroy ();
+                _world = null;
+            }
         }
 
         #region IAssemblerPart

@@ -1,4 +1,4 @@
-﻿using Leopotam.Ecs;
+﻿using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Example.Ecs.Systems
@@ -10,13 +10,11 @@ namespace Example.Ecs.Systems
         private const int OneSecond = 1;
 
         #endregion
-        
-        private readonly EcsWorld _world = null;
 
         private float _elapsedTime = OneSecond;
         private int _seconds;
-        
-        public void Run()
+
+        public void Run(IEcsSystems systems)
         {
             _elapsedTime -= Time.deltaTime;
             if (_elapsedTime > 0)
@@ -26,8 +24,6 @@ namespace Example.Ecs.Systems
 
             _elapsedTime = OneSecond;
             _seconds++;
-            
-            Debug.Log($"[TimerSystem] Elapsed seconds {_seconds}");
         }
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Ecs.Common.Components;
-using Leopotam.Ecs;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Ecs
@@ -13,7 +13,7 @@ namespace Ecs
 			_world = world;
 		}
 
-		private EcsEntity Spawn(SpawnComponent spawnComponent, Transform parent)
+		private EcsPackedEntityWithWorld Spawn(SpawnComponent spawnComponent, Transform parent)
 		{
 			var gameObject = Instantiate(spawnComponent.Prefab, spawnComponent.Position, spawnComponent.Rotation, parent);
 
@@ -24,16 +24,24 @@ namespace Ecs
 			}
 
 			var ecsEntity = _world.NewEntity();
-			monoEntity.Make(ref ecsEntity);
+			var packedEcsEntityWithWorld = _world.PackEntityWithWorld(ecsEntity);
+			
+			monoEntity.Make(ref packedEcsEntityWithWorld);
 			gameObject.AddComponent<ConvertedEntityComponent>();
 
-			return ecsEntity;
+			return packedEcsEntityWithWorld;
 		}
 
-		private void Despawn(EcsEntity entity)
+		private void Despawn(EcsPackedEntityWithWorld entity)
         {
-			Destroy(entity.Get<GameObjectComponent>().GameObject);
-			entity.Destroy();
+	        if (!entity.Unpack(out var world, out var unpackedEntity))
+	        {
+		        return;
+	        }
+
+	        var gameObject = world.GetPool<GameObjectComponent>().Get(unpackedEntity).GameObject;
+			Destroy(gameObject);
+			world.DelEntity(unpackedEntity);
         }
 
 		private void ConvertAllMonoEntitiesInScene()
@@ -48,7 +56,9 @@ namespace Ecs
 				}
 				
 				var ecsEntity = _world.NewEntity();
-				monoEntity.Make(ref ecsEntity);
+				var packedEcsEntityWithWorld = _world.PackEntityWithWorld(ecsEntity);
+			
+				monoEntity.Make(ref packedEcsEntityWithWorld);
 				monoEntity.gameObject.AddComponent<ConvertedEntityComponent>();
 			}
 		}
@@ -60,12 +70,12 @@ namespace Ecs
 			SetWorld(world);
 		}
 
-		EcsEntity IPrefabFactory.Spawn(SpawnComponent spawnComponent, Transform parent)
+		EcsPackedEntityWithWorld IPrefabFactory.Spawn(SpawnComponent spawnComponent, Transform parent)
 		{
 			return Spawn(spawnComponent, parent);
 		}
 
-		void IPrefabFactory.Despawn(EcsEntity entity)
+		void IPrefabFactory.Despawn(EcsPackedEntityWithWorld entity)
 		{
 			Despawn(entity);
 		}

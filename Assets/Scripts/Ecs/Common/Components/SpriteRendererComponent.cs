@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Ecs.Common.Components
 {
-    public struct SpriteRendererComponent
+    [Serializable] public struct SpriteRendererComponent
     {
         public SpriteRenderer SpriteRenderer;
     }

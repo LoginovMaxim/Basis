@@ -2,28 +2,30 @@
 using Example.Ecs.Components;
 using Example.Ecs.Events;
 using Example.Ecs.Providers;
-using Leopotam.Ecs;
+using GoodCat.EcsLite.Shared;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Example.Ecs.Systems
 {
     public sealed class MapSystem : IEcsInitSystem, IEcsRunSystem
     {
-        private readonly EcsWorld _world = null;
-        private readonly EcsFilter<OnKeyPressedEvent> _keyPressedFilter = null;
-        private readonly EcsFilter<CubeTagComponent> _cubeFilter = null;
-
-        private readonly IMapConfigProvider _mapConfigProvider;
+        [EcsInject] private readonly IMapConfigProvider _mapConfigProvider;
         
         private Vector2 _offset;
 
-        public void Init()
+        public void Init(IEcsSystems systems)
         {
+            var world = systems.GetWorld();
+            var spawns = world.GetPool<SpawnComponent>();
+            
             for (var i = 0; i < _mapConfigProvider.MapSize; i++)
             {
                 for (var j = 0; j < _mapConfigProvider.MapSize; j++)
                 {
-                    _world.NewEntity().Get<SpawnComponent>() = new SpawnComponent
+                    var entity = world.NewEntity();
+                    ref var spawn = ref spawns.Add(entity);
+                    spawn = new SpawnComponent
                     {
                         Prefab = _mapConfigProvider.CubePrefab,
                         Position = new Vector3(i, 0, j),
@@ -34,13 +36,17 @@ namespace Example.Ecs.Systems
                 }
             }
         }
-        
-        public void Run()
-        {
-            foreach (var k in _keyPressedFilter)
-            {
-                ref var keyPressedComponent = ref _keyPressedFilter.Get1(k);
 
+        public void Run(IEcsSystems systems)
+        {
+            var world = systems.GetWorld();
+            
+            var keyPressedFilter = world.Filter<OnKeyPressedEvent>().End();
+            var keyPressedEvents = world.GetPool<OnKeyPressedEvent>();
+            
+            foreach (var keyPressedEntity in keyPressedFilter)
+            {
+                ref var keyPressedComponent = ref keyPressedEvents.Get(keyPressedEntity);
                 switch (keyPressedComponent.KeyCode)
                 {
                     case KeyCode.W:
@@ -65,14 +71,16 @@ namespace Example.Ecs.Systems
                     }
                 }
             }
+            
+            var cubeTagFilter = world.Filter<CubeTagComponent>().End();
+            var transforms = world.GetPool<TransformComponent>();
 
-            foreach (var c in _cubeFilter)
+            foreach (var cubeEntity in cubeTagFilter)
             {
-                ref var cubeEntity = ref _cubeFilter.GetEntity(c);
-                ref var cubeTransform = ref cubeEntity.Get<TransformComponent>().Transform;
+                ref var transform = ref transforms.Get(cubeEntity).Transform;
                 
-                var perlinX = cubeTransform.position.x / _mapConfigProvider.MapSize + _offset.x;
-                var perlinY = cubeTransform.position.z / _mapConfigProvider.MapSize + _offset.y;
+                var perlinX = transform.position.x / _mapConfigProvider.MapSize + _offset.x;
+                var perlinY = transform.position.z / _mapConfigProvider.MapSize + _offset.y;
                 
                 var scale = 0f;
                 for (var i = 0; i < _mapConfigProvider.MapPerlinParameters.Length; i++)
@@ -82,10 +90,10 @@ namespace Example.Ecs.Systems
                     scale += amplitude * Mathf.PerlinNoise(frequency * perlinX, frequency * perlinY);
                 }
                 
-                var cubeScale = cubeTransform.localScale;
+                var cubeScale = transform.localScale;
                 cubeScale.y = scale;
                 
-                cubeTransform.localScale = cubeScale;
+                transform.localScale = cubeScale;
             }
         }
     }

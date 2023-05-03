@@ -1,32 +1,30 @@
 ﻿using Ecs.Common.Components;
-using Leopotam.Ecs;
+using GoodCat.EcsLite.Shared;
+using Leopotam.EcsLite;
 
 namespace Ecs.Common.Systems
 {
     public sealed class SpawnSystem : IEcsPreInitSystem, IEcsRunSystem
     {
-        private readonly EcsWorld _world = null;
-        private readonly EcsFilter<SpawnComponent> _filter = null;
+        [EcsInject] private readonly IPrefabFactory _prefabFactory;
 
-        private IPrefabFactory _prefabFactory;
-
-        public void PreInit()
+        public void PreInit(IEcsSystems systems)
         {
-            _prefabFactory.SetWorld(_world);
+            _prefabFactory.SetWorld(systems.GetWorld());
         }
 
-        public void Run()
+        public void Run(IEcsSystems systems)
         {
-            if (_filter.IsEmpty())
-                return;
+            var world = systems.GetWorld();
+            var spawnFilter = world.Filter<SpawnComponent>().End();
+            var spawns = world.GetPool<SpawnComponent>();
 
-            foreach (var i in _filter)
+            foreach (var entity in spawnFilter)
             {
-                ref var spawnEntity = ref _filter.GetEntity(i);
-                ref var spawn = ref _filter.Get1(i);
+                var emitEffect = spawns.Get(entity);
 
-                _prefabFactory.Spawn(spawn);
-                spawnEntity.Del<SpawnComponent>();
+                _prefabFactory.Spawn(emitEffect);
+                spawns.Del(entity);
             }
         }
     }

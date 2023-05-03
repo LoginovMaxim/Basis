@@ -1,12 +1,12 @@
-﻿using Leopotam.Ecs;
+﻿using Leopotam.EcsLite;
 
 namespace Ecs.Common.MonoLinks
 {
     public abstract class PhysicMonoLinkBase : MonoLinkBase
     {
-		protected EcsEntity Entity;
+		protected EcsPackedEntityWithWorld Entity;
 
-		public override void Make(ref EcsEntity entity)
+		public override void Make(ref EcsPackedEntityWithWorld entity)
 		{
 			Entity = entity;
 		}

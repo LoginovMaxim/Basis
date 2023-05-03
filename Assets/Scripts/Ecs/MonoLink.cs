@@ -1,4 +1,4 @@
-﻿using Leopotam.Ecs;
+﻿using Leopotam.EcsLite;
 
 namespace Ecs
 {
@@ -6,9 +6,16 @@ namespace Ecs
     {
         public T Value;
 
-        public override void Make(ref EcsEntity entity)
+        public override void Make(ref EcsPackedEntityWithWorld entity)
         {
-            entity.Get<T>() = Value;
+            if (!entity.Unpack(out var world, out var unpackedEntity))
+            {
+                return;
+            }
+
+            var pool = world.GetPool<T>();
+            ref var component = ref pool.Add(unpackedEntity);
+            component = Value;
         }
     }
 }

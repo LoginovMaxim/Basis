@@ -1,4 +1,4 @@
-﻿using Leopotam.Ecs;
+﻿using Leopotam.EcsLite;
 
 namespace Ecs
 {
@@ -6,13 +6,11 @@ namespace Ecs
     {
         public int Order;
         public IEcsSystem EcsSystem;
-        public string SystemName;
 
-        public EcsOrderSystem(int order, IEcsSystem ecsSystem, string systemName)
+        public EcsOrderSystem(int order, IEcsSystem ecsSystem)
         {
             Order = order;
             EcsSystem = ecsSystem;
-            SystemName = systemName;
         }
     }
 }

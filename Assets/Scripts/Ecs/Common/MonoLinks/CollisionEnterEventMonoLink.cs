@@ -1,5 +1,5 @@
 ﻿using Ecs.Common.Events;
-using Leopotam.Ecs;
+using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Ecs.Common.MonoLinks
@@ -8,7 +8,14 @@ namespace Ecs.Common.MonoLinks
     {
         public void OnCollisionEnter2D(Collision2D other)
 		{
-			Entity.Get<OnCollisionEnterEvent>() = new OnCollisionEnterEvent
+			if (!Entity.Unpack(out var world, out var unpackedEntity))
+			{
+				return;
+			}
+
+			var pool = world.GetPool<OnCollisionEnterEvent>();
+			ref var collisionEnterEvent = ref pool.Add(unpackedEntity);
+			collisionEnterEvent = new OnCollisionEnterEvent
 			{
 				Collision = other,
 				Sender = gameObject
