@@ -2,7 +2,7 @@
 
 namespace Ecs.Common.MonoLinks
 {
-    public sealed class GameObjectMonoLink : MonoLink<GameObjectComponent>
+    public sealed class AnimatorMonoLink : MonoLink<AnimatorComponent>
     {
     }
 }

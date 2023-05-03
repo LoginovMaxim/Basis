@@ -5,6 +5,6 @@ namespace Ecs.Common.Components
 {
     [Serializable] public struct RigidbodyComponent
     {
-        public Rigidbody2D Rigidbody;
+        public Rigidbody Rigidbody;
     }
 }

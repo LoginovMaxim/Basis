@@ -4,6 +4,6 @@ namespace App.Data
 {
     public interface IData
     {
-        event Action DataChanged;
+        event Action OnDataChanged;
     }
 }

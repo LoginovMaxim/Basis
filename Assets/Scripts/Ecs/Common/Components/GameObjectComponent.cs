@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Ecs.Common.Components
 {
-    public struct GameObjectComponent
+    [Serializable] public struct GameObjectComponent
     {
         public GameObject GameObject;
+        public int Layer;
     }
 }

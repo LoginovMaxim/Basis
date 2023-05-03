@@ -6,14 +6,12 @@ namespace Ecs
     {
         public readonly Vector3 Position;
         public readonly Quaternion Rotation;
-        public readonly Vector3 Scale;
         public readonly int Layer;
 
-        public SpawnData(Vector3 position, Quaternion rotation, Vector3 scale, int layer)
+        public SpawnData(Vector3 position, Quaternion rotation, int layer)
         {
             Position = position;
             Rotation = rotation;
-            Scale = scale;
             Layer = layer;
         }
     }

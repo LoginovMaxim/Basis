@@ -2,7 +2,7 @@
 
 namespace Utils
 {
-    public static class TransformUtils
+    public static class TransformExtension
     {
         public static int GetActiveChildCount(this Transform transform)
         {

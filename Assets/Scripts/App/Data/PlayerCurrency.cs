@@ -5,37 +5,35 @@ namespace App.Data
 {
     [Serializable] public class PlayerCurrency : IData
     {
-        public event Action DataChanged;
+        public event Action OnDataChanged;
 
         public int Soft
         {
-            get
-            {
-                return _soft;
-            }
+            get => _soft;
             set
             {
                 if (_soft == value)
+                {
                     return;
+                }
 
                 _soft = value;
-                DataChanged?.Invoke();
+                OnDataChanged?.Invoke();
             }
         }
         
         public int Hard
         {
-            get
-            {
-                return _hard;
-            }
+            get => _hard;
             set
             {
                 if (_hard == value)
+                {
                     return;
+                }
 
                 _hard = value;
-                DataChanged?.Invoke();
+                OnDataChanged?.Invoke();
             }
         }
 

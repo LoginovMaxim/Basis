@@ -24,7 +24,7 @@ namespace Ecs
             _orderSystems.Add(new EcsOrderSystem(order, system));
         }
 
-        protected void AddInject(object shared)
+        protected void AddInject<T>(T shared) where T : class
         {
             _systems.InjectShared(shared);
         }

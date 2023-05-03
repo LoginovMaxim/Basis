@@ -51,5 +51,26 @@ namespace Utils
 
             return (3f * mT * mT) * (p1 - p0) + (6f * t * mT) * (p2 - p1) + (3f * t * t) * (p3 - p2);
         }
+        
+        public static Vector3 GetPosition(Vector3 startPosition, Vector3 averagePosition, Vector3 endPosition, float t)
+        {
+            t = Mathf.Clamp01(t);
+            var mT = 1 - t;
+
+            // Квадратичная кривая: https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B8%D0%B2%D0%B0%D1%8F_%D0%91%D0%B5%D0%B7%D1%8C%D0%B5
+            return (mT * mT * startPosition) + (2 * t * mT * averagePosition) + (t * t * endPosition);
+        }
+
+        public static Vector3 GetPosition(Vector3 startPosition, Vector3 anchorStartPosition, Vector3 anchorEndPosition, Vector3 endPosition, float t)
+        {
+            t = Mathf.Clamp01(t);
+            var mT = 1 - t;
+
+            // Кубическая кривая: https://ru.wikipedia.org/wiki/%D0%9A%D1%80%D0%B8%D0%B2%D0%B0%D1%8F_%D0%91%D0%B5%D0%B7%D1%8C%D0%B5
+            return (mT * mT * mT * startPosition) +
+                   (3 * t * mT * mT * anchorStartPosition) +
+                   (3 * t * t * mT * anchorEndPosition) +
+                   (t * t * t * endPosition);
+        }
     }
 }

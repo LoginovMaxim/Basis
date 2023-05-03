@@ -6,14 +6,7 @@ namespace Ecs
 {
     public sealed class PrefabFactory : MonoBehaviour, IPrefabFactory
     {
-		private EcsWorld _world;
-
-		private void SetWorld(EcsWorld world)
-		{
-			_world = world;
-		}
-
-		private EcsPackedEntityWithWorld Spawn(SpawnComponent spawnComponent, Transform parent)
+	    private EcsPackedEntityWithWorld Spawn(SpawnComponent spawnComponent, Transform parent)
 		{
 			var gameObject = Instantiate(spawnComponent.Prefab, spawnComponent.Position, spawnComponent.Rotation, parent);
 
@@ -23,8 +16,8 @@ namespace Ecs
 				return default;
 			}
 
-			var ecsEntity = _world.NewEntity();
-			var packedEcsEntityWithWorld = _world.PackEntityWithWorld(ecsEntity);
+			var ecsEntity = spawnComponent.World.NewEntity();
+			var packedEcsEntityWithWorld = spawnComponent.World.PackEntityWithWorld(ecsEntity);
 			
 			monoEntity.Make(ref packedEcsEntityWithWorld);
 			gameObject.AddComponent<ConvertedEntityComponent>();
@@ -44,7 +37,7 @@ namespace Ecs
 			world.DelEntity(unpackedEntity);
         }
 
-		private void ConvertAllMonoEntitiesInScene()
+		private void ConvertAllMonoEntitiesInScene(EcsWorld world)
 		{
 			var monoEntities = FindObjectsOfType<MonoEntity>();
 
@@ -55,8 +48,8 @@ namespace Ecs
 					continue;
 				}
 				
-				var ecsEntity = _world.NewEntity();
-				var packedEcsEntityWithWorld = _world.PackEntityWithWorld(ecsEntity);
+				var ecsEntity = world.NewEntity();
+				var packedEcsEntityWithWorld = world.PackEntityWithWorld(ecsEntity);
 			
 				monoEntity.Make(ref packedEcsEntityWithWorld);
 				monoEntity.gameObject.AddComponent<ConvertedEntityComponent>();
@@ -64,11 +57,6 @@ namespace Ecs
 		}
 
 		#region IPrefabFactory
-
-		void IPrefabFactory.SetWorld(EcsWorld world)
-		{
-			SetWorld(world);
-		}
 
 		EcsPackedEntityWithWorld IPrefabFactory.Spawn(SpawnComponent spawnComponent, Transform parent)
 		{
@@ -80,9 +68,9 @@ namespace Ecs
 			Despawn(entity);
 		}
 
-		void IPrefabFactory.ConvertAllMonoEntitiesInScene()
+		void IPrefabFactory.ConvertAllMonoEntitiesInScene(EcsWorld world)
 		{
-			ConvertAllMonoEntitiesInScene();
+			ConvertAllMonoEntitiesInScene(world);
 		}
 
 		#endregion

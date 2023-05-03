@@ -11,7 +11,7 @@ namespace App.Data
         public DataStorage()
         {
             Load();
-            _data.DataChanged += Save;
+            _data.OnDataChanged += Save;
         }
         
         private void Load()
@@ -59,7 +59,7 @@ namespace App.Data
 
         private void Dispose()
         {
-            _data.DataChanged -= Save;
+            _data.OnDataChanged -= Save;
         }
 
         #region IDataStorage<T>

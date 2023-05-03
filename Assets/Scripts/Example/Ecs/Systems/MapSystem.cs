@@ -25,14 +25,13 @@ namespace Example.Ecs.Systems
                 {
                     var entity = world.NewEntity();
                     ref var spawn = ref spawns.Add(entity);
-                    spawn = new SpawnComponent
-                    {
-                        Prefab = _mapConfigProvider.CubePrefab,
-                        Position = new Vector3(i, 0, j),
-                        Rotation = Quaternion.identity,
-                        Scale = Vector3.one,
-                        Parent = null
-                    };
+                    spawn = new SpawnComponent(
+                        _mapConfigProvider.CubePrefab, 
+                        new Vector3(i, 0, j), 
+                        Quaternion.identity, 
+                        Vector3.one, 
+                        null, 
+                        world);
                 }
             }
         }

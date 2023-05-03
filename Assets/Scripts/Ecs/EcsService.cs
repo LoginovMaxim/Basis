@@ -11,6 +11,9 @@ namespace Ecs
 {
     public abstract class EcsService : UpdatableService, IEcsService, IAssemblerPart
     {
+        protected List<EcsOrderSystem> OrderSystems => _orderSystems;
+        protected EcsSystems Systems => _systems;
+        
         private readonly List<EcsOrderSystem> _orderSystems = new();
         
         private EcsWorld _world;
@@ -30,7 +33,6 @@ namespace Ecs
             AddInjects();
             InitInjects();
             InitSystem();
-            Start();
             return Task.CompletedTask;
         }
 
@@ -53,7 +55,6 @@ namespace Ecs
             _systems?.Destroy();
             _systems = null;
             _systems = new EcsSystems(_world);
-            //Leopotam.Ecs.UnityIntegration.EcsSystemsObserver.Create(_systems);
         }
 
         private void CorrectOrderSystem(List<EcsOrderSystem> systems, ref int order)

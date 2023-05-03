@@ -2,7 +2,7 @@
 
 namespace Utils
 {
-    public static class Parser
+    public static class EnumExtension
     {
         public static string GetEnumName<T>(T value)
         {

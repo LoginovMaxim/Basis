@@ -5,7 +5,7 @@ namespace App.Data
 {
     [Serializable] public class PlayerData : IData
     {
-        public event Action DataChanged;
+        public event Action OnDataChanged;
 
         public string Id
         {
@@ -21,7 +21,7 @@ namespace App.Data
                 }
 
                 _id = value;
-                DataChanged?.Invoke();
+                OnDataChanged?.Invoke();
             }
         }
         
@@ -39,7 +39,7 @@ namespace App.Data
                 }
 
                 _name = value;
-                DataChanged?.Invoke();
+                OnDataChanged?.Invoke();
             }
         }
         
@@ -57,7 +57,7 @@ namespace App.Data
                 }
 
                 _level = value;
-                DataChanged?.Invoke();
+                OnDataChanged?.Invoke();
             }
         }
         
@@ -75,7 +75,7 @@ namespace App.Data
                 }
 
                 _experience = value;
-                DataChanged?.Invoke();
+                OnDataChanged?.Invoke();
             }
         }
 

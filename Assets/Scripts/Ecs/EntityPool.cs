@@ -62,8 +62,6 @@ namespace Ecs
                 var transformPool = world.GetPool<TransformComponent>();
                 ref var transform = ref transformPool.Get(unpackedEntity).Transform;
                 transform.position = spawnData.Position;
-                transform.rotation = spawnData.Rotation;
-                transform.localScale = spawnData.Scale;
 
                 gameObject.layer = spawnData.Layer;
                 gameObject.SetActive(true);
@@ -93,8 +91,6 @@ namespace Ecs
             var transformPool = world.GetPool<TransformComponent>();
             ref var transform = ref transformPool.Get(unpackedEntity).Transform;
             transform.position = spawnData.Position;
-            transform.rotation = spawnData.Rotation;
-            transform.localScale = spawnData.Scale;
             
             var gameObjectPool = world.GetPool<GameObjectComponent>();
             ref var gameObject = ref gameObjectPool.Get(unpackedEntity).GameObject;

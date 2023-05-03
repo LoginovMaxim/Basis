@@ -18,7 +18,7 @@ namespace Ecs.Common.Systems
             foreach (var entity in emitEffectFilter)
             {
                 ref var emitEffect = ref emitEffectRequests.Get(entity);
-                _effectEmitter.Emit(emitEffect.EffectId, emitEffect.Position, emitEffect.Color);
+                //_effectEmitter.Emit(emitEffect.EffectId, emitEffect.Position);
             }
         }
     }
