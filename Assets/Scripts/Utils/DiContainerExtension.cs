@@ -4,7 +4,6 @@ using App.Assemblers;
 using App.Fsm;
 using App.Services;
 using Ecs;
-using Example.App.Assemblers;
 using Zenject;
 
 namespace Utils
@@ -17,16 +16,16 @@ namespace Utils
             return container.BindInterfacesAndSelfTo<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
         }
         
-        public static IfNotBoundBinder BindEcsService<TWorld, TEcsService>(this DiContainer container, UpdateType updateType) 
-            where TWorld : IWorld
+        public static TEcsWorld BindEcsWorld<TEcsWorld>(this DiContainer container)
+            where TEcsWorld : World
+        {
+            container.BindInterfacesAndSelfTo<TEcsWorld>().AsSingle().NonLazy();
+            return container.Resolve<TEcsWorld>();
+        }
+        
+        public static IfNotBoundBinder BindEcsService<TEcsService>(this DiContainer container, IWorld world, UpdateType updateType)
             where TEcsService : IEcsService
         {
-            var world = container.Resolve<TWorld>();
-            if (world == null)
-            {
-                container.Bind<TWorld>().AsSingle().NonLazy();
-                world = container.Resolve<TWorld>();
-            }
             return container.BindInterfacesAndSelfTo<TEcsService>().AsSingle().WithArguments(world, updateType).NonLazy();
         }
         

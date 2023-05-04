@@ -12,18 +12,18 @@ namespace App.Services
         protected UpdatableService(IMonoUpdater monoUpdater, UpdateType updateType, bool isImmediateStart)
         {
             _monoUpdater = monoUpdater;
-            
-            if (updateType.HasFlag(UpdateType.Update))
+
+            switch (updateType)
             {
-                _monoUpdater.Subscribe(UpdateType.Update, OnUpdate);
-            }
-            if (updateType.HasFlag(UpdateType.FixedUpdate))
-            {
-                _monoUpdater.Subscribe(UpdateType.FixedUpdate, OnFixedUpdate);
-            }
-            if (updateType.HasFlag(UpdateType.LateUpdate))
-            {
-                _monoUpdater.Subscribe(UpdateType.LateUpdate, OnLateUpdate);
+                case UpdateType.Update:
+                    _monoUpdater.Subscribe(UpdateType.Update, OnUpdate);
+                    break;
+                case UpdateType.FixedUpdate:
+                    _monoUpdater.Subscribe(UpdateType.FixedUpdate, OnUpdate);
+                    break;
+                case UpdateType.LateUpdate:
+                    _monoUpdater.Subscribe(UpdateType.LateUpdate, OnUpdate);
+                    break;
             }
 
             if (isImmediateStart)
@@ -36,10 +36,8 @@ namespace App.Services
         {
             UnPause();    
         }
-        
-        protected virtual void Update() { }
-        protected virtual void FixedUpdate() { }
-        protected virtual void LateUpdate() { }
+
+        protected abstract void Update();
 
         private void OnUpdate()
         {
@@ -49,26 +47,6 @@ namespace App.Services
             }
 
             Update();
-        }
-        
-        private void OnFixedUpdate()
-        {
-            if (_isPause)
-            {
-                return;
-            }
-
-            FixedUpdate();
-        }
-        
-        private void OnLateUpdate()
-        {
-            if (_isPause)
-            {
-                return;
-            }
-
-            LateUpdate();
         }
         
         private void Pause()
@@ -84,8 +62,8 @@ namespace App.Services
         protected virtual void Dispose()
         {
             _monoUpdater.Unsubscribe(UpdateType.Update, OnUpdate);
-            _monoUpdater.Unsubscribe(UpdateType.FixedUpdate, OnFixedUpdate);
-            _monoUpdater.Unsubscribe(UpdateType.LateUpdate, OnLateUpdate);
+            _monoUpdater.Unsubscribe(UpdateType.FixedUpdate, OnUpdate);
+            _monoUpdater.Unsubscribe(UpdateType.LateUpdate, OnUpdate);
         }
         
         #region IUpdateService

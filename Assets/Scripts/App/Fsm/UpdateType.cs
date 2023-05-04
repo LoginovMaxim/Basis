@@ -1,12 +1,9 @@
-﻿using System;
-
-namespace App.Fsm
+﻿namespace App.Fsm
 {
-    [Flags]
     public enum UpdateType
     {
-        Update = 1,
-        FixedUpdate = 2,
-        LateUpdate = 4
+        Update,
+        FixedUpdate,
+        LateUpdate
     }
 }

@@ -44,8 +44,8 @@ namespace App.Installers
             if (RunExample)
             {
                 assemblerPats.Add(Container.BindAssemblerPart<SampleSomethingLoader>());
-                assemblerPats.Add(Container.BindAssemblerPart<SampleMetaLoader>());
                 assemblerPats.Add(Container.BindAssemblerPart<SampleAuthorization>());
+                assemblerPats.Add(Container.BindAssemblerPart<SampleMetaLoader>());
             }
             else
             {

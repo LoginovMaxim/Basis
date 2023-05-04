@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Example/Scenes/MetaExample.unity
     guid: ee0ece94c7526564fb20f25534b8c826
+  - enabled: 1
+    path: Assets/Example/Scenes/MatchExample.unity
+    guid: 11890d806b231ff45a8957186e166f48
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 202bfb9f7a628844497864794c1c3acb, type: 2}

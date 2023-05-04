@@ -16,23 +16,13 @@ namespace Example.App.Services
 
         public async Task Launch()
         {
-            await Task.Delay(2000);
+            await Task.Delay(10);
             Start();
         }
         
         protected override void Update()
         {
             Debug.Log("SampleService.Update");
-        }
-        
-        protected override void FixedUpdate()
-        {
-            Debug.Log("SampleService.FixedUpdate");
-        }
-        
-        protected override void LateUpdate()
-        {
-            Debug.Log("SampleService.LateUpdate");
         }
     }
 }

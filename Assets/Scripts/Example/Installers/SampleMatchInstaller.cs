@@ -5,8 +5,8 @@ using Ecs;
 using Example.App.Assemblers;
 using Example.App.Fsm.SampleMachine;
 using Example.App.Services;
-using Example.Ecs;
-using Example.Ecs.Configs;
+using Example.Match.Ecs;
+using Example.Match.Ecs.Configs;
 using Utils;
 using Zenject;
 
@@ -21,23 +21,24 @@ namespace Example.Installers
             // scriptable objects configs
             Container.BindInterfacesTo<MapConfig>().FromScriptableObject(MapConfig).AsSingle();
 
-            Container.Bind<SampleStateMachine>().AsSingle().NonLazy();
-            
-            // ecs worlds
-            Container.Bind<MainWorld>().AsSingle().NonLazy();
+            //Container.Bind<SampleStateMachine>().AsSingle().NonLazy();
 
             // EcsSetups
             Container.BindInterfacesTo<SampleGameplayEcsSetup>().AsSingle().NonLazy();
             Container.BindInterfacesTo<SampleEnvironmentEcsSetup>().AsSingle().NonLazy();
+
+            var world = Container.BindEcsWorld<MainWorld>();
             
             // services
-            Container.BindService<SampleService>(UpdateType.Update | UpdateType.FixedUpdate);
-            Container.BindEcsService<MainWorld, SampleEcsService>(UpdateType.Update);
+            Container.BindService<SampleService>(UpdateType.Update);
+            Container.BindService<SamplePhysicService>(UpdateType.FixedUpdate);
+            Container.BindEcsService<SampleEcsService>(world, UpdateType.Update);
             
             // assembler
             Container.BindAssembler<SampleAssembler>(new List<IAssemblerPart>
             {
                 Container.Resolve<SampleService>(), 
+                Container.Resolve<SamplePhysicService>(), 
                 Container.Resolve<SampleEcsService>()
             });
         }

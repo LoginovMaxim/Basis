@@ -9,25 +9,30 @@ using Leopotam.EcsLite;
 
 namespace Ecs
 {
-    public abstract class EcsService : UpdatableService, IEcsService, IAssemblerPart
+    public abstract class EcsService<TEcsSetup> : UpdatableService, IEcsService, IAssemblerPart where TEcsSetup : IEcsSetup
     {
-        protected List<EcsOrderSystem> OrderSystems => _orderSystems;
-        protected EcsSystems Systems => _systems;
+        private readonly List<TEcsSetup> _ecsSetups;
         
-        private readonly List<EcsOrderSystem> _orderSystems = new();
+        private List<EcsOrderSystem> _orderSystems;
+        private EcsSystems _systems;
         
         private EcsWorld _world;
-        private EcsSystems _systems;
 
-        protected EcsService(IWorld world, IMonoUpdater monoUpdater, UpdateType updateType) : 
+        protected EcsService(
+            List<TEcsSetup> ecsSetups, 
+            IWorld world, 
+            IMonoUpdater monoUpdater, 
+            UpdateType updateType) : 
             base(monoUpdater, updateType, false)
         {
+            _ecsSetups = ecsSetups;
             _world = world.World;
         }
 
         private Task Launch()
         {
             InitSystems();
+            InitSetups();
             AddSystems();
             BuildSystems();
             AddInjects();
@@ -36,18 +41,28 @@ namespace Ecs
             return Task.CompletedTask;
         }
 
-        protected abstract void AddSystems();
-        protected abstract void AddInjects();
-        
-        protected void AddSystem(int order, IEcsSystem system)
+        private void InitSetups()
         {
-            CorrectOrderSystem(_orderSystems, ref order);
-            _orderSystems.Add(new EcsOrderSystem(order, system));
+            foreach (var levelEcsSetups in _ecsSetups)
+            {
+                levelEcsSetups.Init(_orderSystems, _systems);
+            }
         }
 
-        protected void AddInject<T>(T shared) where T : class
+        private void AddSystems()
         {
-            _systems.InjectShared(shared);
+            foreach (var ecsSetup in _ecsSetups)
+            {
+                ecsSetup.AddSystems();
+            }
+        }
+
+        private void AddInjects()
+        {
+            foreach (var ecsSetup in _ecsSetups)
+            {
+                ecsSetup.AddInjects();
+            }
         }
 
         private void InitSystems()
@@ -55,19 +70,8 @@ namespace Ecs
             _systems?.Destroy();
             _systems = null;
             _systems = new EcsSystems(_world);
-        }
 
-        private void CorrectOrderSystem(List<EcsOrderSystem> systems, ref int order)
-        {
-            for (var i = 0; i < systems.Count; i++)
-            {
-                if (systems[i].Order != order)
-                {
-                    continue;
-                }
-
-                order++;
-            }
+            _orderSystems = new List<EcsOrderSystem>();
         }
 
         private void BuildSystems()
@@ -106,16 +110,6 @@ namespace Ecs
         }
 
         protected override void Update()
-        {
-            _systems.Run();
-        }
-
-        protected override void FixedUpdate()
-        {
-            _systems.Run();
-        }
-
-        protected override void LateUpdate()
         {
             _systems.Run();
         }
