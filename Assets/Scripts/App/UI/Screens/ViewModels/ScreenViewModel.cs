@@ -10,11 +10,11 @@ namespace App.UI.Screens.ViewModels
     {
         [Inject] protected SignalBus SignalBus;
         
-        private List<ButtonChangeScreenMonoViewModel> _buttonViewModels;
+        private List<ButtonChangeScreenViewModel> _buttonViewModels;
         
         protected virtual void Start()
         {
-            _buttonViewModels = GetComponentsInChildren<ButtonChangeScreenMonoViewModel>().ToList();
+            _buttonViewModels = GetComponentsInChildren<ButtonChangeScreenViewModel>().ToList();
             _buttonViewModels.ForEach(button => button.InjectSignalBus(SignalBus));
         }
     }

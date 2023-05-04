@@ -5,7 +5,7 @@ using Zenject;
 
 namespace App.UI.Screens.ViewModels
 {
-    [Binding] public abstract class ButtonChangeScreenMonoViewModel : MonoViewModel
+    [Binding] public abstract class ButtonChangeScreenViewModel : MonoViewModel
     {
         protected abstract int ScreenId { get; }
         

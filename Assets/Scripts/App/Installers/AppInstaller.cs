@@ -54,8 +54,10 @@ namespace App.Installers
 
         private void BindData()
         {
-            Container.BindInterfacesTo<DataStorage<PlayerData>>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<DataStorage<PlayerCurrency>>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<DataStorage<AppSettingsStorageItem>>().AsSingle().NonLazy();
+            
+            Container.BindInterfacesTo<DataStorage<PlayerProfileStorageItem>>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<DataStorage<PlayerCurrencyStorageItem>>().AsSingle().NonLazy();
             
             Container.BindInterfacesTo<PlayerProfile>().AsSingle().NonLazy();
         }

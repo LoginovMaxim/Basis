@@ -4,7 +4,7 @@
     {
         int Id { get; }
         void SetActive(bool isActive);
-        string GetName();
-        void Update();
+        void OnShow();
+        void OnHide();
     }
 }

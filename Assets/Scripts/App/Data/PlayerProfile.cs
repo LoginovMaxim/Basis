@@ -2,20 +2,20 @@
 {
     public class PlayerProfile : IPlayerProfile
     {
-        private readonly IDataStorage<PlayerData> _playerData;
-        private readonly IDataStorage<PlayerCurrency> _playerCurrency;
+        private readonly IDataStorage<PlayerProfileStorageItem> _playerProfileStorageItem;
+        private readonly IDataStorage<PlayerCurrencyStorageItem> _playerCurrencyStorageItem;
         
         public PlayerProfile(
-            IDataStorage<PlayerData> playerData,
-            IDataStorage<PlayerCurrency> playerCurrency)
+            IDataStorage<PlayerProfileStorageItem> playerProfileStorageItem,
+            IDataStorage<PlayerCurrencyStorageItem> playerCurrencyStorageItem)
         {
-            _playerData = playerData;
-            _playerCurrency = playerCurrency;
+            _playerProfileStorageItem = playerProfileStorageItem;
+            _playerCurrencyStorageItem = playerCurrencyStorageItem;
         }
 
         #region IPlayerProfile
 
-        string IPlayerProfile.Id => _playerData.Data.Id;
+        string IPlayerProfile.Id => _playerProfileStorageItem.Data.Id;
 
         #endregion
     }

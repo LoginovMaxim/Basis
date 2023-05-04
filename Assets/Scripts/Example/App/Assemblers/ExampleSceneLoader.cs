@@ -7,7 +7,7 @@ namespace Example.App.Assemblers
 {
     public sealed class ExampleSceneLoader : IAssemblerPart
     {
-        private const string MetaScenePath = "Scenes/Example";
+        private const string MetaScenePath = "Example/Scenes/MetaExample";
         
         private readonly ISceneLoader _sceneLoader;
 

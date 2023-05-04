@@ -12,28 +12,25 @@ namespace App.UI.Screens.Logics
             ScreenViewModel = screenViewModel;
             _id = id;
         }
-
-        public string GetName()
-        {
-            return ScreenViewModel.ToString();
-        }
-
-        protected virtual void Update()
-        {
-        }
         
         private void SetActive(bool isActive)
         {
             ScreenViewModel.SetActive(isActive);
 
-            if (!isActive)
+            if (isActive)
             {
-                return;
+                OnShow();
             }
-            
-            Update();
+            else
+            {
+                OnHide();
+            }
         }
-        
+
+        protected abstract void OnShow();
+
+        protected abstract void OnHide();
+
         #region IScreen
 
         int IScreen.Id => _id;
@@ -43,9 +40,14 @@ namespace App.UI.Screens.Logics
             SetActive(isActive);
         }
 
-        void IScreen.Update()
+        void IScreen.OnShow()
         {
-            Update();
+            OnShow();
+        }
+
+        void IScreen.OnHide()
+        {
+            OnHide();
         }
 
         #endregion

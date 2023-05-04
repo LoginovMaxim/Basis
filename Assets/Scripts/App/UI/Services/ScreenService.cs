@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using App.Fsm;
+using System.Text;
 using App.Monos;
 using App.UI.Screens.Logics;
 using App.UI.Signals;
 using UnityEngine;
+using Utils;
 using Zenject;
 
 namespace App.UI.Services
@@ -33,6 +33,7 @@ namespace App.UI.Services
             _currentScreen = _screens[0];
             _currentScreen.SetActive(true);
             _stackScreenIds.Push(_currentScreen.Id);
+            PrintStackScreens();
         }
 
         protected void OnChangeScreenButtonClicked(int screenId)
@@ -57,8 +58,43 @@ namespace App.UI.Services
             {
                 return;
             }
+
+            if (HasBack(screenId, out var countPops))
+            {
+                for (var i = 0; i < countPops; i++)
+                {
+                    _stackScreenIds.Pop();
+                }
+            }
+            else
+            {
+                _stackScreenIds.Push(_currentScreen.Id);
+            }
             
-            _stackScreenIds.Push(_currentScreen.Id);
+            // Debug
+            //PrintStackScreens();
+        }
+
+        private bool HasBack(int screenId, out int countPops)
+        {
+            countPops = 0;
+            if (_stackScreenIds.Count < 2)
+            {
+                return false;
+            }
+            
+            var stack = new Stack<int>(_stackScreenIds.Reverse());
+            foreach (var id in stack)
+            {
+                if (id == screenId)
+                {
+                    return true;
+                }
+                
+                countPops++;
+            }
+            
+            return false;
         }
 
         private void OnBackScreenButtonClicked()
@@ -71,6 +107,25 @@ namespace App.UI.Services
             _stackScreenIds.Pop();
             var lastScreenId = _stackScreenIds.Pop();
             OnChangeScreenButtonClicked(lastScreenId);
+        }
+
+        private void PrintStackScreens()
+        {
+            var stackInfo = new StringBuilder();
+            stackInfo.Append("Screen stack: [");
+            
+            var screens = _stackScreenIds.ToList();
+            for (var i = 0; i < screens.Count; i++)
+            {
+                stackInfo.Append($"{screens[i]}");
+                if (i != screens.Count - 1)
+                {
+                    stackInfo.Append(", ");
+                }
+            }
+            
+            stackInfo.Append("]");
+            Debug.Log(stackInfo.ToString().WithColor(Color.cyan));
         }
 
         #region IMetaScreenService
