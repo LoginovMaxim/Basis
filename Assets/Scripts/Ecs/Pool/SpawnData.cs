@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Ecs
+namespace Ecs.Pool
 {
     public sealed class SpawnData
     {

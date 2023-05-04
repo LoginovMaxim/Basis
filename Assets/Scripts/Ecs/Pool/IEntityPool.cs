@@ -1,7 +1,7 @@
 ﻿using Ecs.Common.Components;
 using Leopotam.EcsLite;
 
-namespace Ecs
+namespace Ecs.Pool
 {
     public interface IEntityPool
     {

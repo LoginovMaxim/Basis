@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Ecs.Common.Components;
 using Leopotam.EcsLite;
 using UnityEngine;
 
-namespace Ecs
+namespace Ecs.Pool
 {
     public sealed class EntityPool<TPoolObject> : IEntityPool where TPoolObject : IPoolObject
     {

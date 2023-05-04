@@ -5,7 +5,6 @@ using Ecs;
 using Example.App.Assemblers;
 using Example.App.Services;
 using Example.Match.Ecs;
-using Example.Match.Ecs.Configs;
 using Utils;
 using Zenject;
 
@@ -13,13 +12,8 @@ namespace Example.Match.Installers
 {
     public sealed class SampleMatchInstaller : MonoInstaller
     {
-        public MapConfig MapConfig;
-
         public override void InstallBindings()
         {
-            // scriptable objects configs
-            Container.BindInterfacesTo<MapConfig>().FromScriptableObject(MapConfig).AsSingle();
-
             //Container.Bind<SampleStateMachine>().AsSingle().NonLazy();
 
             // EcsSetups
