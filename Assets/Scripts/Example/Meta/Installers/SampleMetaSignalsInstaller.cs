@@ -1,7 +1,7 @@
 ﻿using Example.Meta.Signals;
 using Zenject;
 
-namespace Example.Installers
+namespace Example.Meta.Installers
 {
     public sealed class SampleMetaSignalsInstaller : MonoInstaller
     {

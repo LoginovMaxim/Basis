@@ -3,14 +3,13 @@ using App.Assemblers;
 using App.Fsm;
 using Ecs;
 using Example.App.Assemblers;
-using Example.App.Fsm.SampleMachine;
 using Example.App.Services;
 using Example.Match.Ecs;
 using Example.Match.Ecs.Configs;
 using Utils;
 using Zenject;
 
-namespace Example.Installers
+namespace Example.Match.Installers
 {
     public sealed class SampleMatchInstaller : MonoInstaller
     {

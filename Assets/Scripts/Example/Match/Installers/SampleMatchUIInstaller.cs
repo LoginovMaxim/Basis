@@ -3,7 +3,7 @@ using Example.Match.UI.GameplayScreen;
 using Example.Match.UI.PauseScreen;
 using Zenject;
 
-namespace Example.Installers
+namespace Example.Match.Installers
 {
     public sealed class SampleMatchUIInstaller : MonoInstaller
     {

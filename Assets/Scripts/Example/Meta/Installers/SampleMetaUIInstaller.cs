@@ -4,7 +4,7 @@ using Example.Meta.UI.MainScreen;
 using Example.Meta.UI.ShopScreen;
 using Zenject;
 
-namespace Example.Installers
+namespace Example.Meta.Installers
 {
     public sealed class SampleMetaUIInstaller : MonoInstaller
     {

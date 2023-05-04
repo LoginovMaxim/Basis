@@ -1,7 +1,7 @@
 ﻿using Example.Meta.Commands;
 using Zenject;
 
-namespace Example.Installers
+namespace Example.Meta.Installers
 {
     public sealed class SampleMetaCommandsInstaller : MonoInstaller
     {
