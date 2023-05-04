@@ -29,7 +29,7 @@ namespace Ecs
             _world = world.World;
         }
 
-        private Task Launch()
+        private async Task Launch()
         {
             InitSystems();
             InitSetups();
@@ -38,7 +38,10 @@ namespace Ecs
             AddInjects();
             InitInjects();
             InitSystem();
-            return Task.CompletedTask;
+            Start();
+            
+            await Task.Delay(1);
+            Pause();
         }
 
         private void InitSetups()

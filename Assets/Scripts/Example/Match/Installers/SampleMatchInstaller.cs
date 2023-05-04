@@ -36,9 +36,9 @@ namespace Example.Match.Installers
             // assembler
             Container.BindAssembler<SampleAssembler>(new List<IAssemblerPart>
             {
+                Container.Resolve<SampleEcsService>(),
                 Container.Resolve<SampleService>(), 
                 Container.Resolve<SamplePhysicService>(), 
-                Container.Resolve<SampleEcsService>()
             });
         }
     }

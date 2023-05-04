@@ -1,4 +1,5 @@
 ﻿using App.Monos;
+using App.UI.Splashes;
 using Example.App.Commands;
 using Example.Meta.Signals;
 using UnityEngine.SceneManagement;
@@ -11,14 +12,17 @@ namespace Example.Meta.Commands
         private const string SampleMatchScenePath = "Example/Scenes/MatchExample";
         
         private readonly ISceneLoader _sceneLoader;
+        private readonly IAppSplash _appSplash;
         
-        public PlayMatchSampleCommand(ISceneLoader sceneLoader, SignalBus signalBus) : base(signalBus)
+        public PlayMatchSampleCommand(ISceneLoader sceneLoader, IAppSplash appSplash, SignalBus signalBus) : base(signalBus)
         {
             _sceneLoader = sceneLoader;
+            _appSplash = appSplash;
         }
 
         private void OnPlayMatch()
         {
+            _appSplash.Show();
             _sceneLoader.LoadScene(SampleMatchScenePath, LoadSceneMode.Single, null);
         }
         

@@ -16,7 +16,7 @@ namespace Example.App.Services
 
         public async Task Launch()
         {
-            await Task.Delay(10);
+            await Task.Delay(500);
             Start();
         }
         
