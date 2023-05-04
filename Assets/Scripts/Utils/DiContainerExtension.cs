@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using App.Assemblers;
 using App.Fsm;
 using App.Services;
 using Ecs;
+using Example.App.Assemblers;
 using Zenject;
 
 namespace Utils
@@ -34,10 +36,11 @@ namespace Utils
             return container.BindInterfacesAndSelfTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
         }
         
-        public static IfNotBoundBinder BindAssemblerPart<TAssemblerPart>(this DiContainer container)
+        public static IAssemblerPart BindAssemblerPart<TAssemblerPart>(this DiContainer container)
             where TAssemblerPart : IAssemblerPart
         {
-            return container.BindInterfacesAndSelfTo<TAssemblerPart>().AsSingle().NonLazy();
+             container.BindInterfacesAndSelfTo<TAssemblerPart>().AsSingle().NonLazy();
+             return container.Resolve<TAssemblerPart>();
         }
     }
 }

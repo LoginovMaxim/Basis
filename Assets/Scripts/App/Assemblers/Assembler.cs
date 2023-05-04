@@ -23,6 +23,8 @@ namespace App.Assemblers
 #pragma warning restore CS4014
         }
 
+        protected abstract void FinishAssembly();
+
         private async Task LaunchAssemblerPartsAsync(List<IAssemblerPart> assemblerParts)
         {
             foreach (var assemblerPart in assemblerParts)
@@ -60,6 +62,8 @@ namespace App.Assemblers
                 _progress = (float) _servicesCount / _currentStepCount;
                 Debug.Log($"Service: {assemblerPart.GetType()} launched successfully".WithColor(LoggerColor.Green));
             }
+
+            FinishAssembly();
         }
 
         private void Dispose()

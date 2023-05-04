@@ -1,4 +1,8 @@
-﻿namespace App.UI.Commands
+﻿using App.UI.Popups;
+using App.UI.Services;
+using Zenject;
+
+namespace App.UI.Commands
 {
     public sealed class ShowIconPopupCommand
     {

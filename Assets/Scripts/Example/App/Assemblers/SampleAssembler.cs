@@ -8,5 +8,10 @@ namespace Example.App.Assemblers
         public SampleAssembler(List<IAssemblerPart> assemblerParts) : base(assemblerParts)
         {
         }
+
+        protected override void FinishAssembly()
+        {
+            // nothing
+        }
     }
 }

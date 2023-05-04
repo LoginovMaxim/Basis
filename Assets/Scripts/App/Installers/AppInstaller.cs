@@ -15,7 +15,7 @@ namespace App.Installers
 {
     public sealed class AppInstaller : MonoInstaller
     {
-        public bool RunExampleScene;
+        public bool RunExample;
         
         [SerializeField] private MonoUpdater MonoUpdater;
         [SerializeField] private SceneLoader SceneLoader;
@@ -37,16 +37,18 @@ namespace App.Installers
             BindData();
             
             Container.BindInterfacesTo<Localization>().AsSingle().NonLazy();
-            
-            Container.BindAssemblerPart<LocalizationLoader>();
 
             var assemblerPats = new List<IAssemblerPart>();
-            assemblerPats.Add(Container.Resolve<LocalizationLoader>());
+            assemblerPats.Add(Container.BindAssemblerPart<LocalizationLoader>());
             
-            if (RunExampleScene)
+            if (RunExample)
             {
-                Container.BindAssemblerPart<ExampleSceneLoader>();
-                assemblerPats.Add(Container.Resolve<ExampleSceneLoader>());
+                assemblerPats.Add(Container.BindAssemblerPart<SampleSomethingLoader>());
+                assemblerPats.Add(Container.BindAssemblerPart<SampleMetaLoader>());
+            }
+            else
+            {
+                // your load pipeline
             }
             
             Container.BindAssembler<AppAssembler>(assemblerPats);

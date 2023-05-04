@@ -10,10 +10,7 @@ namespace App.UI.Popups.ViewModels
         
         [Binding] public string Label
         {
-            get
-            {
-                return _label;
-            }
+            get => _label;
             set
             {
                 if (_label == value)
@@ -28,10 +25,7 @@ namespace App.UI.Popups.ViewModels
         
         [Binding] public string Description
         {
-            get
-            {
-                return _description;
-            }
+            get => _description;
             set
             {
                 if (_description == value)
@@ -46,10 +40,7 @@ namespace App.UI.Popups.ViewModels
         
         [Binding] public string CloseButtonText
         {
-            get
-            {
-                return _closeButtonText;
-            }
+            get => _closeButtonText;
             set
             {
                 if (_closeButtonText == value)
@@ -64,10 +55,7 @@ namespace App.UI.Popups.ViewModels
         
         [Binding] public string OkButtonText
         {
-            get
-            {
-                return _okButtonText;
-            }
+            get => _okButtonText;
             set
             {
                 if (_okButtonText == value)
@@ -82,10 +70,7 @@ namespace App.UI.Popups.ViewModels
         
         [Binding] public string CancelButtonText
         {
-            get
-            {
-                return _cancelButtonText;
-            }
+            get => _cancelButtonText;
             set
             {
                 if (_cancelButtonText == value)

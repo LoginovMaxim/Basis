@@ -13,9 +13,9 @@ namespace App.Monos
             StartCoroutine(LoadingScene(sceneName, loadSceneMode, onComplete));
         }
 
-        public void UnloadScene(string sceneName, Action onComplete)
+        public void UnloadScene(string sceneName)
         {
-            StartCoroutine(UnloadingScene(sceneName, onComplete));
+            StartCoroutine(UnloadingScene(sceneName));
         }
 
         public async Task LoadSceneAsync(string scenePath, bool isActiveScene, LoadSceneMode loadSceneMode)
@@ -83,11 +83,9 @@ namespace App.Monos
             asyncOperation.allowSceneActivation = true;
         }
 
-        private IEnumerator UnloadingScene(string scenePath, Action onComplete)
+        private IEnumerator UnloadingScene(string scenePath)
         {
             var asyncOperation = SceneManager.UnloadSceneAsync(scenePath);
-            asyncOperation.completed += _ => onComplete?.Invoke();
-
             while (!asyncOperation.isDone)
             {
                 yield return null;

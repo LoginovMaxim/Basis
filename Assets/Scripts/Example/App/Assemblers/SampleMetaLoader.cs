@@ -5,20 +5,20 @@ using UnityEngine.SceneManagement;
 
 namespace Example.App.Assemblers
 {
-    public sealed class ExampleSceneLoader : IAssemblerPart
+    public sealed class SampleMetaLoader : IAssemblerPart
     {
-        private const string MetaScenePath = "Example/Scenes/MetaExample";
+        private const string SampleMetaScenePath = "Example/Scenes/MetaExample";
         
         private readonly ISceneLoader _sceneLoader;
 
-        public ExampleSceneLoader(ISceneLoader sceneLoader)
+        public SampleMetaLoader(ISceneLoader sceneLoader)
         {
             _sceneLoader = sceneLoader;
         }
 
         public async Task Launch()
         {
-            await _sceneLoader.LoadSceneAsync(MetaScenePath, true, LoadSceneMode.Single);
+            await _sceneLoader.LoadSceneAsync(SampleMetaScenePath, true, LoadSceneMode.Single);
         }
     }
 }
