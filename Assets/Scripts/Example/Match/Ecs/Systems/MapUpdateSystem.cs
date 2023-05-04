@@ -1,4 +1,5 @@
-﻿using Ecs.Common.Components;
+﻿using Ecs;
+using Ecs.Common.Components;
 using Example.Match.Ecs.Components;
 using Example.Match.Ecs.Events;
 using Example.Match.Ecs.Providers;
@@ -8,39 +9,32 @@ using UnityEngine;
 
 namespace Example.Match.Ecs.Systems
 {
-    public sealed class MapSystem : IEcsInitSystem, IEcsRunSystem
+    public sealed class MapUpdateSystem : IEcsRunSystem
     {
         [EcsInject] private readonly IMapConfigProvider _mapConfigProvider;
+        [EcsInject] private readonly IPrefabFactory _prefabFactory;
         
         private Vector2 _offset;
+        private bool _isFirstUpdated = true;
 
-        public void Init(IEcsSystems systems)
+        public void Run(IEcsSystems systems)
         {
-            var world = systems.GetWorld();
-            var spawns = world.GetPool<SpawnComponent>();
-            
-            for (var i = 0; i < _mapConfigProvider.MapSize; i++)
+            if (TryUpdateOffset(systems) || _isFirstUpdated)
             {
-                for (var j = 0; j < _mapConfigProvider.MapSize; j++)
-                {
-                    var entity = world.NewEntity();
-                    ref var spawn = ref spawns.Add(entity);
-                    spawn = new SpawnComponent(
-                        _mapConfigProvider.CubePrefab, 
-                        new Vector3(i, 0, j), 
-                        Quaternion.identity, 
-                        Vector3.one, 
-                        null, 
-                        world);
-                }
+                UpdateMap(systems);
             }
         }
 
-        public void Run(IEcsSystems systems)
+        private bool TryUpdateOffset(IEcsSystems systems)
         {
             var world = systems.GetWorld();
             
             var keyPressedFilter = world.Filter<OnKeyPressedEvent>().End();
+            if (keyPressedFilter.GetEntitiesCount() == 0)
+            {
+                return false;
+            }
+            
             var keyPressedEvents = world.GetPool<OnKeyPressedEvent>();
             
             foreach (var keyPressedEntity in keyPressedFilter)
@@ -71,7 +65,19 @@ namespace Example.Match.Ecs.Systems
                 }
             }
             
+            return true;
+        }
+
+        private void UpdateMap(IEcsSystems systems)
+        {
+            var world = systems.GetWorld();
+            
             var cubeTagFilter = world.Filter<CubeTagComponent>().End();
+            if (cubeTagFilter.GetEntitiesCount() == 0)
+            {
+                return;
+            }
+            
             var transforms = world.GetPool<TransformComponent>();
 
             foreach (var cubeEntity in cubeTagFilter)
@@ -94,6 +100,8 @@ namespace Example.Match.Ecs.Systems
                 
                 transform.localScale = cubeScale;
             }
+
+            _isFirstUpdated = true;
         }
     }
 }

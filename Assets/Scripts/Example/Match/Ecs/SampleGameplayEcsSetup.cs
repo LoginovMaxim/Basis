@@ -30,8 +30,8 @@ namespace Example.Match.Ecs
             AddSystem(-1000, new ConvertAllMonoEntitiesSystem());
             AddSystem(-1000, new SampleInputSystem());
             AddSystem(0, new TimerSystem());
-            AddSystem(1000, new SpawnSystem());
-            AddSystem(1000, new EmitEffectSystem());
+            AddSystem(500, new SpawnSystem());
+            AddSystem(2000, new EmitEffectSystem());
             
             AddSystem(10000, new OneFrameSystem<OnTriggerEnterEvent>());
             AddSystem(10000, new OneFrameSystem<OnTriggerStayEvent>());

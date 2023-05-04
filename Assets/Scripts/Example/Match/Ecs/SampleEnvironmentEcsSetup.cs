@@ -15,7 +15,8 @@ namespace Example.Match.Ecs
 
         protected override void AddSystems()
         {
-            AddSystem(0, new MapSystem());
+            AddSystem(-100, new MapBuilderSystem());
+            AddSystem(1000, new MapUpdateSystem());
         }
 
         protected override void AddInjects()

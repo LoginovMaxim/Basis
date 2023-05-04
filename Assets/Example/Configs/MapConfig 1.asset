@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7b4ef3b2d964ec9a73adc1de343a895, type: 3}
-  m_Name: MapConfig
+  m_Name: MapConfig 1
   m_EditorClassIdentifier: 
   _cubePrefab: {fileID: 3460557568140672813, guid: f56e58d6be61ff04dacfe96ded3e19e1, type: 3}
   _mapSize: 50
-  _offsetSpeed: 0.15
+  _offsetSpeed: 0.2
   _mapPerlinParameters:
   - Amplitude: 4
     Frequency: 1
   - Amplitude: 10
     Frequency: 1
-  - Amplitude: -0.5
+  - Amplitude: 1
     Frequency: 10

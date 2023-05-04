@@ -273,6 +273,82 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 11375855}
   m_CullTransparentMesh: 1
+--- !u!1 &139894052
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 139894053}
+  - component: {fileID: 139894055}
+  - component: {fileID: 139894054}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &139894053
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139894052}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 896606105}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &139894054
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139894052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.5019608}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &139894055
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 139894052}
+  m_CullTransparentMesh: 1
 --- !u!1 &368930428
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,6 +602,7 @@ GameObject:
   - component: {fileID: 874754934}
   - component: {fileID: 874754933}
   - component: {fileID: 874754932}
+  - component: {fileID: 874754937}
   m_Layer: 5
   m_Name: BackButton
   m_TagString: Untagged
@@ -663,6 +740,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 874754930}
   m_CullTransparentMesh: 1
+--- !u!114 &874754937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 874754930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360956885, guid: 6a3c0ff4d5ec7054ea0a000b188748bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelMethodName: Example.Match.UI.PauseScreen.SamplePauseScreenViewModel.OnUnpauseButtonClicked
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &896606104
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +783,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 139894053}
   - {fileID: 1091536013}
   - {fileID: 874754931}
   m_Father: {fileID: 1866717086}
@@ -1029,6 +1121,7 @@ GameObject:
   - component: {fileID: 1216223225}
   - component: {fileID: 1216223229}
   - component: {fileID: 1216223228}
+  - component: {fileID: 1216223230}
   m_Layer: 5
   m_Name: PauseButton
   m_TagString: Untagged
@@ -1166,6 +1259,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sampleMatchScreenId: 1
+--- !u!114 &1216223230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216223222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1360956885, guid: 6a3c0ff4d5ec7054ea0a000b188748bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewModelMethodName: Example.Match.UI.GameplayScreen.SampleGameplayScreenViewModel.OnPauseButtonClicked
+  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &1323046136
 GameObject:
   m_ObjectHideFlags: 0
@@ -1510,8 +1617,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1920138855}
   - component: {fileID: 1920138854}
+  - component: {fileID: 1920138861}
   - component: {fileID: 1920138859}
   - component: {fileID: 1920138856}
+  - component: {fileID: 1920138860}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -1533,8 +1642,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
+  - {fileID: 1920138861}
   - {fileID: 1920138859}
   - {fileID: 1920138856}
+  - {fileID: 1920138860}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -1590,6 +1701,30 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: db2f43d56dbb4b5986d89a7bf72c13b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1920138860
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920138853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8243fd183114478a7b12c0167ebbdfe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1920138861
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1920138853}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0be97534f5474c9f9f0c9aa16bf5e033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1965237442

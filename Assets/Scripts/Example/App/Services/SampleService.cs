@@ -22,7 +22,7 @@ namespace Example.App.Services
         
         protected override void Update()
         {
-            Debug.Log("SampleService.Update");
+            // nothing
         }
     }
 }

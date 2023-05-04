@@ -22,7 +22,6 @@ namespace Example.App.Services
         
         protected override void Update()
         {
-            Debug.Log("SamplePhysicService.Update");
         }
     }
 }

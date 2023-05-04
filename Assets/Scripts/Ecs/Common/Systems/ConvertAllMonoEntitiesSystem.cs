@@ -3,17 +3,11 @@ using Leopotam.EcsLite;
 
 namespace Ecs.Common.Systems
 {
-    public sealed class ConvertAllMonoEntitiesSystem : IEcsInitSystem, IEcsRunSystem
+    public sealed class ConvertAllMonoEntitiesSystem : IEcsInitSystem
     {
         [EcsInject] private readonly IPrefabFactory _prefabFactory;
 
         public void Init(IEcsSystems systems)
-        {
-            var world = systems.GetWorld();
-            _prefabFactory.ConvertAllMonoEntitiesInScene(world);
-        }
-        
-        public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
             _prefabFactory.ConvertAllMonoEntitiesInScene(world);
