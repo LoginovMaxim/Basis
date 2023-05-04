@@ -3,7 +3,7 @@ using Zenject;
 
 namespace App.Installers
 {
-    public sealed class AppUIInstaller : MonoInstaller
+    public sealed class AppSplashInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {

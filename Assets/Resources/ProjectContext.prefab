@@ -383,9 +383,9 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 6144647188238760025}
   - {fileID: 8231141710717910004}
-  - {fileID: -1925008677771840207}
   - {fileID: -4678524734797419389}
   - {fileID: 8176278310099464912}
+  - {fileID: -1925008677771840207}
   _installerPrefabs: []
   _parentNewObjectsUnderContext: 1
   _editorReflectionBakingCoverageMode: 0

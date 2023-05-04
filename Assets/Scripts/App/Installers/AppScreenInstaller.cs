@@ -4,7 +4,7 @@ using Zenject;
 
 namespace App.Installers
 {
-    public sealed class ScreenInstaller : MonoInstaller
+    public sealed class AppScreenInstaller : MonoInstaller
     {
         public Transform ScreenParent;
         

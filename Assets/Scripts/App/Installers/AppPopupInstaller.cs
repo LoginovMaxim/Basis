@@ -8,7 +8,7 @@ using Zenject;
 
 namespace App.Installers
 {
-    public sealed class PopupInstaller : MonoInstaller
+    public sealed class AppPopupInstaller : MonoInstaller
     {
         public Transform PopupParent;
         
