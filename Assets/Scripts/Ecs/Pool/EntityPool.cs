@@ -71,7 +71,13 @@ namespace Ecs.Pool
                     ref var rigidbody = ref rigidbodyPool.Get(unpackedEntity).Rigidbody;
                     rigidbody.velocity = Vector3.zero;
                 }
-                
+
+                var activePool = world.GetPool<ActiveComponent>();
+                if (!activePool.Has(unpackedEntity))
+                {
+                    activePool.Add(unpackedEntity);
+                }
+
                 return entity;
             }
 
@@ -107,8 +113,17 @@ namespace Ecs.Pool
             }
 
             var gameObjectPool = world.GetPool<GameObjectComponent>();
+            var activePool = world.GetPool<ActiveComponent>();
+            
             ref var gameObject = ref gameObjectPool.Get(unpackedEntity).GameObject;
             gameObject.SetActive(false);
+
+            if (activePool.Has(unpackedEntity))
+            {
+                return;
+            }
+            
+            activePool.Del(unpackedEntity);
         }
 
         #region IEntityPool
