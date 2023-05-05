@@ -8,6 +8,7 @@ namespace Example.Match.Ecs.Providers
         GameObject CubePrefab { get; }
         int MapSize { get; }
         float OffsetSpeed { get; }
+        float SmoothWave { get; }
         MapPerlinParameters[] MapPerlinParameters { get; }
     }
 }

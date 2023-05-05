@@ -15,6 +15,7 @@ MonoBehaviour:
   _cubePrefab: {fileID: 3460557568140672813, guid: f56e58d6be61ff04dacfe96ded3e19e1, type: 3}
   _mapSize: 50
   _offsetSpeed: 0.15
+  _smoothWave: 5
   _mapPerlinParameters:
   - Amplitude: 4
     Frequency: 1

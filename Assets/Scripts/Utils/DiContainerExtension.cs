@@ -16,17 +16,18 @@ namespace Utils
             return container.BindInterfacesAndSelfTo<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
         }
         
-        public static TEcsWorld BindEcsWorld<TEcsWorld>(this DiContainer container)
-            where TEcsWorld : World
+        public static IAssemblerPart BindAssemblerPart<TAssemblerPart>(this DiContainer container)
+            where TAssemblerPart : IAssemblerPart
         {
-            container.BindInterfacesAndSelfTo<TEcsWorld>().AsSingle().NonLazy();
-            return container.Resolve<TEcsWorld>();
+            container.BindInterfacesAndSelfTo<TAssemblerPart>().AsSingle().NonLazy();
+            return container.Resolve<TAssemblerPart>();
         }
         
-        public static IfNotBoundBinder BindEcsService<TEcsService>(this DiContainer container, IWorld world, UpdateType updateType)
-            where TEcsService : IEcsService
+        public static IAssemblerPart BindEcsAssemblerPart<TAssemblerPart>(this DiContainer container, IWorld world, UpdateType updateType)
+            where TAssemblerPart : IEcsService, IAssemblerPart
         {
-            return container.BindInterfacesAndSelfTo<TEcsService>().AsSingle().WithArguments(world, updateType).NonLazy();
+            container.BindInterfacesAndSelfTo<TAssemblerPart>().AsSingle().WithArguments(world, updateType).NonLazy();
+            return container.Resolve<TAssemblerPart>();
         }
         
         public static IfNotBoundBinder BindAssembler<TAssembler>(this DiContainer container, List<IAssemblerPart> assemblerPart)
@@ -35,11 +36,11 @@ namespace Utils
             return container.BindInterfacesAndSelfTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
         }
         
-        public static IAssemblerPart BindAssemblerPart<TAssemblerPart>(this DiContainer container)
-            where TAssemblerPart : IAssemblerPart
+        public static TEcsWorld BindEcsWorld<TEcsWorld>(this DiContainer container)
+            where TEcsWorld : World
         {
-             container.BindInterfacesAndSelfTo<TAssemblerPart>().AsSingle().NonLazy();
-             return container.Resolve<TAssemblerPart>();
+            container.BindInterfacesAndSelfTo<TEcsWorld>().AsSingle().NonLazy();
+            return container.Resolve<TEcsWorld>();
         }
     }
 }

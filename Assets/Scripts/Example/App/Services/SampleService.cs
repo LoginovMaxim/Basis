@@ -3,7 +3,6 @@ using App.Assemblers;
 using App.Fsm;
 using App.Monos;
 using App.Services;
-using UnityEngine;
 
 namespace Example.App.Services
 {
@@ -22,7 +21,7 @@ namespace Example.App.Services
         
         protected override void Update()
         {
-            // nothing
+            // обновляемая логика сервиса
         }
     }
 }

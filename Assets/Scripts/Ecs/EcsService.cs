@@ -38,10 +38,6 @@ namespace Ecs
             AddInjects();
             InitInjects();
             InitSystem();
-            Start();
-            
-            await Task.Delay(1);
-            Pause();
         }
 
         private void InitSetups()

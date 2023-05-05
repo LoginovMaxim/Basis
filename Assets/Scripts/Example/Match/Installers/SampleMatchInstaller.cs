@@ -20,20 +20,19 @@ namespace Example.Match.Installers
             Container.BindInterfacesTo<SampleGameplayEcsSetup>().AsSingle().NonLazy();
             Container.BindInterfacesTo<SampleEnvironmentEcsSetup>().AsSingle().NonLazy();
 
+            Container.BindService<SampleService>(UpdateType.Update);
+            
             var world = Container.BindEcsWorld<MainWorld>();
             
-            // services
-            Container.BindService<SampleService>(UpdateType.Update);
-            Container.BindService<SamplePhysicService>(UpdateType.FixedUpdate);
-            Container.BindEcsService<SampleEcsService>(world, UpdateType.Update);
-            
-            // assembler
-            Container.BindAssembler<SampleAssembler>(new List<IAssemblerPart>
+            // assembler parts
+            var assemblerPats = new List<IAssemblerPart>
             {
-                Container.Resolve<SampleEcsService>(),
-                Container.Resolve<SampleService>(), 
-                Container.Resolve<SamplePhysicService>(), 
-            });
+                Container.BindAssemblerPart<SampleLoader>(),
+                Container.BindEcsAssemblerPart<SampleEcsService>(world, UpdateType.Update)
+            };
+
+            // assembler
+            Container.BindAssembler<SampleAssembler>(assemblerPats);
         }
     }
 }

@@ -15,11 +15,10 @@ namespace Example.Match.Ecs.Systems
         [EcsInject] private readonly IPrefabFactory _prefabFactory;
         
         private Vector2 _offset;
-        private bool _isFirstUpdated = true;
 
         public void Run(IEcsSystems systems)
         {
-            if (TryUpdateOffset(systems) || _isFirstUpdated)
+            if (TryUpdateOffset(systems))
             {
                 UpdateMap(systems);
             }
@@ -43,25 +42,17 @@ namespace Example.Match.Ecs.Systems
                 switch (keyPressedComponent.KeyCode)
                 {
                     case KeyCode.W:
-                    {
                         _offset.y += Time.deltaTime * _mapConfigProvider.OffsetSpeed;
                         break;
-                    }
                     case KeyCode.S:
-                    {
                         _offset.y -= Time.deltaTime * _mapConfigProvider.OffsetSpeed;
                         break;
-                    }
                     case KeyCode.A:
-                    {
                         _offset.x -= Time.deltaTime * _mapConfigProvider.OffsetSpeed;
                         break;
-                    }
                     case KeyCode.D:
-                    {
                         _offset.x += Time.deltaTime * _mapConfigProvider.OffsetSpeed;
                         break;
-                    }
                 }
             }
             
@@ -98,10 +89,9 @@ namespace Example.Match.Ecs.Systems
                 var cubeScale = transform.localScale;
                 cubeScale.y = scale;
                 
-                transform.localScale = cubeScale;
+                transform.localScale = 
+                    Vector3.Lerp(transform.localScale, cubeScale, _mapConfigProvider.SmoothWave * Time.deltaTime);
             }
-
-            _isFirstUpdated = true;
         }
     }
 }
