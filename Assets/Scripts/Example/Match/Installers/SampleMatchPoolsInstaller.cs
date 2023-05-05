@@ -1,5 +1,4 @@
-﻿using Ecs;
-using Ecs.Pool;
+﻿using Ecs.Pool;
 using Example.Match.Pools.Ships;
 using UnityEngine;
 using Zenject;

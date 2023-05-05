@@ -1,5 +1,4 @@
-﻿using Ecs;
-using Ecs.Pool;
+﻿using Ecs.Pool;
 
 namespace Example.Match.Pools.Ships
 {

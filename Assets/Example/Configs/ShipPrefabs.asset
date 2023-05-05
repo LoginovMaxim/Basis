@@ -16,4 +16,4 @@ MonoBehaviour:
   - ShipId: 0
     Prefab: {fileID: 3460557568140672813, guid: 6d3f9f74eb740b84ead51ac9d1ce5cdd, type: 3}
   - ShipId: 1
-    Prefab: {fileID: 3460557568140672813, guid: 6d3f9f74eb740b84ead51ac9d1ce5cdd, type: 3}
+    Prefab: {fileID: 3460557568140672813, guid: 27813fc21b55cd7439cbea100a1e7cf7, type: 3}
