@@ -6,10 +6,9 @@ namespace App.Fsm
     public class State : IState
     {
         private readonly ValueType _stateCode;
+        private readonly IStateBehaviour _stateBehaviour;
         private readonly List<ITransition> _transitions;
 
-        private readonly IStateBehaviour _stateBehaviour;
-        
         private State(ValueType stateCode, IStateBehaviour stateBehaviour)
         {
             _stateCode = stateCode;
