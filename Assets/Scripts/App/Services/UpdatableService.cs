@@ -34,7 +34,7 @@ namespace App.Services
 
         protected virtual void Start()
         {
-            UnPause();    
+            Unpause();    
         }
 
         protected abstract void Update();
@@ -54,7 +54,7 @@ namespace App.Services
             _isPause = true;
         }
 
-        protected void UnPause()
+        protected void Unpause()
         {
             _isPause = false;
         }
@@ -75,9 +75,9 @@ namespace App.Services
             Pause();
         }
 
-        void IUpdatableService.UnPause()
+        void IUpdatableService.Unpause()
         {
-            UnPause();
+            Unpause();
         }
 
         #endregion

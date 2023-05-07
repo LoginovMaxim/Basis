@@ -31,8 +31,6 @@ namespace App.Installers
             Container.BindInterfacesTo<GameObjectFinder>().FromComponentInNewPrefab(GameObjectFinder).AsSingle().NonLazy();
             Container.BindInterfacesTo<PrefabFactory>().FromComponentInNewPrefab(PrefabFactory).AsSingle().NonLazy();
             Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
-
-            Container.BindFactory<StateMachine, StateMachine.Factory>().AsTransient().NonLazy();
             
             BindData();
             

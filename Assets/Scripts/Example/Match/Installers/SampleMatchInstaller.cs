@@ -15,7 +15,7 @@ namespace Example.Match.Installers
     {
         public override void InstallBindings()
         {
-            Container.Bind<SampleStateMachine>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<SampleStateMachine>().AsSingle().NonLazy();
 
             // EcsSetups
             Container.BindInterfacesTo<SampleGameplayEcsSetup>().AsSingle().NonLazy();

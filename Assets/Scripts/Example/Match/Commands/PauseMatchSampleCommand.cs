@@ -1,4 +1,6 @@
-﻿using Example.App.Commands;
+﻿using System.Collections.Generic;
+using App.Services;
+using Example.App.Commands;
 using Example.Match.Ecs;
 using Example.Match.Signals;
 using Zenject;
@@ -7,16 +9,16 @@ namespace Example.Match.Commands
 {
     public class PauseMatchSampleCommand : Command
     {
-        private readonly ISampleEcsService _sampleEcsService;
+        private readonly List<IUpdatableService> _updatableServices;
         
-        public PauseMatchSampleCommand(ISampleEcsService sampleEcsService, SignalBus signalBus) : base(signalBus)
+        public PauseMatchSampleCommand(List<IUpdatableService> updatableServices, SignalBus signalBus) : base(signalBus)
         {
-            _sampleEcsService = sampleEcsService;
+            _updatableServices = updatableServices;
         }
 
         private void OnPauseMatch()
         {
-            _sampleEcsService.Pause();
+            _updatableServices.ForEach(service => service.Pause());
         }
         
         protected override void Subscribe()

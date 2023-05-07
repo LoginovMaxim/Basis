@@ -1,11 +1,9 @@
-﻿using System;
+﻿using App.Services;
 
 namespace App.Fsm
 {
-    public interface IStateMachine
+    public interface IStateMachine : IUpdatableService
     {
         void Start();
-        void AddState(IState state);
-        void SetInitialState(ValueType stateCode);
     }
 }
