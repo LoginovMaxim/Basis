@@ -1,31 +1,36 @@
 ﻿using System;
 using System.Collections.Generic;
 using App.Monos;
+using App.Services;
 using Zenject;
 
 namespace App.Fsm
 {
-    public class StateMachine : IStateMachine, IDisposable
+    public class StateMachine : UpdatableService, IStateMachine
     {
-        private readonly IMonoUpdater _monoUpdater;
+        private readonly Dictionary<ValueType, IState> _states = new();
         
-        private Dictionary<ValueType, State> _states = new();
-        private State _currentState;
-        
-        public StateMachine(IMonoUpdater monoUpdater)
+        private IState _currentState;
+        private ValueType _initialStateCode;
+
+        public StateMachine(IMonoUpdater monoUpdater) : base(monoUpdater, UpdateType.Update, false)
         {
-            _monoUpdater = monoUpdater;
-            _monoUpdater.Subscribe(UpdateType.Update, OnUpdate);
         }
 
-        private void AddState(State state)
+        protected override void Start()
+        {
+            SwitchState(_initialStateCode);
+            base.Start();
+        }
+
+        private void AddState(IState state)
         {
             _states.Add(state.StateCode, state);
         }
 
         private void SetInitialState(ValueType stateCode)
         {
-            SwitchState(stateCode);
+            _initialStateCode = stateCode;
         }
 
         private void SwitchState(ValueType stateCode)
@@ -39,8 +44,8 @@ namespace App.Fsm
             _currentState = _states[stateCode];
             _currentState?.OnEnter();
         }
-        
-        private void OnUpdate()
+
+        protected override void Update()
         {
             if (_currentState == null)
             {
@@ -56,15 +61,15 @@ namespace App.Fsm
             
             SwitchState(otherStateCode);
         }
-        
-        protected virtual void Dispose()
-        {
-            _monoUpdater.Unsubscribe(UpdateType.Update, OnUpdate);
-        }
 
         #region IStateMachine
 
-        void IStateMachine.AddState(State state)
+        void IStateMachine.Start()
+        {
+            Start();
+        }
+
+        void IStateMachine.AddState(IState state)
         {
             AddState(state);
         }
@@ -72,15 +77,6 @@ namespace App.Fsm
         void IStateMachine.SetInitialState(ValueType stateCode)
         {
             SetInitialState(stateCode);
-        }
-
-        #endregion
-
-        #region IDisposable
-        
-        void IDisposable.Dispose()
-        {
-            Dispose();
         }
 
         #endregion

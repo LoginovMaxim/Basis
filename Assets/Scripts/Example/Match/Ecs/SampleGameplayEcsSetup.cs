@@ -43,6 +43,7 @@ namespace Example.Match.Ecs
             AddSystem(-1000, new SampleInputSystem());
             AddSystem(0, new TimerSystem());
             AddSystem(0, new SpawnShipSystem());
+            AddSystem(0, new DespawnShipSystem());
             AddSystem(500, new SpawnSystem());
             AddSystem(2000, new EmitEffectSystem());
             

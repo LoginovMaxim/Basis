@@ -4,7 +4,8 @@ namespace App.Fsm
 {
     public interface IStateMachine
     {
-        void AddState(State state);
+        void Start();
+        void AddState(IState state);
         void SetInitialState(ValueType stateCode);
     }
 }

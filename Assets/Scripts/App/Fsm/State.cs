@@ -5,42 +5,24 @@ namespace App.Fsm
 {
     public class State : IState
     {
-        public ValueType StateCode => _stateCode;
+        private readonly ValueType _stateCode;
+        private readonly Action _enterAction;
+        private readonly Action _updateAction;
+        private readonly Action _exitAction;
+        private readonly List<ITransition> _transitions;
 
-        private ValueType _stateCode;
-        
-        private Action _enterAction;
-        private Action _updateAction;
-        private Action _exitAction;
-
-        private List<ITransition> _transitions;
-        
-        public State(ValueType stateCode)
+        private State(ValueType stateCode, IStateBehaviour stateBehaviour)
         {
             _stateCode = stateCode;
-        }
-        
-        public IState SetEnter(Action enterAction)
-        {
-            _enterAction = enterAction;
-            return this;
+            _enterAction = stateBehaviour.OnEnter;
+            _updateAction = stateBehaviour.OnUpdate;
+            _exitAction = stateBehaviour.OnExit;
+            _transitions = stateBehaviour.GetTransitions();
         }
 
-        public IState SetUpdate(Action updateAction)
+        public static IState NewInstance(ValueType stateCode, IStateBehaviour stateBehaviour)
         {
-            _updateAction = updateAction;
-            return this;
-        }
-
-        public IState SetExit(Action exitAction)
-        {
-            _exitAction = exitAction;
-            return this;
-        }
-
-        public void SetTransitions(List<ITransition> transitions)
-        {
-            _transitions = transitions;
+            return new State(stateCode, stateBehaviour);
         }
 
         public bool TrySwitchOtherState(out ValueType otherStateCode)
@@ -49,7 +31,9 @@ namespace App.Fsm
             foreach (var transition in _transitions)
             {
                 if (!transition.IsTransition())
+                {
                     continue;
+                }
 
                 otherStateCode = transition.TransitionStateCode;
                 return true;
@@ -72,5 +56,11 @@ namespace App.Fsm
         {
             _exitAction?.Invoke();
         }
+
+        #region IState
+        
+        ValueType IState.StateCode => _stateCode;
+
+        #endregion
     }
 }

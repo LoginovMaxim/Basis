@@ -3,6 +3,7 @@ using App.Assemblers;
 using App.Fsm;
 using Ecs;
 using Example.App.Assemblers;
+using Example.App.Fsm.SampleMachine;
 using Example.App.Services;
 using Example.Match.Ecs;
 using Utils;
@@ -14,7 +15,7 @@ namespace Example.Match.Installers
     {
         public override void InstallBindings()
         {
-            //Container.Bind<SampleStateMachine>().AsSingle().NonLazy();
+            Container.Bind<SampleStateMachine>().AsSingle().NonLazy();
 
             // EcsSetups
             Container.BindInterfacesTo<SampleGameplayEcsSetup>().AsSingle().NonLazy();

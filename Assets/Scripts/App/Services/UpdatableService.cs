@@ -32,7 +32,7 @@ namespace App.Services
             }
         }
 
-        protected void Start()
+        protected virtual void Start()
         {
             UnPause();    
         }

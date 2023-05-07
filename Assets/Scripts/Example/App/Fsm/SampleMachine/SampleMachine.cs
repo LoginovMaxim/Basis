@@ -10,16 +10,17 @@ namespace Example.App.Fsm.SampleMachine
         {
             _stateMachine = stateMachineFactory.Create();
 
-            var idleState = new State(SampleMachineState.Idle);
-            var idleStateBehaviour = new IdleSampleStateBehaviour(idleState);
+            var idleStateBehaviour = new IdleSampleStateBehaviour();
+            var idleState = State.NewInstance(SampleMachineState.Idle, idleStateBehaviour);
             
-            var shotState = new State(SampleMachineState.Shot);
-            var shotStateBehaviour = new ShotSampleStateBehaviour(shotState);
+            var shotStateBehaviour = new ShotSampleStateBehaviour();
+            var shotState = State.NewInstance(SampleMachineState.Shot, shotStateBehaviour);
             
             _stateMachine.AddState(idleState);
             _stateMachine.AddState(shotState);
             
             _stateMachine.SetInitialState(idleState.StateCode);
+            _stateMachine.Start();
         }
     }
 }

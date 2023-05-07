@@ -100,6 +100,12 @@ namespace Ecs.Pool
             var gameObjectPool = world.GetPool<GameObjectComponent>();
             ref var gameObject = ref gameObjectPool.Get(unpackedEntity).GameObject;
             gameObject.layer = spawnData.Layer;
+
+            var activePool = world.GetPool<ActiveComponent>();
+            if (!activePool.Has(unpackedEntity))
+            {
+                activePool.Add(unpackedEntity);
+            }
             
             _entityPool.Add(entity);
             return entity;
@@ -120,10 +126,8 @@ namespace Ecs.Pool
 
             if (activePool.Has(unpackedEntity))
             {
-                return;
+                activePool.Del(unpackedEntity);
             }
-            
-            activePool.Del(unpackedEntity);
         }
 
         #region IEntityPool
