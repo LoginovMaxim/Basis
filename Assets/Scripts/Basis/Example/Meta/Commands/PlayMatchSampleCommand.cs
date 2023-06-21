@@ -1,14 +1,14 @@
-﻿using Azur.TowerDefense.App.UI.Splashes;
+﻿using Basis.App.Commands;
 using Basis.App.Monos;
+using Basis.App.Signals;
 using Basis.App.UI.Splashes;
-using Basis.Example.App.Commands;
 using Basis.Example.Meta.Signals;
 using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace Basis.Example.Meta.Commands
 {
-    public class PlayMatchSampleCommand : Command
+    public class PlayMatchSampleCommand : Command<EmptySignalData, PlayMatchSampleSignal>
     {
         private const string SampleMatchScenePath = "Example/Scenes/MatchExample";
         
@@ -21,20 +21,10 @@ namespace Basis.Example.Meta.Commands
             _appSplash = appSplash;
         }
 
-        private void OnPlayMatch()
+        protected override void Execute(EmptySignalData signalData)
         {
             _appSplash.Show();
             _sceneLoader.LoadScene(SampleMatchScenePath, LoadSceneMode.Single, null);
-        }
-        
-        protected override void Subscribe()
-        {
-            _signalBus.Subscribe<PlayMatchSampleSignal>(OnPlayMatch);
-        }
-
-        protected override void Unsubscribe()
-        {
-            _signalBus.Unsubscribe<PlayMatchSampleSignal>(OnPlayMatch);
         }
     }
 }

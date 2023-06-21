@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
-using Basis.App.UI.Splashes;
 using UnityEngine;
 using UnityWeld.Binding;
 
-namespace Azur.TowerDefense.App.UI.Splashes
+namespace Basis.App.UI.Splashes
 {
     [Binding] public sealed class AppSplashViewModel : SplashViewModel
     {

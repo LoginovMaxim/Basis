@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Azur.TowerDefense.App.UI.Splashes;
+using Basis.App.UI.Splashes;
 
 namespace Basis.App.Assemblers
 {

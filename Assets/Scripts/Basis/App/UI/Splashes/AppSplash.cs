@@ -1,9 +1,8 @@
 ﻿using System.Collections.Generic;
 using Basis.App.Assemblers;
-using Basis.App.UI.Splashes;
 using UnityEngine;
 
-namespace Azur.TowerDefense.App.UI.Splashes
+namespace Basis.App.UI.Splashes
 {
     public sealed class AppSplash : Splash<AppSplashViewModel>, IAppSplash
     {
