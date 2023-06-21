@@ -15,20 +15,15 @@ namespace Basis.App.Installers
     public sealed class AppInstaller : MonoInstaller
     {
         public bool RunExample;
-        
-        [SerializeField] private MonoUpdater MonoUpdater;
-        [SerializeField] private SceneLoader SceneLoader;
-        [SerializeField] private GameObjectFinder GameObjectFinder;
-        [SerializeField] private PrefabFactory PrefabFactory;
     
         public override void InstallBindings()
         {
             SignalBusInstaller.Install(Container);
             
-            Container.BindInterfacesTo<MonoUpdater>().FromComponentInNewPrefab(MonoUpdater).AsSingle().NonLazy();
-            Container.BindInterfacesTo<SceneLoader>().FromComponentInNewPrefab(SceneLoader).AsSingle().NonLazy();
-            Container.BindInterfacesTo<GameObjectFinder>().FromComponentInNewPrefab(GameObjectFinder).AsSingle().NonLazy();
-            Container.BindInterfacesTo<PrefabFactory>().FromComponentInNewPrefab(PrefabFactory).AsSingle().NonLazy();
+            Container.BindInterfacesTo<MonoUpdater>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<SceneLoader>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<GameObjectFinder>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<PrefabFactory>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
             
             BindData();

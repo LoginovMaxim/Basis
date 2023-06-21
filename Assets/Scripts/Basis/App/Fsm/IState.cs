@@ -1,14 +1,12 @@
-﻿using System;
-
-namespace Basis.App.Fsm
+﻿namespace Basis.App.Fsm
 {
-    public interface IState
+    public interface IState<TStateType>
     {
-        ValueType StateCode { get; }
+        TStateType StateType { get; }
         
         void OnEnter();
         void OnUpdate();
         void OnExit();
-        bool TrySwitchOtherState(out ValueType otherStateCode);
+        bool TrySwitchOtherState(out TStateType otherStateCode);
     }
 }

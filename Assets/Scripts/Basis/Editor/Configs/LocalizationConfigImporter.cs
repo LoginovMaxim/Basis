@@ -1,6 +1,4 @@
-﻿using Editor.Configs;
-
-namespace Basis.Editor.Configs
+﻿namespace Basis.Editor.Configs
 {
     public sealed class LocalizationConfigImporter : ConfigImporter
     {

@@ -3,22 +3,24 @@ using System.Collections.Generic;
 
 namespace Basis.App.Fsm
 {
-    public class State : IState
+    public class State<TStateType> : IState<TStateType> where TStateType : Enum
     {
-        private readonly ValueType _stateCode;
-        private readonly IStateBehaviour _stateBehaviour;
-        private readonly List<ITransition> _transitions;
-
-        private State(ValueType stateCode, IStateBehaviour stateBehaviour)
+        public TStateType StateType => _stateCode;
+        
+        private readonly TStateType _stateCode;
+        private readonly IStateBehaviour<TStateType> _stateBehaviour;
+        private readonly List<ITransition<TStateType>> _transitions;
+        
+        private State(TStateType stateCode, IStateBehaviour<TStateType> stateBehaviour)
         {
             _stateCode = stateCode;
             _stateBehaviour = stateBehaviour;
             _transitions = stateBehaviour.GetTransitions();
         }
 
-        public static IState NewInstance(ValueType stateCode, IStateBehaviour stateBehaviour)
+        public static IState<TStateType> NewInstance(TStateType stateCode, IStateBehaviour<TStateType> stateBehaviour)
         {
-            return new State(stateCode, stateBehaviour);
+            return new State<TStateType>(stateCode, stateBehaviour);
         }
 
         public void OnEnter()
@@ -36,7 +38,7 @@ namespace Basis.App.Fsm
             _stateBehaviour.OnExit();
         }
 
-        public bool TrySwitchOtherState(out ValueType otherStateCode)
+        public bool TrySwitchOtherState(out TStateType otherStateCode)
         {
             otherStateCode = default;
             foreach (var transition in _transitions)
@@ -52,11 +54,5 @@ namespace Basis.App.Fsm
 
             return false;
         }
-
-        #region IState
-        
-        ValueType IState.StateCode => _stateCode;
-
-        #endregion
     }
 }

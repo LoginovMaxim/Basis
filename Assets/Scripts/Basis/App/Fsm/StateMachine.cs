@@ -1,73 +1,90 @@
 ﻿using System;
 using System.Collections.Generic;
-using Basis.App.Monos;
-using Basis.App.Services;
 
 namespace Basis.App.Fsm
+{
+    public abstract class StateMachine<TStateType> : IStateMachine<TStateType> where TStateType : Enum
     {
-        public abstract class StateMachine : UpdatableService, IStateMachine
-        {
-            private readonly Dictionary<ValueType, IState> _states = new();
+        public bool IsPaused { get; private set; }
+        
+        private readonly Dictionary<TStateType, IState<TStateType>> _states = new();
             
-            private IState _currentState;
-            private ValueType _initialStateCode;
+        private IState<TStateType> _currentState;
+        private TStateType _initialStateCode;
 
-            protected StateMachine(IMonoUpdater monoUpdater) : base(monoUpdater, UpdateType.Update, false)
+        public void Start()
+        {
+            SwitchState(_initialStateCode);
+        }
+
+        public void Pause()
+        {
+            IsPaused = true;
+        }
+
+        public void Unpause()
+        {
+            IsPaused = false;
+        }
+
+        public void AddState(TStateType valueType, IStateBehaviour<TStateType> stateBehaviour)
+        {
+            var state = State<TStateType>.NewInstance(valueType, stateBehaviour);
+            if (_states.ContainsKey(state.StateType))
             {
+                return;
+            }
+            
+            _states.Add(state.StateType, state);
+        }
+
+        public void RemoveState(TStateType stateType)
+        {
+            if (!_states.ContainsKey(stateType))
+            {
+                return;
             }
 
-            protected override void Start()
-            {
-                SwitchState(_initialStateCode);
-                base.Start();
-            }
+            _states.Remove(stateType);
+        }
 
-            protected void AddState(IState state)
-            {
-                _states.Add(state.StateCode, state);
-            }
+        protected void SetInitialState(TStateType stateCode)
+        {
+            _initialStateCode = stateCode;
+        }
 
-            protected void SetInitialState(ValueType stateCode)
+        private void SwitchState(TStateType stateCode)
+        {
+            if (!_states.ContainsKey(stateCode))
             {
-                _initialStateCode = stateCode;
+                return;
             }
-
-            private void SwitchState(ValueType stateCode)
-            {
-                if (!_states.ContainsKey(stateCode))
-                {
-                    return;
-                }
                 
-                _currentState?.OnExit();
-                _currentState = _states[stateCode];
-                _currentState?.OnEnter();
-            }
+            _currentState?.OnExit();
+            _currentState = _states[stateCode];
+            _currentState?.OnEnter();
+        }
 
-            protected override void Update()
+        public void Update()
+        {
+            if (IsPaused)
             {
-                if (_currentState == null)
-                {
-                    return;
-                }
-                
-                _currentState.OnUpdate();
-                
-                if (!_currentState.TrySwitchOtherState(out var otherStateCode))
-                {
-                    return;
-                }
-                
-                SwitchState(otherStateCode);
+                return;
             }
-
-            #region IStateMachine
-
-            void IStateMachine.Start()
+            
+            if (_currentState == null)
             {
-                Start();
+                return;
             }
-
-            #endregion
+                
+            _currentState.OnUpdate();
+                
+            if (!_currentState.TrySwitchOtherState(out var otherStateCode))
+            {
+                return;
+            }
+                
+            SwitchState(otherStateCode);
         }
     }
+}

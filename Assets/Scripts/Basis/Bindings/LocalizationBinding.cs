@@ -13,7 +13,6 @@ namespace Basis.Bindings
 {
     public sealed class LocalizationBinding : AbstractMemberBinding, ILocalizationMonoBehaviour
     {
-        
         [SerializeField] private string _localizationKey = "{0}";
         [SerializeField] private List<string> _viewModelPropertyName = new List<string>();
 

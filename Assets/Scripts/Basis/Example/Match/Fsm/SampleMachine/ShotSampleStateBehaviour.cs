@@ -3,32 +3,32 @@ using Basis.App.Fsm;
 using Basis.Utils;
 using UnityEngine;
 
-namespace Basis.Example.App.Fsm.SampleMachine
+namespace Basis.Example.Match.Fsm.SampleMachine
 {
-    public class ShotSampleStateBehaviour : IStateBehaviour
+    public class ShotSampleStateBehaviour : StateBehaviour<SampleMachineState>
     {
         private float _relaxationTime = 3;
         private float _elapsedRelaxationTime;
 
-        public void OnEnter()
+        public override void OnEnter()
         {
             Debug.Log($"Shot");
         }
 
-        public void OnUpdate()
+        public override void OnUpdate()
         {
             Debug.Log($"Wait");
         }
 
-        public void OnExit()
+        public override void OnExit()
         {
             Debug.Log($"Hide weapon");
         }
 
-        public List<ITransition> GetTransitions()
+        public override List<ITransition<SampleMachineState>> GetTransitions()
         {
-            var idleTransition = new Transition(SampleMachineState.Idle, IsRelaxationTimeOver);
-            return new List<ITransition> { idleTransition };
+            var idleTransition = new Transition<SampleMachineState>(SampleMachineState.Idle, IsRelaxationTimeOver);
+            return new List<ITransition<SampleMachineState>> { idleTransition };
         }
 
         private bool IsRelaxationTimeOver()

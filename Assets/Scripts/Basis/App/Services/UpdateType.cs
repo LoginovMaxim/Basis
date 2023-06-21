@@ -1,4 +1,4 @@
-﻿namespace Basis.App.Fsm
+﻿namespace Basis.App.Services
 {
     public enum UpdateType
     {

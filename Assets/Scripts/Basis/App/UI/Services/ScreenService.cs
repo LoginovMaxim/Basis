@@ -29,11 +29,6 @@ namespace Basis.App.UI.Services
 
             _signalBus = signalBus;
             _signalBus.Subscribe<SwitchScreenSignal>(x => OnChangeScreenButtonClicked(x.ScreenId));
-
-            _currentScreen = _screens[0];
-            _currentScreen.SetActive(true);
-            _stackScreenIds.Push(_currentScreen.Id);
-            PrintStackScreens();
         }
 
         protected void OnChangeScreenButtonClicked(int screenId)
@@ -50,7 +45,7 @@ namespace Basis.App.UI.Services
                 return;
             }
 
-            _currentScreen.SetActive(false);
+            _currentScreen?.SetActive(false);
             _currentScreen = screen;
             _currentScreen.SetActive(true);
             

@@ -1,10 +1,8 @@
-﻿using System;
-
-namespace Basis.App.Fsm
+﻿namespace Basis.App.Fsm
 {
-    public interface ITransition
+    public interface ITransition<TStateType>
     {
-        ValueType TransitionStateCode { get; }
+        TStateType TransitionStateCode { get; }
         bool IsTransition();
     }
 }

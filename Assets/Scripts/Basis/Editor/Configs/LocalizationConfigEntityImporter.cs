@@ -4,9 +4,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Basis.App.Configs;
 using Basis.App.Localizations;
-using Basis.Editor.Configs;
 
-namespace Editor.Configs
+namespace Basis.Editor.Configs
 {
     public sealed class LocalizationConfigEntityImporter : IConfigEntityImporter
     {

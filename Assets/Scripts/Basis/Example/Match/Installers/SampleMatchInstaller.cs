@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using Basis.App.Assemblers;
 using Basis.App.Fsm;
+using Basis.App.Services;
 using Basis.Ecs;
 using Basis.Example.App.Assemblers;
-using Basis.Example.App.Fsm.SampleMachine;
 using Basis.Example.App.Services;
 using Basis.Example.Match.Ecs;
+using Basis.Example.Match.Fsm.SampleMachine;
+using Basis.Example.Match.Services;
 using Basis.Utils;
 using Zenject;
 
@@ -17,11 +19,11 @@ namespace Basis.Example.Match.Installers
         {
             Container.BindInterfacesTo<SampleStateMachine>().AsSingle().NonLazy();
 
+            Container.BindService<SampleService>(UpdateType.Update, true);
+
             // EcsSetups
             Container.BindInterfacesTo<SampleGameplayEcsSetup>().AsSingle().NonLazy();
             Container.BindInterfacesTo<SampleEnvironmentEcsSetup>().AsSingle().NonLazy();
-
-            Container.BindService<SampleService>(UpdateType.Update);
             
             var world = Container.BindEcsWorld<MainWorld>();
             
@@ -33,7 +35,7 @@ namespace Basis.Example.Match.Installers
             };
 
             // assembler
-            Container.BindAssembler<SampleAssembler>(assemblerPats);
+            Container.BindAssembler<SampleMatchAssembler>(assemblerPats);
         }
     }
 }

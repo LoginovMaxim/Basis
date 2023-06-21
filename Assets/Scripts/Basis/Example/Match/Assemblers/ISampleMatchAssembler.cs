@@ -2,7 +2,7 @@
 
 namespace Basis.Example.App.Assemblers
 {
-    public interface ISampleAssembler : IAssembler
+    public interface ISampleMatchAssembler : IAssembler
     {
     }
 }

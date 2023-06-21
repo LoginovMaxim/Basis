@@ -1,4 +1,4 @@
-namespace Basis.Example.App.Fsm.SampleMachine
+namespace Basis.Example.Match.Fsm.SampleMachine
 {
     public enum SampleMachineState
     {

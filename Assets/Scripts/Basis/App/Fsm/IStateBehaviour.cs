@@ -2,11 +2,11 @@
 
 namespace Basis.App.Fsm
 {
-    public interface IStateBehaviour
+    public interface IStateBehaviour<TStateType>
     {
         void OnEnter();
         void OnUpdate();
         void OnExit();    
-        List<ITransition> GetTransitions();
+        List<ITransition<TStateType>> GetTransitions();
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Basis.Example.App.Services
+﻿namespace Basis.Example.Match.Services
 {
     public interface ISampleService
     {
