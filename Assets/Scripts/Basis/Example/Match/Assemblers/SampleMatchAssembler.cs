@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
+using Azur.TowerDefense.App.UI.Splashes;
 using Basis.App.Assemblers;
-using Basis.App.UI.Splashes;
 using Basis.Example.Match.Ecs;
 using Basis.Example.Match.UI;
 
@@ -24,7 +24,11 @@ namespace Basis.Example.App.Assemblers
             _appSplash = appSplash;
         }
 
-        protected override void FinishAssembly()
+        protected override void OnStartAssembly()
+        {
+        }
+
+        protected override void OnFinishAssembly()
         {
             _sampleMatchScreenService.ChangeScreen(SampleMatchScreenId.Gameplay);
             _sampleEcsService.Start();

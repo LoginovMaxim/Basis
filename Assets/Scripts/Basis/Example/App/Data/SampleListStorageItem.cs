@@ -47,16 +47,4 @@ namespace Basis.Example.App.Data
             return _sampleDataItems.Any(t => t.Id == id);
         }
     }
-
-    [Serializable] public sealed class SampleDataItem
-    {
-        [SerializeField] public int Id;
-        [SerializeField] public string Label;
-
-        public SampleDataItem(int id, string label)
-        {
-            Id = id;
-            Label = label;
-        }
-    }
 }

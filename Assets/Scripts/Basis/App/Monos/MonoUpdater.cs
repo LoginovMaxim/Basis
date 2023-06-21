@@ -17,7 +17,7 @@ namespace Basis.App.Monos
         private void FixedUpdate() { FixedUpdated?.Invoke(); }
         private void LateUpdate() { LateUpdated?.Invoke(); }
 
-        private void Subscribe(UpdateType updateType, Action action)
+        public void Subscribe(UpdateType updateType, Action action)
         {
             switch (updateType)
             {
@@ -39,7 +39,7 @@ namespace Basis.App.Monos
             }
         }
         
-        private void Unsubscribe(UpdateType updateType, Action action)
+        public void Unsubscribe(UpdateType updateType, Action action)
         {
             switch (updateType)
             {
@@ -60,19 +60,5 @@ namespace Basis.App.Monos
                 }
             }
         }
-
-        #region IMonoUpdater
-
-        void IMonoUpdater.Subscribe(UpdateType updateType, Action action)
-        {
-            Subscribe(updateType, action);
-        }
-        
-        void IMonoUpdater.Unsubscribe(UpdateType updateType, Action action)
-        {
-            Unsubscribe(updateType, action);
-        }
-
-        #endregion
     }
 }

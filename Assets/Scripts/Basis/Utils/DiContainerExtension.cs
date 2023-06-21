@@ -36,7 +36,7 @@ namespace Basis.Utils
         }
         
         public static TEcsWorld BindEcsWorld<TEcsWorld>(this DiContainer container)
-            where TEcsWorld : World
+            where TEcsWorld : WorldBase
         {
             container.BindInterfacesAndSelfTo<TEcsWorld>().AsSingle().NonLazy();
             return container.Resolve<TEcsWorld>();

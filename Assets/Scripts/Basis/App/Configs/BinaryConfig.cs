@@ -7,6 +7,11 @@ namespace Basis.App.Configs
 {
     public sealed class BinaryConfig : IBinaryConfig
     {
+        public bool Empty => _entities.Count == 0;
+        public long Timestamp => _timestamp;
+        public List<IConfigEntity> Entities => _entities;
+        public byte[] Raw => _raw;
+        
         private readonly List<IConfigEntity> _entities = new List<IConfigEntity>();
         private readonly Dictionary<string, IConfigEntity> _entityMap = new Dictionary<string, IConfigEntity>();
         private readonly Dictionary<Type, List<IConfigEntity>> _typeToEntityMap = new Dictionary<Type, List<IConfigEntity>>();
@@ -14,7 +19,7 @@ namespace Basis.App.Configs
         private byte[] _raw;
         private long _timestamp;
 
-        private EntityType GetEntity<EntityType>(string id) where EntityType : IConfigEntity
+        public EntityType GetEntity<EntityType>(string id) where EntityType : IConfigEntity
         {
             if (!_entityMap.TryGetValue(id, out var entity))
             {
@@ -29,7 +34,7 @@ namespace Basis.App.Configs
             return default;
         }
 
-        private List<EntityType> GetEntities<EntityType>() where EntityType : IConfigEntity
+        public List<EntityType> GetEntities<EntityType>() where EntityType : IConfigEntity
         {
             var type = typeof(EntityType);
             if (!_typeToEntityMap.TryGetValue(type, out var entities))
@@ -53,7 +58,7 @@ namespace Basis.App.Configs
             return typedEntities;
         }
 
-        private bool Load(byte[] bytes, long timestamp)
+        public bool Load(byte[] bytes, long timestamp)
         {
             try
             {
@@ -96,37 +101,6 @@ namespace Basis.App.Configs
             return null;
         }
 
-        #region IBinaryConfig
-
-        bool IBinaryConfig.Empty => _entities.Count == 0;
-
-        long IBinaryConfig.Timestamp => _timestamp;
-
-        List<IConfigEntity> IBinaryConfig.Entities => _entities;
-
-        byte[] IBinaryConfig.Raw => _raw;
-
-        EntityType IBinaryConfig.GetEntity<EntityType>(string id)
-        {
-            return GetEntity<EntityType>(id);
-        }
-
-        List<EntityType> IBinaryConfig.GetEntities<EntityType>()
-        {
-            return GetEntities<EntityType>();
-        }
-
-        bool IBinaryConfig.Load(byte[] bytes, long timestamp)
-        {
-            return Load(bytes, timestamp);
-        }
-
-        #endregion
-
-        #region Types
-
         public sealed class Factory : PlaceholderFactory<BinaryConfig>, IBinaryConfigFactory {}
-
-        #endregion
     }
 }

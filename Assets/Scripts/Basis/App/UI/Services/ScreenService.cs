@@ -12,6 +12,8 @@ namespace Basis.App.UI.Services
 {
     public abstract class ScreenService<TScreen> : IScreenService where TScreen : IScreen
     {
+        public IScreen CurrentScreen => _currentScreen;
+        
         private readonly List<TScreen> _screens;
         private readonly IMonoUpdater _monoUpdater;
         private readonly SignalBus _signalBus;
@@ -31,7 +33,7 @@ namespace Basis.App.UI.Services
             _signalBus.Subscribe<SwitchScreenSignal>(x => OnChangeScreenButtonClicked(x.ScreenId));
         }
 
-        protected void OnChangeScreenButtonClicked(int screenId)
+        public void OnChangeScreenButtonClicked(int screenId)
         {
             if (screenId == -1)
             {
@@ -122,16 +124,5 @@ namespace Basis.App.UI.Services
             stackInfo.Append("]");
             Debug.Log(stackInfo.ToString().WithColor(Color.cyan));
         }
-
-        #region IMetaScreenService
-
-        public IScreen CurrentScreen => _currentScreen;
-        
-        void IScreenService.OnChangeScreenButtonClicked(int screenId)
-        {
-            OnChangeScreenButtonClicked(screenId);
-        }
-
-        #endregion
     }
 }

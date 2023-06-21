@@ -13,7 +13,11 @@ namespace Basis.Example.Meta.Assemblers
             _sampleMetaScreenService = sampleMetaScreenService;
         }
 
-        protected override void FinishAssembly()
+        protected override void OnStartAssembly()
+        {
+        }
+
+        protected override void OnFinishAssembly()
         {
             _sampleMetaScreenService.ChangeScreen(SampleMetaScreenId.Main);
         }

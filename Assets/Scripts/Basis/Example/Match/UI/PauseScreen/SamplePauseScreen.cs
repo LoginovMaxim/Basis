@@ -9,12 +9,12 @@ namespace Basis.Example.Match.UI.PauseScreen
         {
         }
 
-        protected override void OnShow()
+        public override void OnShow()
         {
             Debug.Log("Show pause screen");
         }
 
-        protected override void OnHide()
+        public override void OnHide()
         {
             Debug.Log("Show pause screen");
         }

@@ -9,14 +9,14 @@ namespace Basis.Ecs
         private List<EcsOrderSystem> _orderSystems;
         private EcsSystems _systems;
         
-        private void Init(List<EcsOrderSystem> orderSystems, EcsSystems systems)
+        public void Init(List<EcsOrderSystem> orderSystems, EcsSystems systems)
         {
             _orderSystems = orderSystems;
             _systems = systems;
         }
 
-        protected abstract void AddSystems();
-        protected abstract void AddInjects();
+        public abstract void AddSystems();
+        public abstract void AddInjects();
         
         protected void AddSystem(int order, IEcsSystem system)
         {
@@ -41,24 +41,5 @@ namespace Basis.Ecs
                 order++;
             }
         }
-
-        #region IEcsSetup
-        
-        void IEcsSetup.Init(List<EcsOrderSystem> orderSystems, EcsSystems systems)
-        {
-            Init(orderSystems, systems);
-        }
-
-        void IEcsSetup.AddSystems()
-        {
-            AddSystems();
-        }
-
-        void IEcsSetup.AddInjects()
-        {
-            AddInjects();
-        }
-
-        #endregion
     }
 }

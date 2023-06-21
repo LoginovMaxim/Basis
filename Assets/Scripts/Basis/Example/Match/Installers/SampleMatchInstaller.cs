@@ -25,7 +25,7 @@ namespace Basis.Example.Match.Installers
             Container.BindInterfacesTo<SampleGameplayEcsSetup>().AsSingle().NonLazy();
             Container.BindInterfacesTo<SampleEnvironmentEcsSetup>().AsSingle().NonLazy();
             
-            var world = Container.BindEcsWorld<MainWorld>();
+            var world = Container.BindEcsWorld<MainWorldBase>();
             
             // assembler parts
             var assemblerPats = new List<IAssemblerPart>

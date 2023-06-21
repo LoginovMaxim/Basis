@@ -29,7 +29,7 @@ namespace Basis.Ecs
             _world = world.World;
         }
 
-        private async Task Launch()
+        public async Task Launch()
         {
             InitSystems();
             InitSetups();
@@ -129,14 +129,5 @@ namespace Basis.Ecs
                 _world = null;
             }
         }
-
-        #region IAssemblerPart
-        
-        Task IAssemblerPart.Launch()
-        {
-            return Launch();
-        }
-
-        #endregion
     }
 }

@@ -9,12 +9,12 @@ namespace Basis.Example.Meta.UI.ChestScreen
         {
         }
 
-        protected override void OnShow()
+        public override void OnShow()
         {
             Debug.Log("Show chest screen");
         }
 
-        protected override void OnHide()
+        public override void OnHide()
         {
             Debug.Log("Show chest screen");
         }

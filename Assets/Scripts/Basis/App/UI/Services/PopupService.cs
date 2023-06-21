@@ -6,6 +6,8 @@ namespace Basis.App.UI.Services
 {
     public sealed class PopupService : IPopupService
     {
+        public bool IsSomePopupShowing => _popups.Find(p => p.Spawned) != null;
+        
         private readonly List<IPopup> _popups;
 
         public PopupService(List<IPopup> popups)
@@ -13,7 +15,7 @@ namespace Basis.App.UI.Services
             _popups = popups;
         }
         
-        private void ShowPopup(IconPopupData iconPopupData)
+        public void ShowPopup(IconPopupData iconPopupData)
         {
             _popups.ForEach(popup =>
             {
@@ -23,16 +25,5 @@ namespace Basis.App.UI.Services
                 }
             });
         }
-        
-        #region IPopupService
-        
-        bool IPopupService.IsSomePopupShowing => _popups.Find(p => p.Spawned) != null;
-
-        void IPopupService.ShowPopup(IconPopupData iconPopupData)
-        {
-            ShowPopup(iconPopupData);
-        }
-        
-        #endregion
     }
 }

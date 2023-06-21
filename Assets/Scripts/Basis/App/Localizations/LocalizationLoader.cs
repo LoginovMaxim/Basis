@@ -20,7 +20,7 @@ namespace Basis.App.Localizations
 
         public async Task Launch()
         {
-            await _binaryConfigManager.LoadLocal(true, new CancellationToken());
+            await _binaryConfigManager.LoadLocalAsync(true, new CancellationToken());
             
             var localizationConfig = _binaryConfigManager.GetConfig(BinaryConfigId.Localization);
             var entity = localizationConfig.GetEntity<LocalizationConfigEntity>(LocalizationConfigEntity.InstanceId);

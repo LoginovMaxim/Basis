@@ -9,12 +9,12 @@ namespace Basis.Example.Meta.UI.MainScreen
         {
         }
 
-        protected override void OnShow()
+        public override void OnShow()
         {
             Debug.Log("Show main screen");
         }
 
-        protected override void OnHide()
+        public override void OnHide()
         {
             Debug.Log("Hide main screen");
         }

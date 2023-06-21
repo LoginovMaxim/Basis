@@ -9,6 +9,8 @@ namespace Basis.App.UI.Popups.Logics
     {
         private readonly IconPopupViewModel.Pool _pool;
         
+        public bool Spawned => _iconPopups.Count > 0;
+        
         private Dictionary<int, IconPopupViewModel> _iconPopups = new Dictionary<int, IconPopupViewModel>();
         
         private static int _popupIndex;
@@ -19,14 +21,14 @@ namespace Basis.App.UI.Popups.Logics
             signalBus.Subscribe<ClosePopupSignal>(x => Despawn(x.PopupIndex));
         }
 
-        private void Spawn(IconPopupData iconPopupData)
+        public void Spawn(IconPopupData iconPopupData)
         {
             iconPopupData.Index = ++_popupIndex;
             var viewModel = _pool.Spawn(iconPopupData);
             _iconPopups.Add(_popupIndex, viewModel);
         }
 
-        private void Despawn(int index)
+        public void Despawn(int index)
         {
             if (!_iconPopups.ContainsKey(index))
             {
@@ -36,25 +38,5 @@ namespace Basis.App.UI.Popups.Logics
             _pool.Despawn(_iconPopups[index]);
             _iconPopups.Remove(index);
         }
-        
-        #region IPopup
-        
-        bool IPopup.Spawned => _iconPopups.Count > 0;
-
-        void IPopup.Despawn(int index)
-        {
-            Despawn(index);
-        }
-
-        #endregion
-        
-        #region IIconPopup
-        
-        void IIconPopup.Spawn(IconPopupData iconPopupData)
-        {
-            Spawn(iconPopupData);
-        }
-
-        #endregion
     }
 }

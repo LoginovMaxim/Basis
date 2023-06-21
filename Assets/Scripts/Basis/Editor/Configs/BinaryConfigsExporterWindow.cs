@@ -10,11 +10,7 @@ namespace Basis.Editor.Configs
 {
     public class BinaryConfigsExporterWindow : EditorWindow
     {
-        #region Constants
-
         private const string TargetFolder = "Assets/Resources/BinaryConfigs";
-
-        #endregion
 
         private static readonly ConfigInfo[] _configInfos = new ConfigInfo[]
         {
@@ -78,7 +74,7 @@ namespace Basis.Editor.Configs
                 {
                     var configInfo = _configInfos[i];
                     UpdateProgress(configInfo.Stage, configInfo.Progress);
-                    bytes[i] = await configInfo.Importer.Import(sheetSource, _tokenSource.Token);
+                    bytes[i] = await configInfo.Importer.ImportAsync(sheetSource, _tokenSource.Token);
                 }
                 
                 UpdateProgress("saving", 0.99F);

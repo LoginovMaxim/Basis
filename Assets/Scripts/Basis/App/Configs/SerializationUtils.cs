@@ -7,11 +7,7 @@ namespace Basis.App.Configs
 {
     public static class SerializationUtils
     {
-        #region Constants
-
         private const string AssamblyPlaceHolder = "[ASSEMBLY]";
-
-        #endregion
 
         private static readonly SerializationBinder _loadBinder = new SerializationBinder(AssamblyPlaceHolder, $"{ Assembly.GetExecutingAssembly().GetName().Name },");
         private static readonly SerializationBinder _saveBinder = new SerializationBinder($"{ Assembly.GetExecutingAssembly().GetName().Name },", AssamblyPlaceHolder);

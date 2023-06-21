@@ -9,12 +9,12 @@ namespace Basis.Example.Meta.UI.ShopScreen
         {
         }
 
-        protected override void OnShow()
+        public override void OnShow()
         {
             Debug.Log("Show shop screen");
         }
 
-        protected override void OnHide()
+        public override void OnHide()
         {
             Debug.Log("Hide shop screen");
         }

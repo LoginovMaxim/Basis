@@ -1,4 +1,5 @@
-﻿using Basis.App.Monos;
+﻿using Azur.TowerDefense.App.UI.Splashes;
+using Basis.App.Monos;
 using Basis.App.UI.Splashes;
 using Basis.Example.App.Commands;
 using Basis.Example.Meta.Signals;

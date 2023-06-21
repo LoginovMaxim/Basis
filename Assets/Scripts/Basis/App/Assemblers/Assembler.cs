@@ -12,9 +12,10 @@ namespace Basis.App.Assemblers
         private readonly Queue<IAssemblerPart> _assemblerParts = new();
         private readonly CancellationTokenSource _tokenSource = new();
 
-        private int _servicesCount;
-        private int _currentStepCount;
-        private float _progress;
+        public event Action<float> OnStepLoaded;
+        public int ServicesCount { get; private set; }
+        public int CurrentStepCount { get; private set; }
+        public float Progress { get; private set; }
 
         protected Assembler(List<IAssemblerPart> assemblerParts)
         {
@@ -23,23 +24,28 @@ namespace Basis.App.Assemblers
 #pragma warning restore CS4014
         }
 
-        protected abstract void FinishAssembly();
+        protected abstract void OnStartAssembly();
+        
+        protected abstract void OnFinishAssembly();
 
         private async Task LaunchAssemblerPartsAsync(List<IAssemblerPart> assemblerParts)
         {
+            await Task.Delay(100);
+
+            OnStartAssembly();
+            
             foreach (var assemblerPart in assemblerParts)
             {
                 _assemblerParts.Enqueue(assemblerPart);
             }
             
-            _servicesCount = _assemblerParts.Count;
-            
+            ServicesCount = _assemblerParts.Count;
             while (_assemblerParts.Count > 0)
             {
                 if (_tokenSource.IsCancellationRequested)
                 {
                     return;
-                }
+                } 
                 
                 var assemblerPart = _assemblerParts.Peek();
                 try
@@ -49,43 +55,26 @@ namespace Basis.App.Assemblers
                 }
                 catch (Exception e)
                 {
-                    Debug.Log($"Service {assemblerPart.GetType()} was error launch.".WithColor(LoggerColor.Red) +
-                              $"\nMessage {e.Message}." +
-                              $"\nStacktrace: {e.StackTrace}.");
-
-                    await Task.Delay(100);
-                    continue;
+                    _tokenSource.Cancel();
+                    throw new Exception(
+                        $"Service {assemblerPart.GetType()} was error launch.".WithColor(LoggerColor.Red) +
+                        $"\nMessage {e.Message}." +
+                        $"\nStacktrace: {e.StackTrace}.");
                 }
                 
                 _assemblerParts.Dequeue();
-                _currentStepCount++;
-                _progress = (float) _servicesCount / _currentStepCount;
+                CurrentStepCount++;
+                Progress = (float) CurrentStepCount / ServicesCount;
+                OnStepLoaded?.Invoke(Progress);
                 Debug.Log($"Service: {assemblerPart.GetType()} launched successfully".WithColor(LoggerColor.Green));
             }
 
-            FinishAssembly();
+            OnFinishAssembly();
         }
 
-        private void Dispose()
+        public void Dispose()
         {
             _tokenSource.Cancel();
         }
-
-        #region IAssembler
-
-        int IAssembler.ServicesCount => _servicesCount;
-        int IAssembler.CurrentStepCount => _currentStepCount;
-        float IAssembler.Progress => _progress;
-        
-        #endregion
-        
-        #region IDisposable
-
-        void IDisposable.Dispose()
-        {
-            Dispose();
-        }
-
-        #endregion
     }
 }

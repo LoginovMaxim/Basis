@@ -17,7 +17,7 @@ namespace Basis.Editor.Configs
             _sheetsService = sheetsService;
         }
 
-        private async Task<ISheet> GetSheetAsync(string sheetName, CancellationToken token)
+        public async Task<ISheet> GetSheetAsync(string sheetName, CancellationToken token)
         {
             if (_sheets.TryGetValue(sheetName, out var sheet))
             {
@@ -29,13 +29,5 @@ namespace Basis.Editor.Configs
             return sheet;
         }
 
-        #region ISheetSource
-
-        Task<ISheet> ISheetSource.GetSheetAsync(string sheetName, CancellationToken token)
-        {
-            return GetSheetAsync(sheetName, token);
-        }
-
-        #endregion
     }
 }

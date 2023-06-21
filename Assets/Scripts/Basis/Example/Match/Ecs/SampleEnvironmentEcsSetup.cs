@@ -16,13 +16,13 @@ namespace Basis.Example.Match.Ecs
             _shipPool = shipPool;
         }
 
-        protected override void AddSystems()
+        public override void AddSystems()
         {
             AddSystem(-100, new MapBuilderSystem());
             AddSystem(1000, new MapUpdateSystem());
         }
 
-        protected override void AddInjects()
+        public override void AddInjects()
         {
             AddInject(_mapConfigProvider);
             AddInject(_shipPool);

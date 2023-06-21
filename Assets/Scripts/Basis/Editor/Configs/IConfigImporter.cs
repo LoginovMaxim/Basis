@@ -5,6 +5,6 @@ namespace Basis.Editor.Configs
 {
     public interface IConfigImporter
     {
-        Task<byte[]> Import(ISheetSource sheetSource, CancellationToken token);
+        Task<byte[]> ImportAsync(ISheetSource sheetSource, CancellationToken token);
     }
 }

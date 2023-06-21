@@ -5,15 +5,15 @@ namespace Basis.App.UI.Screens.Logics
     public abstract class BaseScreen<TScreenViewModel> : IScreen where TScreenViewModel : IScreenViewModel
     {
         protected readonly TScreenViewModel ScreenViewModel;
-        private readonly int _id;
+        public int Id { get; private set; }
         
         protected BaseScreen(TScreenViewModel screenViewModel, int id)
         {
             ScreenViewModel = screenViewModel;
-            _id = id;
+            Id = id;
         }
         
-        private void SetActive(bool isActive)
+        public void SetActive(bool isActive)
         {
             ScreenViewModel.SetActive(isActive);
 
@@ -27,29 +27,8 @@ namespace Basis.App.UI.Screens.Logics
             }
         }
 
-        protected abstract void OnShow();
+        public abstract void OnShow();
 
-        protected abstract void OnHide();
-
-        #region IScreen
-
-        int IScreen.Id => _id;
-
-        void IScreen.SetActive(bool isActive)
-        {
-            SetActive(isActive);
-        }
-
-        void IScreen.OnShow()
-        {
-            OnShow();
-        }
-
-        void IScreen.OnHide()
-        {
-            OnHide();
-        }
-
-        #endregion
+        public abstract void OnHide();
     }
 }

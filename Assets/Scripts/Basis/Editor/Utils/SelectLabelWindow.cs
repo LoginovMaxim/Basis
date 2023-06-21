@@ -26,7 +26,7 @@ namespace Basis.Editor.Utils
             window.Show(true);
 
             window._binaryConfigManager = new BinaryConfigManager(new ResourceProvider());
-            await window._binaryConfigManager.LoadLocal(true, new CancellationToken());
+            await window._binaryConfigManager.LoadLocalAsync(true, new CancellationToken());
             
             var localizationConfig = window._binaryConfigManager.GetConfig(BinaryConfigId.Localization);
             var entity = localizationConfig.GetEntity<LocalizationConfigEntity>(LocalizationConfigEntity.InstanceId);

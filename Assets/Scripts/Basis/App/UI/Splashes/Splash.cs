@@ -9,14 +9,14 @@
             _splashViewModel = splashViewModel;
         }
 
-        public void Show()
+        public virtual void Show()
         {
             _splashViewModel.SetActive(true);
         }
 
-        public void Hide()
+        public virtual void Hide()
         {
-            _splashViewModel.SetActive(false);
+            _splashViewModel.Hide();
         }
     }
 }

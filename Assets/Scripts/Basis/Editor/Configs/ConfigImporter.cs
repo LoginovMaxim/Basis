@@ -9,7 +9,7 @@ namespace Basis.Editor.Configs
     {
         protected abstract IConfigEntityImporter[] ConfigEntityImporters { get; }
 
-        private async Task<byte[]> ImportAsync(ISheetSource sheetSource, CancellationToken token)
+        public async Task<byte[]> ImportAsync(ISheetSource sheetSource, CancellationToken token)
         {
             var entities = new List<IConfigEntity>();
             foreach (var configEntityImporters in ConfigEntityImporters)
@@ -18,14 +18,5 @@ namespace Basis.Editor.Configs
             }
             return BinaryConfig.Save(entities);
         }
-
-        #region IConfigImporter
-
-        Task<byte[]> IConfigImporter.Import(ISheetSource sheetSource, CancellationToken token)
-        {
-            return ImportAsync(sheetSource, token);
-        }
-
-        #endregion
     }
 }

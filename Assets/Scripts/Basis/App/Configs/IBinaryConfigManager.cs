@@ -8,7 +8,7 @@ namespace Basis.App.Configs
     {
         BinaryConfigId[] ConfigIds { get; }
         IBinaryConfig GetConfig(BinaryConfigId binaryConfigId);
-        Task<bool> LoadLocal(bool cached, CancellationToken token);
+        Task<bool> LoadLocalAsync(bool cached, CancellationToken token);
         IHandle SubscribeToUpdate(BinaryConfigId binaryConfigId, Action onConfigUpdate);
     }
 }

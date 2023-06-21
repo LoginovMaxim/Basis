@@ -8,6 +8,8 @@ namespace Basis.Ecs.Pool
 {
     public sealed class EntityPool<TPoolObject> : IEntityPool where TPoolObject : IPoolObject
     {
+        IPoolObject IEntityPool.PoolObject => _poolObject;
+        
         private readonly IPrefabFactory _prefabFactory;
         private readonly TPoolObject _poolObject;
         private readonly Transform _parent;
@@ -23,7 +25,7 @@ namespace Basis.Ecs.Pool
             _parent = parent;
         }
 
-        private void Initialize(SpawnComponent spawnComponent, int poolSize)
+        public void Initialize(SpawnComponent spawnComponent, int poolSize)
         {
             _spawnComponent = spawnComponent;
             _poolSize = poolSize;
@@ -36,7 +38,7 @@ namespace Basis.Ecs.Pool
             }
         }
 
-        private EcsPackedEntityWithWorld Spawn(SpawnData spawnData)
+        public EcsPackedEntityWithWorld Spawn(SpawnData spawnData)
         {
             foreach (var entity in _entityPool)
             {
@@ -111,7 +113,7 @@ namespace Basis.Ecs.Pool
             return entity;
         }
 
-        private void Despawn(EcsPackedEntityWithWorld entity)
+        public void Despawn(EcsPackedEntityWithWorld entity)
         {
             if (!entity.Unpack(out var world, out var unpackedEntity))
             {
@@ -129,26 +131,5 @@ namespace Basis.Ecs.Pool
                 activePool.Del(unpackedEntity);
             }
         }
-
-        #region IEntityPool
-
-        IPoolObject IEntityPool.PoolObject => _poolObject;
-
-        void IEntityPool.Initialize(SpawnComponent spawnComponent, int poolSize)
-        {
-            Initialize(spawnComponent, poolSize);
-        }
-
-        EcsPackedEntityWithWorld IEntityPool.Spawn(SpawnData spawnData)
-        {
-            return Spawn(spawnData);
-        }
-
-        void IEntityPool.Despawn(EcsPackedEntityWithWorld entity)
-        {
-            Despawn(entity);
-        }
-
-        #endregion
     }
 }

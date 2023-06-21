@@ -32,7 +32,7 @@ namespace Basis.Example.Match.Ecs
             _unitPool = unitPool;
         }
 
-        protected override void AddSystems()
+        public override void AddSystems()
         {
 #if UNITY_EDITOR
             AddSystem(-1000, new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem());
@@ -55,7 +55,7 @@ namespace Basis.Example.Match.Ecs
             AddSystem(10000, new OneFrameSystem<OnKeyPressedEvent>());
         }
 
-        protected override void AddInjects()
+        public override void AddInjects()
         {
             AddInject(_prefabFactory);
             AddInject(_popupService);

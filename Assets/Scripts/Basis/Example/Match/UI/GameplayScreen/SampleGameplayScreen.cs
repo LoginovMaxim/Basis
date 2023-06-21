@@ -9,12 +9,12 @@ namespace Basis.Example.Match.UI.GameplayScreen
         {
         }
 
-        protected override void OnShow()
+        public override void OnShow()
         {
             Debug.Log("Show gameplay screen");
         }
 
-        protected override void OnHide()
+        public override void OnHide()
         {
             Debug.Log("Hide gameplay screen");
         }

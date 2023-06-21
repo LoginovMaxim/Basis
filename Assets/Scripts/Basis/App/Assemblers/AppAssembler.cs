@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Basis.App.UI.Splashes;
+using Azur.TowerDefense.App.UI.Splashes;
 
 namespace Basis.App.Assemblers
 {
@@ -12,7 +12,11 @@ namespace Basis.App.Assemblers
             _appSplash = appSplash;
         }
 
-        protected override void FinishAssembly()
+        protected override void OnStartAssembly()
+        {
+        }
+
+        protected override void OnFinishAssembly()
         {
             _appSplash.Hide();
         }

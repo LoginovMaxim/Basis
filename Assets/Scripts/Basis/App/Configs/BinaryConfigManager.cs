@@ -10,13 +10,11 @@ namespace Basis.App.Configs
 {
     public sealed class BinaryConfigManager : IBinaryConfigManager, IDisposable
     {
-        #region Constants
-
         private const string TimestampName = "ConfigTimestamp";
         private const string TimestampVersionName = "ConfigTimestampVersion";
         private const string Version = "0.0.0";
 
-        #endregion
+        public BinaryConfigId[] ConfigIds => _configIds;
 
         private static readonly BinaryConfigId[] _configIds = GetBinaryConfigIds();
 
@@ -46,7 +44,7 @@ namespace Basis.App.Configs
             }
         }
 
-        private IBinaryConfig GetConfig(BinaryConfigId binaryConfigId)
+        public IBinaryConfig GetConfig(BinaryConfigId binaryConfigId)
         {
             return _binaryConfigById[binaryConfigId];
         }
@@ -106,7 +104,7 @@ namespace Basis.App.Configs
 
         private async Task<Tuple<byte[], long>> LoadStoredConfigAsync(BinaryConfigId binaryConfigId, CancellationToken token)
         {
-            var resource = await _resourceProvider.LoadResource($"BinaryConfigs/{ GetBinaryConfigName(binaryConfigId) }", token);
+            var resource = await _resourceProvider.LoadResourceAsync($"BinaryConfigs/{ GetBinaryConfigName(binaryConfigId) }", token);
             try
             {
                 var textAsset = (TextAsset) resource;
@@ -173,7 +171,7 @@ namespace Basis.App.Configs
             return false;
         }
 
-        private async Task<bool> LoadLocalAsync(bool cached, CancellationToken token)
+        public async Task<bool> LoadLocalAsync(bool cached, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             Debug.Log($"Load local configs (cached = { cached })");
@@ -229,7 +227,7 @@ namespace Basis.App.Configs
             return false;
         }
 
-        private IHandle SubscribeToUpdate(BinaryConfigId binaryConfigId, Action onConfigUpdate)
+        public IHandle SubscribeToUpdate(BinaryConfigId binaryConfigId, Action onConfigUpdate)
         {
             var subscription = new UpdateSubscriprion("binary_config_manager", onConfigUpdate);
             _updateSubscriptionHashSetByBinaryConfigId[binaryConfigId].Add(subscription);
@@ -278,7 +276,7 @@ namespace Basis.App.Configs
             return $"{ Application.persistentDataPath }/{ GetBinaryConfigFileName(binaryConfigId) }";
         }
 
-        private void Dispose()
+        public void Dispose()
         {
             if (_disposed)
             {
@@ -301,35 +299,5 @@ namespace Basis.App.Configs
         {
             return $"{GetBinaryConfigName(binaryConfigId)}.bytes";
         }
-
-        #region IBinaryConfigManager
-
-        BinaryConfigId[] IBinaryConfigManager.ConfigIds => _configIds;
-
-        IBinaryConfig IBinaryConfigManager.GetConfig(BinaryConfigId binaryConfigId)
-        {
-            return GetConfig(binaryConfigId);
-        }
-
-        Task<bool> IBinaryConfigManager.LoadLocal(bool cached, CancellationToken token)
-        {
-            return LoadLocalAsync(cached, token);
-        }
-
-        IHandle IBinaryConfigManager.SubscribeToUpdate(BinaryConfigId binaryConfigId, Action onConfigUpdate)
-        {
-            return SubscribeToUpdate(binaryConfigId, onConfigUpdate);
-        }
-
-        #endregion
-
-        #region IDisposable
-
-        void IDisposable.Dispose()
-        {
-            Dispose();
-        }
-
-        #endregion
     }
 }

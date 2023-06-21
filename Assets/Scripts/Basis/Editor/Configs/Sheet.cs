@@ -5,6 +5,12 @@ namespace Basis.Editor.Configs
 {
     public sealed class Sheet : ISheet
     {
+        public string Name => _name;
+
+        public string[] Header => _header;
+
+        public ISheetRow this[string columnName, string value] => GetRow(columnName, value);
+        
         private readonly string _name;
         private readonly string[] _header;
         private readonly Dictionary<string, int> _nameToIndexMap = new Dictionary<string, int>();
@@ -26,12 +32,12 @@ namespace Basis.Editor.Configs
             }
         }
 
-        private List<ISheetRow> GetRows()
+        public List<ISheetRow> GetRows()
         {
             return _rows;
         }
 
-        private List<ISheetRow> SelectRows(Func<ISheetRow, bool> match)
+        public List<ISheetRow> SelectRows(Func<ISheetRow, bool> match)
         {
             var rows = new List<ISheetRow>();
             foreach (var row in _rows)
@@ -44,7 +50,7 @@ namespace Basis.Editor.Configs
             return rows;
         }
 
-        private ISheetRow GetRow(string columnName, string value)
+        public ISheetRow GetRow(string columnName, string value)
         {
             var rows = SelectRows(row => (string)row[columnName] == value);
             if (rows.Count < 1)
@@ -57,30 +63,5 @@ namespace Basis.Editor.Configs
             }
             return rows[0];
         }
-
-        #region ISheet
-
-        string ISheet.Name => _name;
-
-        string[] ISheet.Header => _header;
-
-        ISheetRow ISheet.this[string columnName, string value] => GetRow(columnName, value);
-
-        List<ISheetRow> ISheet.GetRows()
-        {
-            return GetRows();
-        }
-
-        List<ISheetRow> ISheet.SelectRows(Func<ISheetRow, bool> match)
-        {
-            return SelectRows(match);
-        }
-
-        ISheetRow ISheet.GetRow(string columnName, string value)
-        {
-            return GetRow(columnName, value);
-        }
-
-        #endregion
     }
 }

@@ -5,6 +5,10 @@ namespace Basis.Editor.Configs
 {
     public sealed class SheetRow : ISheetRow
     {
+        public int Length => _values.Count;
+
+        public object this[string name] => GetValue(name);
+        
         private readonly ISheet _sheet;
         private readonly Dictionary<string, int> _nameToIndexMap;
         private readonly IList<object> _values;
@@ -19,7 +23,7 @@ namespace Basis.Editor.Configs
             _values = values;
         }
 
-        private object GetValue(string name)
+        public object GetValue(string name)
         {
             if (!_nameToIndexMap.TryGetValue(name, out var index))
             {
@@ -28,67 +32,29 @@ namespace Basis.Editor.Configs
             return index < _values.Count ? _values[index] : null;
         }
 
-        private object GetValueByIndex(int i)
+        public object GetValueByIndex(int i)
         {
             return _values[i];
         }
 
-        private string GetValueAsString(string name)
+        public string GetValueAsString(string name)
         {
             return GetValue(name).ToString();
         }
 
-        private bool GetValueAsBool(string name)
+        public bool GetValueAsBool(string name)
         {
             return Convert.ToBoolean(GetValue(name));
         }
 
-        private int GetValueAsInt(string name)
+        public int GetValueAsInt(string name)
         {
             return Convert.ToInt32(GetValue(name));
         }
 
-        private float GetValueAsFloat(string name)
+        public float GetValueAsFloat(string name)
         {
             return Convert.ToSingle(GetValue(name));
         }
-
-        #region ISheetRow
-
-        int ISheetRow.Length => _values.Count;
-
-        object ISheetRow.this[string name] => GetValue(name);
-
-        object ISheetRow.GetValueByIndex(int i)
-        {
-            return GetValueByIndex(i);
-        }
-
-        object ISheetRow.GetValue(string name)
-        {
-            return GetValue(name);
-        }
-
-        string ISheetRow.GetValueAsString(string name)
-        {
-            return GetValueAsString(name);
-        }
-
-        bool ISheetRow.GetValueAsBool(string name)
-        {
-            return GetValueAsBool(name);
-        }
-
-        int ISheetRow.GetValueAsInt(string name)
-        {
-            return GetValueAsInt(name);
-        }
-
-        float ISheetRow.GetValueAsFloat(string name)
-        {
-            return GetValueAsFloat(name);
-        }
-
-        #endregion
     }
 }

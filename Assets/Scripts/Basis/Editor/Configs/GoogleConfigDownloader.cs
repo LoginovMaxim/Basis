@@ -11,13 +11,9 @@ namespace Basis.Editor.Configs
 {
     public class GoogleConfigDownloader
     {
-        #region Constants
-
         private const string ApplicationName = "Google Sheets API .NET Quickstart";
         private const string CredentialsFileName = "credentials.json";
         private const string AccessTokenPath = "Token";
-
-        #endregion
 
         private static readonly string[] _scopes = { SheetsService.Scope.SpreadsheetsReadonly };
 

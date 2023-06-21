@@ -6,7 +6,7 @@ namespace Basis.Ecs
 {
     public sealed class PrefabFactory : MonoBehaviour, IPrefabFactory
     {
-	    private EcsPackedEntityWithWorld Spawn(SpawnComponent spawnComponent, Transform parent)
+	    public EcsPackedEntityWithWorld Spawn(SpawnComponent spawnComponent, Transform parent)
 		{
 			var gameObject = Instantiate(spawnComponent.Prefab, spawnComponent.Position, spawnComponent.Rotation, parent);
 
@@ -25,7 +25,7 @@ namespace Basis.Ecs
 			return packedEcsEntityWithWorld;
 		}
 
-		private void Despawn(EcsPackedEntityWithWorld entity)
+	    public void Despawn(EcsPackedEntityWithWorld entity)
         {
 	        if (!entity.Unpack(out var world, out var unpackedEntity))
 	        {
@@ -37,7 +37,7 @@ namespace Basis.Ecs
 			world.DelEntity(unpackedEntity);
         }
 
-		private void ConvertAllMonoEntitiesInScene(EcsWorld world)
+		public void ConvertAllMonoEntitiesInScene(EcsWorld world)
 		{
 			var monoEntities = FindObjectsOfType<MonoEntity>();
 
@@ -55,24 +55,5 @@ namespace Basis.Ecs
 				monoEntity.gameObject.AddComponent<ConvertedEntityComponent>();
 			}
 		}
-
-		#region IPrefabFactory
-
-		EcsPackedEntityWithWorld IPrefabFactory.Spawn(SpawnComponent spawnComponent, Transform parent)
-		{
-			return Spawn(spawnComponent, parent);
-		}
-
-		void IPrefabFactory.Despawn(EcsPackedEntityWithWorld entity)
-		{
-			Despawn(entity);
-		}
-
-		void IPrefabFactory.ConvertAllMonoEntitiesInScene(EcsWorld world)
-		{
-			ConvertAllMonoEntitiesInScene(world);
-		}
-
-		#endregion
     }
 }
