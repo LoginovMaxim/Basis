@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using Azur.TowerDefense.App.UI.Splashes;
 using Basis.App.Assemblers;
+using Basis.App.UI.Splashes;
 using Basis.Example.Match.Ecs;
 using Basis.Example.Match.UI;
 
-namespace Basis.Example.App.Assemblers
+namespace Basis.Example.Match.Assemblers
 {
     public sealed class SampleMatchAssembler : Assembler, ISampleMatchAssembler
     {

@@ -1,13 +1,13 @@
 ﻿using System;
 using Zenject;
 
-namespace Basis.Example.App.Commands
+namespace Basis.App.Commands
 {
-    public abstract class Command : IDisposable
+    public abstract class EmptyCommand : IDisposable
     {
         protected readonly SignalBus _signalBus;
 
-        protected Command(SignalBus signalBus)
+        protected EmptyCommand(SignalBus signalBus)
         {
             _signalBus = signalBus;
             Subscribe();
@@ -15,14 +15,10 @@ namespace Basis.Example.App.Commands
 
         protected abstract void Subscribe();
         protected abstract void Unsubscribe();
-
-        #region IDisposable
         
-        void IDisposable.Dispose()
+        public void Dispose()
         {
             Unsubscribe();
         }
-
-        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using Basis.App.UI.Screens.ViewModels;
+﻿using Basis.App.Signals;
+using Basis.App.UI.Screens.ViewModels;
 using Basis.Example.Match.Signals;
 using UnityWeld.Binding;
 
@@ -8,7 +9,7 @@ namespace Basis.Example.Match.UI.PauseScreen
     {
         [Binding] public void OnUnpauseButtonClicked()
         {
-            SignalBus.Fire<UnpauseMatchSampleSignal>();
+            SignalBus.Fire(new UnpauseMatchSampleSignal(new EmptySignalData()));
         }
     }
 }

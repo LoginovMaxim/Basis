@@ -1,6 +1,11 @@
-﻿namespace Basis.Example.Match.Signals
+﻿using Basis.App.Signals;
+
+namespace Basis.Example.Match.Signals
 {
-    public class PauseMatchSampleSignal
+    public sealed class PauseMatchSampleSignal : Signal<EmptySignalData>
     {
+        public PauseMatchSampleSignal(EmptySignalData signalData) : base(signalData)
+        {
+        }
     }
 }

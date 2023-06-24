@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Basis.App.Monos;
@@ -10,7 +11,7 @@ using Zenject;
 
 namespace Basis.App.UI.Services
 {
-    public abstract class ScreenService<TScreen> : IScreenService where TScreen : IScreen
+    public abstract class ScreenService<TScreen> : IScreenService, IDisposable where TScreen : IScreen
     {
         public IScreen CurrentScreen => _currentScreen;
         
@@ -123,6 +124,11 @@ namespace Basis.App.UI.Services
             
             stackInfo.Append("]");
             Debug.Log(stackInfo.ToString().WithColor(Color.cyan));
+        }
+
+        public void Dispose()
+        {
+            _signalBus.TryUnsubscribe<SwitchScreenSignal>(x => OnChangeScreenButtonClicked(x.ScreenId));
         }
     }
 }

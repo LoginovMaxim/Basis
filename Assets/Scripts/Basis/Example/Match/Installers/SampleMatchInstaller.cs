@@ -5,6 +5,7 @@ using Basis.App.Services;
 using Basis.Ecs;
 using Basis.Example.App.Assemblers;
 using Basis.Example.App.Services;
+using Basis.Example.Match.Assemblers;
 using Basis.Example.Match.Ecs;
 using Basis.Example.Match.Fsm.SampleMachine;
 using Basis.Example.Match.Services;

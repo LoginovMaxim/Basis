@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using Basis.App.Commands;
 using Basis.App.Services;
-using Basis.Example.App.Commands;
+using Basis.App.Signals;
 using Basis.Example.Match.Signals;
 using Zenject;
 
 namespace Basis.Example.Match.Commands
 {
-    public class UnpauseMatchSampleCommand : Command
+    public class UnpauseMatchSampleCommand : Command<EmptySignalData, UnpauseMatchSampleSignal>
     {
         private readonly List<IUpdatableService> _updatableServices;
         
@@ -15,19 +16,9 @@ namespace Basis.Example.Match.Commands
             _updatableServices = updatableServices;
         }
 
-        private void OnUnpauseMatch()
+        protected override void Execute(EmptySignalData signalData)
         {
             _updatableServices.ForEach(service => service.Unpause());
-        }
-        
-        protected override void Subscribe()
-        {
-            _signalBus.Subscribe<UnpauseMatchSampleSignal>(OnUnpauseMatch);
-        }
-
-        protected override void Unsubscribe()
-        {
-            _signalBus.Unsubscribe<UnpauseMatchSampleSignal>(OnUnpauseMatch);
         }
     }
 }

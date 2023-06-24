@@ -1,4 +1,5 @@
-﻿using Basis.App.UI.Screens.ViewModels;
+﻿using Basis.App.Signals;
+using Basis.App.UI.Screens.ViewModels;
 using Basis.Example.Meta.Signals;
 using UnityWeld.Binding;
 
@@ -8,7 +9,7 @@ namespace Basis.Example.Meta.UI.MainScreen
     {
         [Binding] public void OnPlayButtonClicked()
         {
-            SignalBus.Fire<PlayMatchSampleSignal>();
+            SignalBus.Fire(new PlayMatchSampleSignal(new EmptySignalData()));
         }
     }
 }

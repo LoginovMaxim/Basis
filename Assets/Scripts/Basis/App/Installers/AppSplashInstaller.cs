@@ -1,4 +1,4 @@
-﻿using Azur.TowerDefense.App.UI.Splashes;
+﻿using Basis.App.UI.Splashes;
 using Zenject;
 
 namespace Basis.App.Installers
