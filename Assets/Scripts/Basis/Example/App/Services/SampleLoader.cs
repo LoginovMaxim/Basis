@@ -1,13 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
 using Basis.App.Assemblers;
+using Cysharp.Threading.Tasks;
 
 namespace Basis.Example.App.Services
 {
     public sealed class SampleLoader : ISampleLoader, IAssemblerPart
     {
-        public async Task Launch()
+        public async UniTask Launch(CancellationToken token)
         {
-            await Task.Delay(100);
+            await UniTask.Delay(100);
         }
     }
 }

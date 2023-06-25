@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace Basis.App.Configs
@@ -54,7 +55,7 @@ namespace Basis.App.Configs
             return PlayerPrefs.GetString(binaryConfigId.ToString(), _cachedBinaryConfigVersion);
         }
 
-        private async Task<Tuple<bool, bool>> LoadStoredAsync(BinaryConfigId binaryConfigId, CancellationToken token)
+        private async UniTask<Tuple<bool, bool>> LoadStoredAsync(BinaryConfigId binaryConfigId, CancellationToken token)
         {
             Debug.Log($"/{ binaryConfigId }/ Load stored config");
             var tuple = await LoadStoredConfigAsync(binaryConfigId, token);
@@ -78,7 +79,7 @@ namespace Basis.App.Configs
             return new Tuple<bool, bool>(true, true);
         }
 
-        private async Task<Tuple<bool, bool>> LoadCachedAsync(BinaryConfigId binaryConfigId, CancellationToken token)
+        private async UniTask<Tuple<bool, bool>> LoadCachedAsync(BinaryConfigId binaryConfigId, CancellationToken token)
         {
             Debug.Log($"/{ binaryConfigId }/ Load cached config");
             var tuple = await LoadCachedConfigAsync(binaryConfigId, token);
@@ -102,7 +103,7 @@ namespace Basis.App.Configs
             return new Tuple<bool, bool>(true, true);
         }
 
-        private async Task<Tuple<byte[], long>> LoadStoredConfigAsync(BinaryConfigId binaryConfigId, CancellationToken token)
+        private async UniTask<Tuple<byte[], long>> LoadStoredConfigAsync(BinaryConfigId binaryConfigId, CancellationToken token)
         {
             var resource = await _resourceProvider.LoadResourceAsync($"BinaryConfigs/{ GetBinaryConfigName(binaryConfigId) }", token);
             try
@@ -121,7 +122,7 @@ namespace Basis.App.Configs
             return null;
         }
 
-        private async Task<Tuple<byte[], long>> LoadCachedConfigAsync(BinaryConfigId binaryConfigId, CancellationToken token)
+        private async UniTask<Tuple<byte[], long>> LoadCachedConfigAsync(BinaryConfigId binaryConfigId, CancellationToken token)
         {
             var fileName = GetCachedConfigFileName(binaryConfigId);
             try
@@ -145,7 +146,7 @@ namespace Basis.App.Configs
             return null;
         }
 
-        private async Task<bool> CacheConfigAsync(BinaryConfigId binaryConfigId, byte[] bytes, long timestamp, CancellationToken token)
+        private async UniTask<bool> CacheConfigAsync(BinaryConfigId binaryConfigId, byte[] bytes, long timestamp, CancellationToken token)
         {
             var fileName = GetCachedConfigFileName(binaryConfigId);
             try
@@ -171,7 +172,7 @@ namespace Basis.App.Configs
             return false;
         }
 
-        public async Task<bool> LoadLocalAsync(bool cached, CancellationToken token)
+        public async UniTask<bool> LoadLocalAsync(bool cached, CancellationToken token)
         {
             token.ThrowIfCancellationRequested();
             Debug.Log($"Load local configs (cached = { cached })");

@@ -1,7 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Basis.App.Assemblers;
-using Basis.App.Fsm;
 using Basis.App.Monos;
 using Basis.App.Services;
 using GoodCat.EcsLite.Shared;
@@ -9,7 +6,7 @@ using Leopotam.EcsLite;
 
 namespace Basis.Ecs
 {
-    public abstract class EcsService<TEcsSetup> : UpdatableService, IEcsService, IAssemblerPart where TEcsSetup : IEcsSetup
+    public abstract class EcsService<TEcsSetup> : UpdatableService, IEcsService where TEcsSetup : IEcsSetup
     {
         private readonly List<TEcsSetup> _ecsSetups;
         
@@ -29,7 +26,7 @@ namespace Basis.Ecs
             _world = world.World;
         }
 
-        public async Task Launch()
+        protected override void Start()
         {
             InitSystems();
             InitSetups();
@@ -38,6 +35,7 @@ namespace Basis.Ecs
             AddInjects();
             InitInjects();
             InitSystem();
+            base.Start();
         }
 
         private void InitSetups()
@@ -69,7 +67,7 @@ namespace Basis.Ecs
             _systems?.Destroy();
             _systems = null;
             _systems = new EcsSystems(_world);
-
+            
             _orderSystems = new List<EcsOrderSystem>();
         }
 
@@ -119,13 +117,13 @@ namespace Basis.Ecs
 
             if (_systems != null) 
             {
-                _systems.Destroy ();
+                _systems.Destroy();
                 _systems = null;
             }
             
             if (_world != null) 
             {
-                _world.Destroy ();
+                _world.Destroy();
                 _world = null;
             }
         }

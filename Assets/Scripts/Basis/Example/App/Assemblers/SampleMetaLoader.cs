@@ -1,6 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
 using Basis.App.Assemblers;
 using Basis.App.Monos;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 namespace Basis.Example.App.Assemblers
@@ -16,7 +17,7 @@ namespace Basis.Example.App.Assemblers
             _sceneLoader = sceneLoader;
         }
 
-        public async Task Launch()
+        public async UniTask Launch(CancellationToken token)
         {
             await _sceneLoader.LoadSceneAsync(SampleMetaScenePath, true, LoadSceneMode.Single);
         }

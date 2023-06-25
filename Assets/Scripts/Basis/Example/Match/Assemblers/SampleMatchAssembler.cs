@@ -10,29 +10,28 @@ namespace Basis.Example.Match.Assemblers
     {
         private readonly ISampleMatchScreenService _sampleMatchScreenService;
         private readonly ISampleEcsService _sampleEcsService;
-        private readonly IAppSplash _appSplash;
         
         public SampleMatchAssembler(
             ISampleMatchScreenService sampleMatchScreenService, 
             ISampleEcsService sampleEcsService, 
-            IAppSplash appSplash, 
-            List<IAssemblerPart> assemblerParts) : 
-            base(assemblerParts)
+            List<IAssemblerPart> assemblerParts, 
+            ISplash appSplash) : 
+            base(assemblerParts, appSplash)
         {
             _sampleMatchScreenService = sampleMatchScreenService;
             _sampleEcsService = sampleEcsService;
-            _appSplash = appSplash;
         }
 
         protected override void OnStartAssembly()
         {
+            // nothing
         }
 
         protected override void OnFinishAssembly()
         {
             _sampleMatchScreenService.ChangeScreen(SampleMatchScreenId.Gameplay);
             _sampleEcsService.Start();
-            _appSplash.Hide();
+            _splash.Hide();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Basis.App.Assemblers;
 using Basis.App.Configs;
+using Cysharp.Threading.Tasks;
 
 namespace Basis.App.Localizations
 {
@@ -18,7 +19,7 @@ namespace Basis.App.Localizations
             _localization = localization;
         }
 
-        public async Task Launch()
+        public async UniTask Launch(CancellationToken token)
         {
             await _binaryConfigManager.LoadLocalAsync(true, new CancellationToken());
             

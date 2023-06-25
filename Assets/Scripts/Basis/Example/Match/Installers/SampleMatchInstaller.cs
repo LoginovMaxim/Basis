@@ -27,12 +27,12 @@ namespace Basis.Example.Match.Installers
             Container.BindInterfacesTo<SampleEnvironmentEcsSetup>().AsSingle().NonLazy();
             
             var world = Container.BindEcsWorld<MainWorldBase>();
+            Container.BindEcsService<SampleEcsService>(world, UpdateType.Update);
             
             // assembler parts
             var assemblerPats = new List<IAssemblerPart>
             {
                 Container.BindAssemblerPart<SampleLoader>(),
-                Container.BindEcsAssemblerPart<SampleEcsService>(world, UpdateType.Update)
             };
 
             // assembler

@@ -5,20 +5,18 @@ namespace Basis.App.Assemblers
 {
     public sealed class AppAssembler : Assembler
     {
-        private IAppSplash _appSplash;
-        
-        public AppAssembler(IAppSplash appSplash, List<IAssemblerPart> assemblerParts) : base(assemblerParts)
+        public AppAssembler(List<IAssemblerPart> assemblerParts, ISplash splash) : base(assemblerParts, splash)
         {
-            _appSplash = appSplash;
         }
 
         protected override void OnStartAssembly()
         {
+            // nothing
         }
 
         protected override void OnFinishAssembly()
         {
-            _appSplash.Hide();
+            _splash.Hide();
         }
     }
 }

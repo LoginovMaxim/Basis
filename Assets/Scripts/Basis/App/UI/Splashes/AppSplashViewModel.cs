@@ -9,10 +9,10 @@ namespace Basis.App.UI.Splashes
     {
         private const float HideDelay = 0.25f;
         
-        [SerializeField] private RectTransform _progressBar;
         private float _progress;
         private int _percentage;
 
+        [Binding]
         public override float Progress
         {
             get => _progress;
@@ -25,7 +25,7 @@ namespace Basis.App.UI.Splashes
 
                 _progress = Mathf.Clamp01(value);
                 Percentage = (int)(_progress * 100);
-                AnimateProgress();
+                OnPropertyChanged(nameof(Progress));
             }
         }
 
@@ -46,11 +46,9 @@ namespace Basis.App.UI.Splashes
 
         [Binding] public string PercentageCaption { get; set; }
 
-        private void AnimateProgress()
+        public override void Show()
         {
-            var originalOffset = _progressBar.offsetMax;
-            _progressBar.anchorMax = new Vector2(_progress, _progressBar.anchorMax.y);
-            _progressBar.offsetMax = originalOffset;
+            gameObject.SetActive(true);
         }
 
         public override void Hide()

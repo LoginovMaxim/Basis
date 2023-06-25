@@ -4,8 +4,8 @@
     {
         public abstract float Progress { get; set; }
 
-        public virtual void Hide()
-        {
-        }
+        public abstract void Show();
+
+        public abstract void Hide();
     }
 }

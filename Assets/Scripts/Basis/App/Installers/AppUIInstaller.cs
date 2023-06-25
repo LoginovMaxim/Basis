@@ -3,13 +3,12 @@ using Zenject;
 
 namespace Basis.App.Installers
 {
-    public sealed class AppSplashInstaller : MonoInstaller
+    public sealed class AppUIInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<AppSplashViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();
-
-            Container.BindInterfacesTo<AppSplash>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<Splash<AppSplashViewModel>>().AsSingle().NonLazy();
         }
     }
 }

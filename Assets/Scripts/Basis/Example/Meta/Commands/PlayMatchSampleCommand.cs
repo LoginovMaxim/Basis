@@ -12,17 +12,17 @@ namespace Basis.Example.Meta.Commands
         private const string SampleMatchScenePath = "Example/Scenes/MatchExample";
         
         private readonly ISceneLoader _sceneLoader;
-        private readonly IAppSplash _appSplash;
+        private readonly ISplash _splash;
         
-        public PlayMatchSampleCommand(ISceneLoader sceneLoader, IAppSplash appSplash, SignalBus signalBus) : base(signalBus)
+        public PlayMatchSampleCommand(ISceneLoader sceneLoader, ISplash splash, SignalBus signalBus) : base(signalBus)
         {
             _sceneLoader = sceneLoader;
-            _appSplash = appSplash;
+            _splash = splash;
         }
 
         protected override void Execute()
         {
-            _appSplash.Show();
+            _splash.Show();
             _sceneLoader.LoadScene(SampleMatchScenePath, LoadSceneMode.Single, null);
         }
     }

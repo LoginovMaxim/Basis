@@ -1,13 +1,14 @@
-﻿using System.Threading.Tasks;
+﻿using System.Threading;
 using Basis.App.Assemblers;
+using Cysharp.Threading.Tasks;
 
 namespace Basis.Example.App.Assemblers
 {
     public sealed class SampleMetaInitializer : IAssemblerPart
     {
-        public async Task Launch()
+        public async UniTask Launch(CancellationToken token)
         {
-            await Task.Delay(500);
+            await UniTask.Delay(500);
         }
     }
 }

@@ -12,7 +12,13 @@ namespace Basis.Utils
         public static IfNotBoundBinder BindService<TUpdatableService>(this DiContainer container, UpdateType updateType, bool isImmediateStart = false)
             where TUpdatableService : IUpdatableService
         {
-            return container.BindInterfacesAndSelfTo<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
+            return container.BindInterfacesTo<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
+        }
+        
+        public static IfNotBoundBinder BindEcsService<TEcsUpdatableService>(this DiContainer container, IWorld world, UpdateType updateType)
+            where TEcsUpdatableService : IEcsService
+        {
+            return container.BindInterfacesTo<TEcsUpdatableService>().AsSingle().WithArguments(world, updateType).NonLazy();
         }
         
         public static IAssemblerPart BindAssemblerPart<TAssemblerPart>(this DiContainer container)
@@ -22,17 +28,10 @@ namespace Basis.Utils
             return container.Resolve<TAssemblerPart>();
         }
         
-        public static IAssemblerPart BindEcsAssemblerPart<TAssemblerPart>(this DiContainer container, IWorld world, UpdateType updateType)
-            where TAssemblerPart : IEcsService, IAssemblerPart
-        {
-            container.BindInterfacesAndSelfTo<TAssemblerPart>().AsSingle().WithArguments(world, updateType).NonLazy();
-            return container.Resolve<TAssemblerPart>();
-        }
-        
         public static IfNotBoundBinder BindAssembler<TAssembler>(this DiContainer container, List<IAssemblerPart> assemblerPart)
             where TAssembler : Assembler
         {
-            return container.BindInterfacesAndSelfTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
+            return container.BindInterfacesTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
         }
         
         public static TEcsWorld BindEcsWorld<TEcsWorld>(this DiContainer container)
