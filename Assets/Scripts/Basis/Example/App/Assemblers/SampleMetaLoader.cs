@@ -8,7 +8,7 @@ namespace Basis.Example.App.Assemblers
 {
     public sealed class SampleMetaLoader : IAssemblerPart
     {
-        private const string SampleMetaScenePath = "Example/Scenes/MetaExample";
+        private const string SampleMetaScenePath = "Basis/Example/Scenes/MetaExample";
         
         private readonly ISceneLoader _sceneLoader;
 

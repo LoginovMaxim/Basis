@@ -9,7 +9,7 @@ namespace Basis.Example.Meta.Commands
 {
     public sealed class PlayMatchSampleCommand : Command<PlayMatchSampleSignal>
     {
-        private const string SampleMatchScenePath = "Example/Scenes/MatchExample";
+        private const string SampleMatchScenePath = "Basis/Example/Scenes/MatchExample";
         
         private readonly ISceneLoader _sceneLoader;
         private readonly ISplash _splash;
