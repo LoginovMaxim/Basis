@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Basis.App.UI.Services
 {
-    public abstract class ScreenService<TScreen> : IScreenService, IDisposable where TScreen : IScreen
+    public abstract class ScreenService<TScreen> : IScreenService, IInitializable, IDisposable where TScreen : IScreen
     {
         public IScreen CurrentScreen => _currentScreen;
         
@@ -20,18 +20,18 @@ namespace Basis.App.UI.Services
         private readonly SignalBus _signalBus;
 
         private TScreen _currentScreen;
-        private Stack<int> _stackScreenIds = new Stack<int>();
+        private Stack<int> _stackScreenIds = new();
 
         protected ScreenService(List<TScreen> screens, SignalBus signalBus)
         {
             _screens = screens;
-            _screens.ForEach(screen =>
-            {
-                screen.SetActive(false);
-            });
-
             _signalBus = signalBus;
-            _signalBus.Subscribe<SwitchScreenSignal>(x => OnChangeScreenButtonClicked(x.ScreenId));
+        }
+
+        public void Initialize()
+        {
+            _screens.ForEach(screen => screen.SetActive(false));
+            _signalBus.Subscribe<SwitchScreenSignal>(OnChangeScreenButtonClicked);
         }
 
         public void OnChangeScreenButtonClicked(int screenId)
@@ -71,6 +71,11 @@ namespace Basis.App.UI.Services
             
             // Debug
             //PrintStackScreens();
+        }
+
+        private void OnChangeScreenButtonClicked(SwitchScreenSignal signal)
+        {
+            OnChangeScreenButtonClicked(signal.ScreenId);
         }
 
         private bool HasBack(int screenId, out int countPops)
@@ -128,7 +133,7 @@ namespace Basis.App.UI.Services
 
         public void Dispose()
         {
-            _signalBus.TryUnsubscribe<SwitchScreenSignal>(x => OnChangeScreenButtonClicked(x.ScreenId));
+            _signalBus.Unsubscribe<SwitchScreenSignal>(OnChangeScreenButtonClicked);
         }
     }
 }

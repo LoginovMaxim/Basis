@@ -7,7 +7,6 @@ using Basis.Ecs;
 using Basis.Example.App.Assemblers;
 using Basis.Utils;
 using Basis.VisualEffects;
-using UnityEngine;
 using Zenject;
 
 namespace Basis.App.Installers

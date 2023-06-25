@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Basis.App.Commands;
 using Basis.App.Services;
-using Basis.App.Signals;
 using Basis.Example.Match.Signals;
 using Zenject;
 
