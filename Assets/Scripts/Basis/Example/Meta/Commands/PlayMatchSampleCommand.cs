@@ -1,6 +1,5 @@
 ﻿using Basis.App.Commands;
 using Basis.App.Monos;
-using Basis.App.Signals;
 using Basis.App.UI.Splashes;
 using Basis.Example.Meta.Signals;
 using UnityEngine.SceneManagement;
@@ -8,7 +7,7 @@ using Zenject;
 
 namespace Basis.Example.Meta.Commands
 {
-    public sealed class PlayMatchSampleCommand : Command<EmptySignalData, PlayMatchSampleSignal>
+    public sealed class PlayMatchSampleCommand : Command<PlayMatchSampleSignal>
     {
         private const string SampleMatchScenePath = "Example/Scenes/MatchExample";
         
@@ -21,7 +20,7 @@ namespace Basis.Example.Meta.Commands
             _appSplash = appSplash;
         }
 
-        protected override void Execute(EmptySignalData signalData)
+        protected override void Execute()
         {
             _appSplash.Show();
             _sceneLoader.LoadScene(SampleMatchScenePath, LoadSceneMode.Single, null);

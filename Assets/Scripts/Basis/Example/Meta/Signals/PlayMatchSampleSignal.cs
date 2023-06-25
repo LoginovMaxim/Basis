@@ -1,11 +1,6 @@
-﻿using Basis.App.Signals;
-
-namespace Basis.Example.Meta.Signals
+﻿namespace Basis.Example.Meta.Signals
 {
-    public sealed class PlayMatchSampleSignal : Signal<EmptySignalData>
+    public sealed class PlayMatchSampleSignal
     {
-        public PlayMatchSampleSignal(EmptySignalData signalData) : base(signalData)
-        {
-        }
     }
 }

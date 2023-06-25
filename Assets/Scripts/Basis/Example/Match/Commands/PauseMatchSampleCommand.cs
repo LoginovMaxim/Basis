@@ -7,7 +7,7 @@ using Zenject;
 
 namespace Basis.Example.Match.Commands
 {
-    public class PauseMatchSampleCommand : Command<EmptySignalData, PauseMatchSampleSignal>
+    public class PauseMatchSampleCommand : Command<PauseMatchSampleSignal>
     {
         private readonly List<IUpdatableService> _updatableServices;
         
@@ -16,7 +16,7 @@ namespace Basis.Example.Match.Commands
             _updatableServices = updatableServices;
         }
 
-        protected override void Execute(EmptySignalData signalData)
+        protected override void Execute()
         {
             _updatableServices.ForEach(service => service.Pause());
         }

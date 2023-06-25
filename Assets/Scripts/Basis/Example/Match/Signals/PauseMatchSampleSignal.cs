@@ -1,11 +1,6 @@
-﻿using Basis.App.Signals;
-
-namespace Basis.Example.Match.Signals
+﻿namespace Basis.Example.Match.Signals
 {
-    public sealed class PauseMatchSampleSignal : Signal<EmptySignalData>
+    public sealed class PauseMatchSampleSignal
     {
-        public PauseMatchSampleSignal(EmptySignalData signalData) : base(signalData)
-        {
-        }
     }
 }
