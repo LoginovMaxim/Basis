@@ -23,6 +23,7 @@ namespace Basis.App.Installers
             Container.BindInterfacesTo<SceneLoader>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<GameObjectFinder>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<PrefabFactory>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ApplicationStatusHandler>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
             
             BindData();
