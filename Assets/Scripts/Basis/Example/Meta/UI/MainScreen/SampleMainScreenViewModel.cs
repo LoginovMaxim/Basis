@@ -8,7 +8,7 @@ namespace Basis.Example.Meta.UI.MainScreen
     {
         [Binding] public void OnPlayButtonClicked()
         {
-            SignalBus.Fire<PlayMatchSampleSignal>();
+            _signalBus.Fire<PlayMatchSampleSignal>();
         }
     }
 }

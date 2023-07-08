@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,7 +19,7 @@ namespace Basis.App.Monos
             StartCoroutine(UnloadingScene(sceneName));
         }
 
-        public async UniTask LoadSceneAsync(string scenePath, bool isActiveScene, LoadSceneMode loadSceneMode)
+        public async UniTask LoadSceneAsync(string scenePath, bool isActiveScene, LoadSceneMode loadSceneMode, CancellationToken token)
         {
             var sceneName = scenePath.Split('/');
             var asyncOperation = SceneManager.LoadSceneAsync(scenePath, loadSceneMode);
@@ -34,6 +35,11 @@ namespace Basis.App.Monos
 
             while (true)
             {
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+                
                 if (asyncOperation.progress >= 0.9f)
                 {
                     break;
@@ -45,11 +51,16 @@ namespace Basis.App.Monos
             asyncOperation.allowSceneActivation = true;
         }
 
-        public async UniTask UnloadAdditiveSceneAsync(string scenePath)
+        public async UniTask UnloadAdditiveSceneAsync(string scenePath, CancellationToken token)
         {
             var asyncOperation = SceneManager.UnloadSceneAsync(scenePath);
             while (true)
             {
+                if (token.IsCancellationRequested)
+                {
+                    return;
+                }
+                
                 if (asyncOperation.progress >= 0.9f)
                 {
                     break;

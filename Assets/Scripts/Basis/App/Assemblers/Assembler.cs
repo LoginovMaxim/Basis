@@ -43,7 +43,7 @@ namespace Basis.App.Assemblers
 
         private async UniTask LaunchAssemblerPartsAsync()
         {
-            await UniTask.Delay(100, cancellationToken: _tokenSource.Token);
+            await UniTask.Delay(200, cancellationToken: _tokenSource.Token);
             OnStartAssembly();
             
             ServicesCount = _assemblerParts.Count;
@@ -59,7 +59,13 @@ namespace Basis.App.Assemblers
                 {
                     Debug.Log($"Launching service: {assemblerPart.GetType()}");
                     await assemblerPart.Launch(_tokenSource.Token);
-                    await UniTask.Delay(100, cancellationToken: _tokenSource.Token);
+                
+                    CurrentStepCount++;
+                    Progress = (float) CurrentStepCount / ServicesCount;
+                
+                    OnStepLoaded?.Invoke(Progress);
+                    
+                    await UniTask.Delay(200, cancellationToken: _tokenSource.Token);
                 }
                 catch (Exception e)
                 {
@@ -71,15 +77,10 @@ namespace Basis.App.Assemblers
                 }
                 
                 _assemblerParts.Dequeue();
-                
-                CurrentStepCount++;
-                Progress = (float) CurrentStepCount / ServicesCount;
-                
-                OnStepLoaded?.Invoke(Progress);
                 Debug.Log($"Service: {assemblerPart.GetType()} launched successfully".WithColor(LoggerColor.Green));
             }
             
-            await UniTask.Delay(100, cancellationToken: _tokenSource.Token);
+            await UniTask.Delay(200, cancellationToken: _tokenSource.Token);
             OnFinishAssembly();
         }
 

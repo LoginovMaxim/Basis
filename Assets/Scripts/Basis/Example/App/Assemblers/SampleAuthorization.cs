@@ -6,10 +6,9 @@ namespace Basis.Example.App.Assemblers
 {
     public sealed class SampleAuthorization : IAssemblerPart
     {
-        public async UniTask Launch(CancellationToken token)
+        public UniTask Launch(CancellationToken token)
         {
-            // authorization pipeline
-            await UniTask.Delay(100, cancellationToken: token);
+            return UniTask.CompletedTask;
         }
     }
 }

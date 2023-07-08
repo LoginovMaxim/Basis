@@ -8,7 +8,7 @@ namespace Basis.Example.Match.UI.PauseScreen
     {
         [Binding] public void OnUnpauseButtonClicked()
         {
-            SignalBus.Fire<UnpauseMatchSampleSignal>();
+            _signalBus.Fire<UnpauseMatchSampleSignal>();
         }
     }
 }

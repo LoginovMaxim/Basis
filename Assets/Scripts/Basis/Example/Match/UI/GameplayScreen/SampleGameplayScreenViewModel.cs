@@ -8,7 +8,12 @@ namespace Basis.Example.Match.UI.GameplayScreen
     {
         [Binding] public void OnPauseButtonClicked()
         {
-            SignalBus.Fire<PauseMatchSampleSignal>();
+            _signalBus.Fire<PauseMatchSampleSignal>();
+        }
+        
+        [Binding] public void OnExitButtonClicked()
+        {
+            _signalBus.Fire<ExitMatchSampleSignal>();
         }
     }
 }

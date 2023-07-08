@@ -9,5 +9,11 @@ namespace Basis.Utils
             var hexColor = ColorUtility.ToHtmlStringRGB(color);
             return $"<color=#{hexColor}>{value}</color>";
         }
+
+        public static string GetTypeName(this string value)
+        {
+            var values = value.Split('.');
+            return values[^1];
+        }
     }
 }

@@ -5,6 +5,7 @@ using Basis.App.Localizations;
 using Basis.App.Monos;
 using Basis.Ecs;
 using Basis.Example.App.Assemblers;
+using Basis.Example.App.Services;
 using Basis.Utils;
 using Basis.VisualEffects;
 using Zenject;
@@ -22,7 +23,6 @@ namespace Basis.App.Installers
             Container.BindInterfacesTo<MonoUpdater>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<SceneLoader>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<GameObjectFinder>().FromComponentInHierarchy().AsSingle().NonLazy();
-            Container.BindInterfacesTo<PrefabFactory>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<ApplicationStatusHandler>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
             
@@ -35,9 +35,11 @@ namespace Basis.App.Installers
             
             if (RunExample)
             {
+                Container.BindInterfacesTo<SampleMetaSceneLoader>().AsSingle().NonLazy();
+                
                 assemblerPats.Add(Container.BindAssemblerPart<SampleSomethingLoader>());
                 assemblerPats.Add(Container.BindAssemblerPart<SampleAuthorization>());
-                assemblerPats.Add(Container.BindAssemblerPart<SampleMetaLoader>());
+                assemblerPats.Add(Container.BindAssemblerPart<SampleMetaLauncher>());
             }
             else
             {

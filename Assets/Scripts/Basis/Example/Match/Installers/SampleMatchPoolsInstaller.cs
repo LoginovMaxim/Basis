@@ -7,13 +7,10 @@ namespace Basis.Example.Match.Installers
 {
     public sealed class SampleMatchPoolsInstaller : MonoInstaller
     {
-        public SampleSeaBlockView SampleSeaBlockView;
-        public SampleShipView SampleShipView;
-        
         public override void InstallBindings()
         {
-            Container.BindViewPool<SampleSeaBlockView, SampleSeaBlockViewPool>(SampleSeaBlockView);
-            Container.BindViewPool<SampleShipView, SampleShipViewPool>(SampleShipView);
+            Container.BindViewPool<SampleSeaBlockView, SampleSeaBlockViewPool>(3000);
+            Container.BindViewPool<SampleShipView, SampleShipViewPool>(10);
         }
     }
 }

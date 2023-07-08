@@ -42,11 +42,14 @@ namespace Basis.Utils
             return container.Resolve<TEcsWorld>();
         }
         
-        public static void BindViewPool<TViewObject, TViewPool>(this DiContainer container, PoolObject prefab)
+        public static void BindViewPool<TViewObject, TViewPool>(this DiContainer container, int initialSize = 0)
             where TViewObject : IViewObject 
             where TViewPool : ViewPool<TViewObject>
         {
-            container.BindMemoryPool<TViewObject, TViewPool>().FromComponentInNewPrefab(prefab).AsCached().NonLazy();
+            var resourcePath = typeof(TViewObject).ToString().GetTypeName();
+            
+            container.BindMemoryPool<TViewObject, TViewPool>().WithInitialSize(initialSize)
+                .FromComponentInNewPrefabResource(resourcePath).AsCached().NonLazy();
             
             var viewPool = container.Resolve<TViewPool>();
             var poolService = container.Resolve<IPoolService>();

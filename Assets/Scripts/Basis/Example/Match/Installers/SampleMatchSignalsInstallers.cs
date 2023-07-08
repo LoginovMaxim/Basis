@@ -9,6 +9,7 @@ namespace Basis.Example.Match.Installers
         {
             Container.DeclareSignal<PauseMatchSampleSignal>();
             Container.DeclareSignal<UnpauseMatchSampleSignal>();
+            Container.DeclareSignal<ExitMatchSampleSignal>();
         }
     }
 }

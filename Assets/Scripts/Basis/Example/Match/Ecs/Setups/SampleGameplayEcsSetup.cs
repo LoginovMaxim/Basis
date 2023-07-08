@@ -12,20 +12,17 @@ namespace Basis.Example.Match.Ecs.Setups
 {
     public class SampleGameplayEcsSetup : EcsSetup, ISampleEcsSetup
     {
-        private readonly IPrefabFactory _prefabFactory;
         private readonly IPopupService _popupService;
         private readonly IEffectEmitter _effectEmitter;
         private readonly IShipPrefabConfigProvider _shipPrefabConfigProvider;
         private readonly IPoolService _poolService;
 
         public SampleGameplayEcsSetup(
-            IPrefabFactory prefabFactory, 
             IPopupService popupService, 
             IEffectEmitter effectEmitter, 
             IShipPrefabConfigProvider shipPrefabConfigProvider,
             IPoolService poolService)
         {
-            _prefabFactory = prefabFactory;
             _popupService = popupService;
             _effectEmitter = effectEmitter;
             _shipPrefabConfigProvider = shipPrefabConfigProvider;
@@ -38,13 +35,11 @@ namespace Basis.Example.Match.Ecs.Setups
             AddSystem(-1000, new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem());
 #endif
             
-            AddSystem(-1000, new ConvertAllMonoEntitiesSystem());
             AddSystem(-1000, new InitShipPoolSystem());
             AddSystem(-1000, new SampleInputSystem());
             AddSystem(0, new TimerSystem());
             AddSystem(0, new SpawnShipSystem(_poolService));
             AddSystem(0, new DespawnShipSystem());
-            AddSystem(500, new SpawnSystem());
             AddSystem(2000, new EmitEffectSystem());
             
             AddSystem(10000, new OneFrameSystem<OnTriggerEnterEvent>());
@@ -57,7 +52,6 @@ namespace Basis.Example.Match.Ecs.Setups
 
         public override void AddInjects()
         {
-            AddInject(_prefabFactory);
             AddInject(_popupService);
             AddInject(_effectEmitter);
             AddInject(_shipPrefabConfigProvider);

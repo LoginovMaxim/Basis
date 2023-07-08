@@ -9,6 +9,7 @@ namespace Basis.Example.Match.Installers
         {
             Container.BindInterfacesTo<PauseMatchSampleCommand>().AsSingle().NonLazy();
             Container.BindInterfacesTo<UnpauseMatchSampleCommand>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ExitMatchSampleCommand>().AsSingle().NonLazy();
         }
     }
 }
