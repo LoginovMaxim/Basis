@@ -103,7 +103,7 @@ namespace Zenject
             get { return typeof(TContract); }
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
 #if UNITY_EDITOR
             StaticMemoryPoolRegistry.Remove(this);

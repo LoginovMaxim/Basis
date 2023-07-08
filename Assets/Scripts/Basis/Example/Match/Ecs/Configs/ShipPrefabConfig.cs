@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Basis.Example.Match.Ecs.Providers;
-using Basis.Example.Match.Pools.Ships;
 using UnityEngine;
 
 namespace Basis.Example.Match.Ecs.Configs
@@ -11,7 +10,7 @@ namespace Basis.Example.Match.Ecs.Configs
     {
         [SerializeField] private List<ShipPrefabData> _shipPrefabData;
 
-        public GameObject GetShipPrefabById(ShipId shipId)
+        /*public GameObject GetShipPrefabById(ShipId shipId)
         {
             foreach (var shipPrefabData in _shipPrefabData)
             {
@@ -24,12 +23,12 @@ namespace Basis.Example.Match.Ecs.Configs
             }
 
             throw new Exception($"Missing ship prefab with {shipId} ship id");
-        }
+        }*/
     }
 
     [Serializable] public struct ShipPrefabData
     {
-        public ShipId ShipId;
+        //public ShipId ShipId;
         public GameObject Prefab;
     }
 }

@@ -5,6 +5,7 @@ using Basis.Ecs;
 using Basis.Example.App.Services;
 using Basis.Example.Match.Assemblers;
 using Basis.Example.Match.Ecs;
+using Basis.Example.Match.Ecs.Setups;
 using Basis.Example.Match.Fsm.SampleMachine;
 using Basis.Example.Match.Services;
 using Basis.Utils;
@@ -20,9 +21,12 @@ namespace Basis.Example.Match.Installers
 
             Container.BindService<SampleService>(UpdateType.Update, true);
 
+            Container.BindInterfacesTo<EngineApi>().AsSingle().NonLazy();
+            
             // EcsSetups
             Container.BindInterfacesTo<SampleGameplayEcsSetup>().AsSingle().NonLazy();
             Container.BindInterfacesTo<SampleEnvironmentEcsSetup>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<SampleSyncEcsSetup>().AsSingle().NonLazy();
             
             var world = Container.BindEcsWorld<MainWorldBase>();
             Container.BindEcsService<SampleEcsService>(world, UpdateType.Update);

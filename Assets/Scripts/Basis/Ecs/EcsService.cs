@@ -26,7 +26,7 @@ namespace Basis.Ecs
             _world = world.World;
         }
 
-        protected override void Start()
+        protected override void Init()
         {
             InitSystems();
             InitSetups();
@@ -35,7 +35,6 @@ namespace Basis.Ecs
             AddInjects();
             InitInjects();
             InitSystem();
-            base.Start();
         }
 
         private void InitSetups()

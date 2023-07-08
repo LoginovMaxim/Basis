@@ -7,6 +7,7 @@ namespace Basis.App.Services
     {
         private readonly IMonoUpdater _monoUpdater;
         private bool _isPause = true;
+        private bool _wasStarted;
         
         protected UpdatableService(IMonoUpdater monoUpdater, UpdateType updateType, bool isImmediateStart)
         {
@@ -31,9 +32,21 @@ namespace Basis.App.Services
             }
         }
 
-        protected virtual void Start()
+        public virtual void Start()
         {
-            Unpause();    
+            if (_wasStarted)
+            {
+                return;
+            }
+
+            Init();
+            Unpause();
+            
+            _wasStarted = true;
+        }
+
+        protected virtual void Init()
+        {
         }
 
         protected abstract void Update();

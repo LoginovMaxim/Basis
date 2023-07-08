@@ -1,22 +1,18 @@
-﻿using Basis.Ecs.Common.Components;
-using Basis.Example.Match.Ecs.Providers;
-using Basis.Example.Match.Pools.Ships;
+﻿using Basis.Example.Match.Ecs.Providers;
 using GoodCat.EcsLite.Shared;
 using Leopotam.EcsLite;
-using UnityEngine;
 
 namespace Basis.Example.Match.Ecs.Systems
 {
     public sealed class InitShipPoolSystem : IEcsPreInitSystem
     {
         [EcsInject] private readonly IShipPrefabConfigProvider _shipPrefabConfigProvider;
-        [EcsInject] private readonly IShipPool _unitPool;
         
         public void PreInit(IEcsSystems systems)
         {
             var world = systems.GetWorld();
             
-            foreach (var pool in _unitPool.EntityPool)
+            /*foreach (var pool in _unitPool.EntityPool)
             {
                 if (pool.PoolObject is not IShip ship)
                 {
@@ -33,7 +29,7 @@ namespace Basis.Example.Match.Ecs.Systems
                     world);
                 
                 pool.Initialize(unitSpawn, pool.PoolObject.InitialPoolSize);
-            }
+            }*/
         }
     }
 }

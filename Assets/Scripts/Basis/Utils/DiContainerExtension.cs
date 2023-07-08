@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using Basis.App.Assemblers;
+using Basis.App.Pool;
 using Basis.App.Services;
+using Basis.App.Views;
 using Basis.Ecs;
 using Zenject;
 
@@ -38,6 +40,18 @@ namespace Basis.Utils
         {
             container.BindInterfacesAndSelfTo<TEcsWorld>().AsSingle().NonLazy();
             return container.Resolve<TEcsWorld>();
+        }
+        
+        public static void BindViewPool<TViewObject, TViewPool>(this DiContainer container, PoolObject prefab)
+            where TViewObject : IViewObject 
+            where TViewPool : ViewPool<TViewObject>
+        {
+            container.BindMemoryPool<TViewObject, TViewPool>().FromComponentInNewPrefab(prefab).AsCached().NonLazy();
+            
+            var viewPool = container.Resolve<TViewPool>();
+            var poolService = container.Resolve<IPoolService>();
+
+            poolService.TryAddViewPool(typeof(TViewObject), viewPool);
         }
     }
 }

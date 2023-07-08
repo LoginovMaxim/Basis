@@ -3,42 +3,58 @@ using Basis.Ecs.Common.Components;
 using Basis.Example.Match.Ecs.Components;
 using Basis.Example.Match.Ecs.Events;
 using Basis.Example.Match.Ecs.Providers;
-using GoodCat.EcsLite.Shared;
 using Leopotam.EcsLite;
 using UnityEngine;
 
 namespace Basis.Example.Match.Ecs.Systems
 {
-    public sealed class MapUpdateSystem : IEcsRunSystem
+    public sealed class MapUpdateSystem : IEcsInitSystem, IEcsRunSystem
     {
-        [EcsInject] private readonly IMapConfigProvider _mapConfigProvider;
-        [EcsInject] private readonly IPrefabFactory _prefabFactory;
-        
+        private readonly IMapConfigProvider _mapConfigProvider;
+
+        private EcsWorld _world;
+        private EcsFilter _onKeyPressedEventFilter;
+        private EcsFilter _seaBlockTagFilter;
+        private EcsPool<OnKeyPressedEvent> _onKeyPressedEventPool;
+        private EcsPool<PositionSmooth> _positionPool;
+        private EcsPool<ScaleSmooth> _scalePool;
         private Vector2 _offset;
+
+        public MapUpdateSystem(IMapConfigProvider mapConfigProvider)
+        {
+            _mapConfigProvider = mapConfigProvider;
+        }
+
+        public void Init(IEcsSystems systems)
+        {
+            _world = systems.GetWorld();
+            
+            _onKeyPressedEventFilter = _world.Filter<OnKeyPressedEvent>().End();
+            _seaBlockTagFilter = _world.Filter<SeaBlockTag>().End();
+            
+            _onKeyPressedEventPool = _world.GetPool<OnKeyPressedEvent>();
+            _positionPool = _world.GetPool<PositionSmooth>();
+            _scalePool = _world.GetPool<ScaleSmooth>();
+        }
 
         public void Run(IEcsSystems systems)
         {
-            if (TryUpdateOffset(systems))
+            if (TryUpdateOffset())
             {
-                UpdateMap(systems);
+                UpdateMap();
             }
         }
 
-        private bool TryUpdateOffset(IEcsSystems systems)
+        private bool TryUpdateOffset()
         {
-            var world = systems.GetWorld();
-            
-            var keyPressedFilter = world.Filter<OnKeyPressedEvent>().End();
-            if (keyPressedFilter.GetEntitiesCount() == 0)
+            if (_onKeyPressedEventFilter.GetEntitiesCount() == 0)
             {
                 return false;
             }
             
-            var keyPressedEvents = world.GetPool<OnKeyPressedEvent>();
-            
-            foreach (var keyPressedEntity in keyPressedFilter)
+            foreach (var keyPressedEntity in _onKeyPressedEventFilter)
             {
-                ref var keyPressedComponent = ref keyPressedEvents.Get(keyPressedEntity);
+                ref var keyPressedComponent = ref _onKeyPressedEventPool.Get(keyPressedEntity);
                 switch (keyPressedComponent.KeyCode)
                 {
                     case KeyCode.W:
@@ -59,38 +75,31 @@ namespace Basis.Example.Match.Ecs.Systems
             return true;
         }
 
-        private void UpdateMap(IEcsSystems systems)
+        private void UpdateMap()
         {
-            var world = systems.GetWorld();
-            
-            var cubeTagFilter = world.Filter<CubeTagComponent>().End();
-            if (cubeTagFilter.GetEntitiesCount() == 0)
+            if (_seaBlockTagFilter.GetEntitiesCount() == 0)
             {
                 return;
             }
-            
-            var transforms = world.GetPool<TransformComponent>();
 
-            foreach (var cubeEntity in cubeTagFilter)
+            foreach (var seaBlockEntityId in _seaBlockTagFilter)
             {
-                ref var transform = ref transforms.Get(cubeEntity).Transform;
+                ref var position = ref _positionPool.Get(seaBlockEntityId);
+                ref var scale = ref _scalePool.Get(seaBlockEntityId);
                 
-                var perlinX = transform.position.x / _mapConfigProvider.MapSize + _offset.x;
-                var perlinY = transform.position.z / _mapConfigProvider.MapSize + _offset.y;
+                var perlinX = position.Value.x / _mapConfigProvider.MapSize + _offset.x;
+                var perlinY = position.Value.z / _mapConfigProvider.MapSize + _offset.y;
                 
-                var scale = 0f;
+                var scaleValue = 0f;
                 for (var i = 0; i < _mapConfigProvider.MapPerlinParameters.Length; i++)
                 {
                     var amplitude = _mapConfigProvider.MapPerlinParameters[i].Amplitude;
                     var frequency = _mapConfigProvider.MapPerlinParameters[i].Frequency;
-                    scale += amplitude * Mathf.PerlinNoise(frequency * perlinX, frequency * perlinY);
+                    scaleValue += amplitude * Mathf.PerlinNoise(frequency * perlinX, frequency * perlinY);
                 }
                 
-                var cubeScale = transform.localScale;
-                cubeScale.y = scale;
-                
-                transform.localScale = 
-                    Vector3.Lerp(transform.localScale, cubeScale, _mapConfigProvider.SmoothWave * Time.deltaTime);
+                scale.Value = Vector3.one;
+                scale.Value.y = scaleValue;
             }
         }
     }

@@ -9,7 +9,7 @@ namespace Basis.Example.App.Assemblers
     {
         public async UniTask Launch(CancellationToken token)
         {
-            await UniTask.Delay(Random.Range(1000, 2000));
+            await UniTask.Delay(100, cancellationToken: token);
         }
     }
 }

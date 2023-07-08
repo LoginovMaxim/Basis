@@ -1984,8 +1984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24deea00cae444cf8cce3b3a88409d35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SmallShipParent: {fileID: 161083109}
-  BigShipParent: {fileID: 622461119}
+  SampleSeaBlockView: {fileID: 7738902406835648876, guid: f56e58d6be61ff04dacfe96ded3e19e1, type: 3}
+  SampleShipView: {fileID: 6280807054613164964, guid: fdf2065c71bd1ae4c89c998560536d42, type: 3}
 --- !u!114 &1920138863
 MonoBehaviour:
   m_ObjectHideFlags: 0
