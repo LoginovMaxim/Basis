@@ -12,18 +12,15 @@ namespace Basis.Example.Match.Ecs.Setups
 {
     public class SampleGameplayEcsSetup : EcsSetup, ISampleEcsSetup
     {
-        private readonly IPopupService _popupService;
         private readonly IEffectEmitter _effectEmitter;
         private readonly IShipPrefabConfigProvider _shipPrefabConfigProvider;
         private readonly IPoolService _poolService;
 
         public SampleGameplayEcsSetup(
-            IPopupService popupService, 
             IEffectEmitter effectEmitter, 
             IShipPrefabConfigProvider shipPrefabConfigProvider,
             IPoolService poolService)
         {
-            _popupService = popupService;
             _effectEmitter = effectEmitter;
             _shipPrefabConfigProvider = shipPrefabConfigProvider;
             _poolService = poolService;
@@ -52,7 +49,6 @@ namespace Basis.Example.Match.Ecs.Setups
 
         public override void AddInjects()
         {
-            AddInject(_popupService);
             AddInject(_effectEmitter);
             AddInject(_shipPrefabConfigProvider);
             AddInject(_poolService);

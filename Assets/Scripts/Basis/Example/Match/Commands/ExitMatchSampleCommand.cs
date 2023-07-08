@@ -10,8 +10,9 @@ namespace Basis.Example.Match.Commands
     {
         private readonly ISampleMetaSceneLoader _sampleMetaSceneLoader;
         
-        public ExitMatchSampleCommand(SignalBus signalBus) : base(signalBus)
+        public ExitMatchSampleCommand(ISampleMetaSceneLoader sampleMetaSceneLoader, SignalBus signalBus) : base(signalBus)
         {
+            _sampleMetaSceneLoader = sampleMetaSceneLoader;
         }
 
         protected override async void Execute()

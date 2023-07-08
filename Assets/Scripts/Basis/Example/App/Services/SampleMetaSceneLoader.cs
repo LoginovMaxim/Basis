@@ -22,7 +22,7 @@ namespace Basis.Example.App.Services
         public async UniTask LoadAsync(CancellationToken token)
         {
             _splash.Show();
-            await _sceneLoader.LoadSceneAsync(SampleMetaScenePath, false, LoadSceneMode.Additive, token);
+            await _sceneLoader.LoadSceneAsync(SampleMetaScenePath, false, LoadSceneMode.Single, token);
         }
     }
 }

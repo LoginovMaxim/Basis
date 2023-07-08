@@ -32,6 +32,7 @@ namespace Basis.App.Pool
 
         public override void Dispose()
         {
+            base.Dispose();
             _poolService.TryRemoveViewPool(_viewObjectType);
         }
 

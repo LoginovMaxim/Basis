@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Basis.App.Monos;
 using Basis.App.Services;
+using Basis.App.Views;
 using GoodCat.EcsLite.Shared;
 using Leopotam.EcsLite;
 
@@ -9,6 +10,7 @@ namespace Basis.Ecs
     public abstract class EcsService<TEcsSetup> : UpdatableService, IEcsService where TEcsSetup : IEcsSetup
     {
         private readonly List<TEcsSetup> _ecsSetups;
+        private readonly IViewsProvider _viewsProvider;
         
         private List<EcsOrderSystem> _orderSystems;
         private EcsSystems _systems;
@@ -17,12 +19,14 @@ namespace Basis.Ecs
 
         protected EcsService(
             List<TEcsSetup> ecsSetups, 
+            IViewsProvider viewsProvider,
             IWorld world, 
             IMonoUpdater monoUpdater, 
             UpdateType updateType) : 
             base(monoUpdater, updateType, false)
         {
             _ecsSetups = ecsSetups;
+            _viewsProvider = viewsProvider;
             _world = world.World;
         }
 
@@ -114,6 +118,14 @@ namespace Basis.Ecs
         {
             base.Dispose();
 
+            var entities = new int[_world.GetEntitiesCount()];
+            _world.GetAllEntities(ref entities);
+
+            foreach (var entity in entities)
+            {
+                _viewsProvider.TryRemove(entity);
+            }
+            
             if (_systems != null) 
             {
                 _systems.Destroy();

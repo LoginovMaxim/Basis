@@ -11,12 +11,10 @@ namespace Basis.App.Assemblers
 
         protected override void OnStartAssembly()
         {
-            // nothing
         }
 
         protected override void OnFinishAssembly()
         {
-            _splash.Hide();
         }
     }
 }
