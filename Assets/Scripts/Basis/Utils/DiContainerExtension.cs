@@ -1,25 +1,25 @@
 ﻿using System.Collections.Generic;
-using Basis.App.Assemblers;
-using Basis.App.Pool;
-using Basis.App.Services;
-using Basis.App.Views;
+using Basis.Assemblers;
 using Basis.Ecs;
+using Basis.Pool;
+using Basis.Services;
+using Basis.Views;
 using Zenject;
 
 namespace Basis.Utils
 {
     public static class DiContainerExtension
     {
-        public static IfNotBoundBinder BindService<TUpdatableService>(this DiContainer container, UpdateType updateType, bool isImmediateStart = false)
+        public static void BindService<TUpdatableService>(this DiContainer container, UpdateType updateType, bool isImmediateStart = false)
             where TUpdatableService : IUpdatableService
         {
-            return container.BindInterfacesTo<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
+            container.BindInterfacesTo<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
         }
         
-        public static IfNotBoundBinder BindEcsService<TEcsUpdatableService>(this DiContainer container, IWorld world, UpdateType updateType)
+        public static void BindEcsService<TEcsUpdatableService>(this DiContainer container, IWorld world, UpdateType updateType)
             where TEcsUpdatableService : IEcsService
         {
-            return container.BindInterfacesTo<TEcsUpdatableService>().AsSingle().WithArguments(world, updateType).NonLazy();
+            container.BindInterfacesTo<TEcsUpdatableService>().AsSingle().WithArguments(world, updateType).NonLazy();
         }
         
         public static IAssemblerPart BindAssemblerPart<TAssemblerPart>(this DiContainer container)
@@ -29,10 +29,10 @@ namespace Basis.Utils
             return container.Resolve<TAssemblerPart>();
         }
         
-        public static IfNotBoundBinder BindAssembler<TAssembler>(this DiContainer container, List<IAssemblerPart> assemblerPart)
+        public static void BindAssembler<TAssembler>(this DiContainer container, List<IAssemblerPart> assemblerPart)
             where TAssembler : Assembler
         {
-            return container.BindInterfacesTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
+            container.BindInterfacesTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
         }
         
         public static TEcsWorld BindEcsWorld<TEcsWorld>(this DiContainer container)

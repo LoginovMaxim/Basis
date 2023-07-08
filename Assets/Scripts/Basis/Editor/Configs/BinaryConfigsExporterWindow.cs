@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using Basis.App.Configs;
+using Basis.Configs;
 using UnityEditor;
 using UnityEngine;
 

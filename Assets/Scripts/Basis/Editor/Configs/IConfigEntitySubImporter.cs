@@ -1,4 +1,4 @@
-﻿using Basis.App.Configs;
+﻿using Basis.Configs;
 
 namespace Basis.Editor.Configs
 {

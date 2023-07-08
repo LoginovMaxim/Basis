@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Basis.App.Configs;
-using Basis.App.Localizations;
+using Basis.Configs;
+using Basis.Localizations;
 
 namespace Basis.Editor.Configs
 {

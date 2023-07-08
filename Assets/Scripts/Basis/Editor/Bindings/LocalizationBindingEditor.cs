@@ -1,7 +1,7 @@
 ﻿using System;
-using Basis.App.Localizations;
 using Basis.Bindings;
 using Basis.Editor.Utils;
+using Basis.Localizations;
 using UnityEditor;
 using UnityEngine;
 using UnityWeld.Binding.Internal;

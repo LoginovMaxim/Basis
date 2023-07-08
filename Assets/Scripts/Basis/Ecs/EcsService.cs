@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Basis.App.Monos;
-using Basis.App.Services;
-using Basis.App.Views;
+using Basis.Monos;
+using Basis.Services;
+using Basis.Views;
 using GoodCat.EcsLite.Shared;
 using Leopotam.EcsLite;
 

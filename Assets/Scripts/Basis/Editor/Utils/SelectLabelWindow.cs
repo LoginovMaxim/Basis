@@ -2,8 +2,8 @@
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
-using Basis.App.Configs;
-using Basis.App.Localizations;
+using Basis.Configs;
+using Basis.Localizations;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
