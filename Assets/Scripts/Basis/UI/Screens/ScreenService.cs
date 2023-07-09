@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Basis.Monos;
 using Basis.Signals;
 using Basis.Utils;
 using UnityEngine;
@@ -10,16 +9,15 @@ using Zenject;
 
 namespace Basis.UI.Screens
 {
-    public abstract class ScreenService<TScreen> : IScreenService, IInitializable, IDisposable where TScreen : IScreen
+    public abstract class ScreenService<TScreen> : IScreenService, IInitializable, IDisposable where TScreen : IScreen 
     {
-        public IScreen CurrentScreen => _currentScreen;
-        
         private readonly List<TScreen> _screens;
-        private readonly IMonoUpdater _monoUpdater;
         private readonly SignalBus _signalBus;
 
         private TScreen _currentScreen;
         private Stack<int> _stackScreenIds = new();
+        
+        public IScreen CurrentScreen => _currentScreen;
 
         protected ScreenService(List<TScreen> screens, SignalBus signalBus)
         {
@@ -32,7 +30,7 @@ namespace Basis.UI.Screens
             _screens.ForEach(screen => screen.SetActive(false));
             _signalBus.Subscribe<SwitchScreenSignal>(OnChangeScreenButtonClicked);
         }
-
+        
         public void OnChangeScreenButtonClicked(int screenId)
         {
             if (screenId == -1)
@@ -67,9 +65,6 @@ namespace Basis.UI.Screens
             {
                 _stackScreenIds.Push(_currentScreen.Id);
             }
-            
-            // Debug
-            //PrintStackScreens();
         }
 
         private void OnChangeScreenButtonClicked(SwitchScreenSignal signal)
