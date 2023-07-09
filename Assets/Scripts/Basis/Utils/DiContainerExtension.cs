@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Basis.Assemblers;
+using Basis.Assemblers.Launchers;
 using Basis.Ecs;
 using Basis.Pool;
 using Basis.Services;
@@ -10,36 +11,29 @@ namespace Basis.Utils
 {
     public static class DiContainerExtension
     {
-        public static void BindService<TUpdatableService>(this DiContainer container, UpdateType updateType, bool isImmediateStart = false)
+        public static void BindService<TUpdatableService>(this DiContainer container, UpdateType updateType)
             where TUpdatableService : IUpdatableService
         {
-            container.BindInterfacesTo<TUpdatableService>().AsSingle().WithArguments(updateType, isImmediateStart).NonLazy();
+            container.BindInterfacesTo<TUpdatableService>().AsSingle().WithArguments(updateType).NonLazy();
         }
         
-        public static void BindEcsService<TEcsUpdatableService>(this DiContainer container, IWorld world, UpdateType updateType)
+        public static void BindEcsService<TEcsUpdatableService>(this DiContainer container, IEcsWorld ecsWorld, UpdateType updateType)
             where TEcsUpdatableService : IEcsService
         {
-            container.BindInterfacesTo<TEcsUpdatableService>().AsSingle().WithArguments(world, updateType).NonLazy();
+            container.BindInterfacesTo<TEcsUpdatableService>().AsSingle().WithArguments(ecsWorld, updateType).NonLazy();
         }
         
-        public static IAssemblerPart BindAssemblerPart<TAssemblerPart>(this DiContainer container)
-            where TAssemblerPart : IAssemblerPart
+        public static IAssemblerLauncher BindAssemblerLauncher<TAssemblerLauncher>(this DiContainer container)
+            where TAssemblerLauncher : IAssemblerLauncher
         {
-            container.BindInterfacesAndSelfTo<TAssemblerPart>().AsSingle().NonLazy();
-            return container.Resolve<TAssemblerPart>();
+            container.BindInterfacesAndSelfTo<TAssemblerLauncher>().AsSingle().NonLazy();
+            return container.Resolve<TAssemblerLauncher>();
         }
         
-        public static void BindAssembler<TAssembler>(this DiContainer container, List<IAssemblerPart> assemblerPart)
+        public static void BindAssembler<TAssembler>(this DiContainer container, List<IAssemblerLauncher> assemblerPart)
             where TAssembler : Assembler
         {
             container.BindInterfacesTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
-        }
-        
-        public static TEcsWorld BindEcsWorld<TEcsWorld>(this DiContainer container)
-            where TEcsWorld : WorldBase
-        {
-            container.BindInterfacesAndSelfTo<TEcsWorld>().AsSingle().NonLazy();
-            return container.Resolve<TEcsWorld>();
         }
         
         public static void BindViewPool<TViewObject, TViewPool>(this DiContainer container, int initialSize = 0)

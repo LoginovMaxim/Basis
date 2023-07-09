@@ -5,12 +5,12 @@ namespace Basis.Localizations
 {
     public interface ILocalization
     {
-        Action OnLanguageChanged { get; set; }
-        Language Language { get; }
-        List<string> Keys { get; }
-        Dictionary<int, Dictionary<string, string>> Table { get; }
-        void InitializeLocalizationTable(Dictionary<int, Dictionary<string, string>> table);
-        string GetString(string key, params object[] args);
-        void SetLanguage(Language language);
+        public event Action OnLanguageChanged;
+        public Language Language { get; }
+        public List<string> Keys { get; }
+        public Dictionary<int, Dictionary<string, string>> Table { get; }
+        public void InitializeLocalizationTable(Dictionary<int, Dictionary<string, string>> table);
+        public string GetString(string key, params object[] args);
+        public void SetLanguage(Language language);
     }
 }

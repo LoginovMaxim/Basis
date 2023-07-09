@@ -18,7 +18,7 @@ namespace Basis.Views
         {
             if (_viewsByEntityIds.ContainsKey(entityId))
             {
-                Debug.Log($"Entity {entityId} already has a view {view.GetType()}".WithColor(Colors.Orange));
+                Debug.Log($"Entity {entityId} already has a view {view.GetType()}".WithColor(LoggerColor.Orange));
                 return false;
             }
             
@@ -30,7 +30,7 @@ namespace Basis.Views
         {
             if (!_viewsByEntityIds.ContainsKey(entityId))
             {
-                Debug.Log($"Missing ViewObject for entityId: {entityId}".WithColor(Colors.Orange));
+                Debug.Log($"Missing ViewObject for entityId: {entityId}".WithColor(LoggerColor.Orange));
                 return false;
             }
             
@@ -42,7 +42,7 @@ namespace Basis.Views
         {
             if (!_viewsByEntityIds.TryGetValue(entityId, out view))
             {
-                Debug.Log($"Missing ViewObject for entityId: {entityId}".WithColor(Colors.Orange));
+                Debug.Log($"Missing ViewObject for entityId: {entityId}".WithColor(LoggerColor.Orange));
                 return false;
             }
             

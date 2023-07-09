@@ -1,7 +1,8 @@
 ﻿using System;
+using Basis.Data;
 using UnityEngine;
 
-namespace Basis.Data
+namespace Project.App.Data
 {
     [Serializable] public sealed class AppSettingsStorageItem : StorageItem
     {

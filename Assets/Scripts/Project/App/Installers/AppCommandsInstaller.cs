@@ -1,6 +1,6 @@
 ﻿using Zenject;
 
-namespace Basis.Installers
+namespace Project.App.Installers
 {
     public sealed class AppCommandsInstaller : MonoInstaller
     {

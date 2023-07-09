@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using Basis.Assemblers.Launchers;
 using Basis.UI.Splashes;
 using Basis.Utils;
 using Cysharp.Threading.Tasks;
@@ -11,7 +12,7 @@ namespace Basis.Assemblers
 {
     public abstract class Assembler : IAssembler, IInitializable, IDisposable
     {
-        private readonly Queue<IAssemblerPart> _assemblerParts = new();
+        private readonly Queue<IAssemblerLauncher> _assemblerLaunchers = new();
         private readonly CancellationTokenSource _tokenSource = new();
         
         protected readonly ISplash _splash;
@@ -21,13 +22,13 @@ namespace Basis.Assemblers
         public int CurrentStepCount { get; private set; }
         public float Progress { get; private set; }
 
-        protected Assembler(List<IAssemblerPart> assemblerParts, ISplash splash)
+        protected Assembler(List<IAssemblerLauncher> assemblerParts, ISplash splash)
         {
             _splash = splash;
             
             foreach (var assemblerPart in assemblerParts)
             {
-                _assemblerParts.Enqueue(assemblerPart);
+                _assemblerLaunchers.Enqueue(assemblerPart);
             }
         }
 
@@ -46,19 +47,19 @@ namespace Basis.Assemblers
             await UniTask.Delay(200, cancellationToken: _tokenSource.Token);
             OnStartAssembly();
             
-            ServicesCount = _assemblerParts.Count;
-            while (_assemblerParts.Count > 0)
+            ServicesCount = _assemblerLaunchers.Count;
+            while (_assemblerLaunchers.Count > 0)
             {
                 if (_tokenSource.IsCancellationRequested)
                 {
                     return;
                 } 
                 
-                var assemblerPart = _assemblerParts.Peek();
+                var assemblerLauncher = _assemblerLaunchers.Peek();
                 try
                 {
-                    Debug.Log($"Launching service: {assemblerPart.GetType()}");
-                    await assemblerPart.Launch(_tokenSource.Token);
+                    Debug.Log($"Launching service: {assemblerLauncher.GetType()}");
+                    await assemblerLauncher.Launch(_tokenSource.Token);
                 
                     CurrentStepCount++;
                     Progress = (float) CurrentStepCount / ServicesCount;
@@ -71,13 +72,13 @@ namespace Basis.Assemblers
                 {
                     _tokenSource.Cancel();
                     throw new Exception(
-                        $"Service {assemblerPart.GetType()} was error launch.".WithColor(LoggerColor.Red) +
+                        $"Service {assemblerLauncher.GetType()} was error launch.".WithColor(LoggerColor.Red) +
                         $"\nMessage {e.Message}." +
                         $"\nStacktrace: {e.StackTrace}.");
                 }
                 
-                _assemblerParts.Dequeue();
-                Debug.Log($"Service: {assemblerPart.GetType()} launched successfully".WithColor(LoggerColor.Green));
+                _assemblerLaunchers.Dequeue();
+                Debug.Log($"Service: {assemblerLauncher.GetType()} launched successfully".WithColor(LoggerColor.Green));
             }
             
             await UniTask.Delay(200, cancellationToken: _tokenSource.Token);

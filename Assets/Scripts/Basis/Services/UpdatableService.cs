@@ -9,7 +9,7 @@ namespace Basis.Services
         private bool _isPause = true;
         private bool _wasStarted;
         
-        protected UpdatableService(IMonoUpdater monoUpdater, UpdateType updateType, bool isImmediateStart)
+        protected UpdatableService(IMonoUpdater monoUpdater, UpdateType updateType)
         {
             _monoUpdater = monoUpdater;
 
@@ -24,11 +24,6 @@ namespace Basis.Services
                 case UpdateType.LateUpdate:
                     _monoUpdater.Subscribe(UpdateType.LateUpdate, OnUpdate);
                     break;
-            }
-
-            if (isImmediateStart)
-            {
-                Start();
             }
         }
 

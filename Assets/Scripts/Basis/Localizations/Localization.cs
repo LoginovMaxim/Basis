@@ -7,14 +7,14 @@ namespace Basis.Localizations
 {
     public sealed class Localization : ILocalization
     {
-        public Action OnLanguageChanged { get; set; }
+        public event Action OnLanguageChanged;
+        
+        private Language _language = Language.English;
+        private Dictionary<int, Dictionary<string, string>> _table = new Dictionary<int, Dictionary<string, string>>();
         
         public Language Language => _language;
         public Dictionary<int, Dictionary<string, string>> Table => _table;
         public List<string> Keys => _table[(int) Language.English].Keys.ToList();
-        
-        private Language _language = Language.English;
-        private Dictionary<int, Dictionary<string, string>> _table;
         
         public void InitializeLocalizationTable(Dictionary<int, Dictionary<string, string>> table)
         {

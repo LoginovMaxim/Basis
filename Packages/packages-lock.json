@@ -1,12 +1,5 @@
 {
   "dependencies": {
-    "com.goodcat.ecslite.multiple-shared": {
-      "version": "https://github.com/GoodCatGames/ecslite-multiple-shared.git",
-      "depth": 0,
-      "source": "git",
-      "dependencies": {},
-      "hash": "9f64f320049fa3bf9ae59b602cbbb73dbec53f24"
-    },
     "com.harlequin.basis": {
       "version": "file:Basis",
       "depth": 0,

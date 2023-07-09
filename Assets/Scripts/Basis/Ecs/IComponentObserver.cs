@@ -1,6 +1,6 @@
 ﻿namespace Basis.Ecs
 {
-    public interface IComponentObserver<TComponent> where TComponent : struct
+    public interface IComponentObserver<in TComponent> where TComponent : struct
     {
         void OnComponentAdded(int entity, TComponent component);
         void OnComponentChanged(int entity, TComponent oldComponent, TComponent component);

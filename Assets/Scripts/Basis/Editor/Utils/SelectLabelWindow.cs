@@ -14,11 +14,11 @@ namespace Basis.Editor.Utils
     {
         private IBinaryConfigManager _binaryConfigManager;
         private ILocalization _localization;
-        private ILocalizationMonoBehaviour _target;
+        private ILocalizationBinding _target;
         public string Filter;
         private Vector2 _scrollPosition;
 
-        public static async void Select(ILocalizationMonoBehaviour target)
+        public static async void Select(ILocalizationBinding target)
         {
             var window = GetWindow<SelectLabelWindow>();
             window._target = target;

@@ -295,7 +295,6 @@ GameObject:
   - component: {fileID: 6880107877829111484}
   - component: {fileID: 5244003083127767935}
   - component: {fileID: 3274985336055604691}
-  - component: {fileID: 4287473613210218301}
   - component: {fileID: 3938925602670346060}
   - component: {fileID: 7292948873818239296}
   - component: {fileID: 1525398044668752262}
@@ -342,7 +341,6 @@ MonoBehaviour:
   - {fileID: 6880107877829111484}
   - {fileID: 5244003083127767935}
   - {fileID: 3274985336055604691}
-  - {fileID: 4287473613210218301}
   - {fileID: 3938925602670346060}
   - {fileID: 7292948873818239296}
   - {fileID: 1525398044668752262}
@@ -407,18 +405,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 12341767194f4b49810793ff0f86cc37, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &4287473613210218301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6809067632826381786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a6896effe5f4777a88d6a55844ad586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &3938925602670346060
@@ -708,6 +694,10 @@ PrefabInstance:
     - target: {fileID: 4257820521179149710, guid: 2991310d3527db141acb245c9fb67967, type: 3}
       propertyPath: m_Name
       value: AppSplash
+      objectReference: {fileID: 0}
+    - target: {fileID: 7605532746642676244, guid: 2991310d3527db141acb245c9fb67967, type: 3}
+      propertyPath: viewModelPropertyName
+      value: Basis.UI.Splashes.AppSplashViewModel.Progress
       objectReference: {fileID: 0}
     - target: {fileID: 8357176785139315684, guid: 2991310d3527db141acb245c9fb67967, type: 3}
       propertyPath: m_AnchorMax.y

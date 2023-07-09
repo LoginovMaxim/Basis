@@ -1,6 +1,6 @@
 ﻿namespace Basis.Services
 {
-    public interface IUpdatableService : IService
+    public interface IUpdatableService
     {
         bool IsPaused { get; }
 

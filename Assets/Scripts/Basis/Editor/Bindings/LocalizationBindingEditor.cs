@@ -88,7 +88,7 @@ namespace Basis.Editor.Bindings
         
         public static void DrawLocalizationKey(Object target)
         {
-            var text = ((ILocalizationMonoBehaviour) target);
+            var text = ((ILocalizationBinding) target);
             if (GUILayout.Button($"Localization: {text.LocalizationKey}"))
                 SelectLabelWindow.Select(text);
         }

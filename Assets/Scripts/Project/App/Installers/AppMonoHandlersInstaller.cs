@@ -1,7 +1,7 @@
 ﻿using Basis.Monos;
 using Zenject;
 
-namespace Basis.Installers
+namespace Project.App.Installers
 {
     public sealed class AppMonoHandlersInstaller : MonoInstaller
     {

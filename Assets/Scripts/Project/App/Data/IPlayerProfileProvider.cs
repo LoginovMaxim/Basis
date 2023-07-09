@@ -1,4 +1,4 @@
-﻿namespace Basis.Data
+﻿namespace Project.App.Data
 {
     public interface IPlayerProfileProvider
     {

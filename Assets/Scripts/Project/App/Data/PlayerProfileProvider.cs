@@ -1,4 +1,6 @@
-﻿namespace Basis.Data
+﻿using Basis.Data;
+
+namespace Project.App.Data
 {
     public class PlayerProfileProvider : IPlayerProfileProvider
     {

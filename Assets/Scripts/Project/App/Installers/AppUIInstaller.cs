@@ -1,7 +1,7 @@
 ﻿using Basis.UI.Splashes;
 using Zenject;
 
-namespace Basis.Installers
+namespace Project.App.Installers
 {
     public sealed class AppUIInstaller : MonoInstaller
     {

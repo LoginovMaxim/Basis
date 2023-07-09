@@ -12,9 +12,9 @@ namespace Basis.Monos
 
         private void Awake() => DontDestroyOnLoad(gameObject);
 
-        private void Update() { Updated?.Invoke(); }
-        private void FixedUpdate() { FixedUpdated?.Invoke(); }
-        private void LateUpdate() { LateUpdated?.Invoke(); }
+        private void Update() => Updated?.Invoke();
+        private void FixedUpdate() => FixedUpdated?.Invoke();
+        private void LateUpdate() => LateUpdated?.Invoke();
 
         public void Subscribe(UpdateType updateType, Action action)
         {

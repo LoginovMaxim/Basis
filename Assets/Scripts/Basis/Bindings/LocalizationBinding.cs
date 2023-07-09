@@ -11,7 +11,7 @@ using Zenject;
 
 namespace Basis.Bindings
 {
-    public sealed class LocalizationBinding : AbstractMemberBinding, ILocalizationMonoBehaviour
+    public sealed class LocalizationBinding : AbstractMemberBinding, ILocalizationBinding
     {
         [SerializeField] private string _localizationKey = "{0}";
         [SerializeField] private List<string> _viewModelPropertyName = new List<string>();
@@ -146,7 +146,6 @@ namespace Basis.Bindings
             }
 
             _viewModelWatchers = null;
-            _localization.OnLanguageChanged = null;
         }
 
         private void UpdateLocalization()

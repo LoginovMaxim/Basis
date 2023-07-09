@@ -1,21 +1,23 @@
 ﻿using System.Collections.Generic;
-using Basis.Assemblers;
-using Basis.Localizations;
+using Basis.Assemblers.Launchers;
 using Basis.Utils;
+using Project.App.Assemblers;
+using Project.App.Assemblers.Launchers;
 using Zenject;
 
-namespace Basis.Installers
+namespace Project.App.Installers
 {
     public sealed class AppAssemblerInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
-            var assemblerPats = new List<IAssemblerPart>()
+            var assemblerLaunchers = new List<IAssemblerLauncher>()
             {
-                Container.BindAssemblerPart<LocalizationLoader>(),
+                Container.BindAssemblerLauncher<LocalizationLauncher>(),
+                Container.BindAssemblerLauncher<MetaSceneLauncher>()
             };
             
-            Container.BindAssembler<AppAssembler>(assemblerPats);
+            Container.BindAssembler<AppAssembler>(assemblerLaunchers);
         }
     }
 }

@@ -2,7 +2,6 @@
 using Basis.Monos;
 using Basis.Services;
 using Basis.Views;
-using GoodCat.EcsLite.Shared;
 using Leopotam.EcsLite;
 
 namespace Basis.Ecs
@@ -20,14 +19,14 @@ namespace Basis.Ecs
         protected EcsService(
             List<TEcsSetup> ecsSetups, 
             IViewsProvider viewsProvider,
-            IWorld world, 
+            IEcsWorld ecsWorld, 
             IMonoUpdater monoUpdater, 
             UpdateType updateType) : 
-            base(monoUpdater, updateType, false)
+            base(monoUpdater, updateType)
         {
             _ecsSetups = ecsSetups;
             _viewsProvider = viewsProvider;
-            _world = world.World;
+            _world = ecsWorld.World;
         }
 
         protected override void Init()
@@ -36,8 +35,6 @@ namespace Basis.Ecs
             InitSetups();
             AddSystems();
             BuildSystems();
-            AddInjects();
-            InitInjects();
             InitSystem();
         }
 
@@ -45,7 +42,7 @@ namespace Basis.Ecs
         {
             foreach (var levelEcsSetups in _ecsSetups)
             {
-                levelEcsSetups.Init(_orderSystems, _systems);
+                levelEcsSetups.Init(_orderSystems);
             }
         }
 
@@ -54,14 +51,6 @@ namespace Basis.Ecs
             foreach (var ecsSetup in _ecsSetups)
             {
                 ecsSetup.AddSystems();
-            }
-        }
-
-        private void AddInjects()
-        {
-            foreach (var ecsSetup in _ecsSetups)
-            {
-                ecsSetup.AddInjects();
             }
         }
 
@@ -97,11 +86,6 @@ namespace Basis.Ecs
                 _systems.Add(_orderSystems[index].EcsSystem);
                 _orderSystems.Remove(_orderSystems[index]);
             }
-        }
-
-        private void InitInjects()
-        {
-            _systems.InitShared();
         }
 
         private void InitSystem()

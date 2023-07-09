@@ -2,15 +2,14 @@
 using Zenject;
 using ResourceProvider = Basis.Configs.ResourceProvider;
 
-namespace Basis.Installers
+namespace Project.App.Installers
 {
     public sealed class AppConfigInstaller : MonoInstaller
     {
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<ResourceProvider>().AsSingle().NonLazy();
-            
-            Container.BindInterfacesTo<BinaryConfigManager>().AsSingle();
+            Container.BindInterfacesTo<BinaryConfigManager>().AsSingle().NonLazy();
         }
     }
 }

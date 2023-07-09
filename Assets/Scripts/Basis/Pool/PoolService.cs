@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using Basis.Utils;
 using Basis.Views;
+using Leopotam.EcsLite;
+using Project.Match.Ecs;
+using Project.Match.Ecs.Features.View.Components;
 using UnityEngine;
 
 namespace Basis.Pool
@@ -9,11 +12,14 @@ namespace Basis.Pool
     public sealed class PoolService : IPoolService
     { 
         private readonly IViewsProvider _viewsProvider;
-        private Dictionary<Type, IViewPool> _viewPoolsByTypes = new Dictionary<Type, IViewPool>();
 
-        public PoolService(IViewsProvider viewsProvider)
+        private Dictionary<Type, IViewPool> _viewPoolsByTypes = new Dictionary<Type, IViewPool>();
+        private EcsPool<ActiveTag> _activeTagPool;
+
+        public PoolService(IViewsProvider viewsProvider, IMatchEcsWorld matchEcsWorld)
         {
             _viewsProvider = viewsProvider;
+            _activeTagPool = matchEcsWorld.World.GetPool<ActiveTag>();
         }
 
         public bool TryAddViewPool(Type viewObjectType, IViewPool viewPool)
@@ -21,7 +27,7 @@ namespace Basis.Pool
             if (_viewPoolsByTypes.ContainsKey(viewObjectType))
             {
                 Debug.Log($"View in type [{viewObjectType}] has already been added to the PoolService"
-                    .WithColor(Colors.Orange));
+                    .WithColor(LoggerColor.Orange));
                 return false;
             }
             
@@ -33,7 +39,7 @@ namespace Basis.Pool
         {
             if (!_viewPoolsByTypes.ContainsKey(viewObjectType))
             {
-                Debug.Log($"Missing ViewPool for [{viewObjectType}] view object type".WithColor(Colors.Orange));
+                Debug.Log($"Missing ViewPool for [{viewObjectType}] view object type".WithColor(LoggerColor.Orange));
                 return false;
             }
             
@@ -51,12 +57,13 @@ namespace Basis.Pool
             viewObject = default;
             if (!_viewPoolsByTypes.TryGetValue(typeof(TViewObjectType), out var viewPool))
             {
-                Debug.Log($"Missing ViewPool for Spawn [{typeof(TViewObjectType)}] view".WithColor(Colors.Orange));
+                Debug.Log($"Missing ViewPool for Spawn [{typeof(TViewObjectType)}] view".WithColor(LoggerColor.Orange));
                 return false;
             }
 
             viewObject = viewPool.Spawn();
             _viewsProvider.TryAdd(entityId, viewObject);
+            _activeTagPool.Add(entityId);
             return true;
         }
 
@@ -69,18 +76,19 @@ namespace Basis.Pool
 
             if (!_viewPoolsByTypes.ContainsKey(viewObject.GetType()))
             {
-                Debug.Log($"Missing ViewObject type [{viewObject.GetType()}] in PoolService".WithColor(Colors.Orange));
+                Debug.Log($"Missing ViewObject type [{viewObject.GetType()}] in PoolService".WithColor(LoggerColor.Orange));
                 return false;
             }
             
             if (!_viewPoolsByTypes.TryGetValue(viewObject.GetType(), out var viewPool))
             {
-                Debug.Log($"Missing ViewPool for [{viewObject.GetType()}] ViewObject type".WithColor(Colors.Orange));
+                Debug.Log($"Missing ViewPool for [{viewObject.GetType()}] ViewObject type".WithColor(LoggerColor.Orange));
                 return false;
             }
 
             viewPool.Despawn(viewObject);
             _viewsProvider.TryRemove(entityId);
+            _activeTagPool.Del(entityId);
             return true;
         }
     }
