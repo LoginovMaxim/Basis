@@ -2,9 +2,9 @@
 {
     public interface IScreen
     {
-        int Id { get; }
-        void SetActive(bool isActive);
-        void OnShow();
-        void OnHide();
+        public int Id { get; }
+        public void Init(int id, ScreenShowingType screenShowingType, ScreenHidingType screenHidingType);
+        public void Show();
+        public void Hide();
     }
 }

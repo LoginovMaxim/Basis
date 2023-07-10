@@ -4,7 +4,9 @@ using Basis.Assemblers.Launchers;
 using Basis.Ecs;
 using Basis.Pool;
 using Basis.Services;
+using Basis.UI.Screens;
 using Basis.Views;
+using Project.App.Data;
 using Zenject;
 
 namespace Basis.Utils
@@ -49,6 +51,18 @@ namespace Basis.Utils
             var poolService = container.Resolve<IPoolService>();
 
             poolService.TryAddViewPool(typeof(TViewObject), viewPool);
+        }
+        
+        public static void BindScreen<TScreen>(
+            this DiContainer container, 
+            int id, 
+            ScreenShowingType screenShowingType = Constants.ScreenAnimation.DefaultScreenShowingType, 
+            ScreenHidingType screenHidingType = Constants.ScreenAnimation.DefaultScreenHidingType)
+            where TScreen : IScreen
+        {
+            container.BindInterfacesAndSelfTo<TScreen>().AsSingle().NonLazy();
+            var screen = container.Resolve<TScreen>();
+            screen.Init(id, screenShowingType, screenHidingType);
         }
     }
 }

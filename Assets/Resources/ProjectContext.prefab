@@ -395,6 +395,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d50b2009664b49ce971c4e84e4545484, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ScreenAnimationConfig: {fileID: 11400000, guid: 0e55d2c6939afc84897afef0bf080f38, type: 2}
 --- !u!114 &3274985336055604691
 MonoBehaviour:
   m_ObjectHideFlags: 0

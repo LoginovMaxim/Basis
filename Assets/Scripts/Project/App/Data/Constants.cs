@@ -1,7 +1,15 @@
-﻿namespace Project.App.Data
+﻿using Basis.UI.Screens;
+
+namespace Project.App.Data
 {
     public static class Constants
     {
+        public static class ScreenAnimation
+        {
+            public const ScreenShowingType DefaultScreenShowingType = ScreenShowingType.FadeOut;
+            public const ScreenHidingType DefaultScreenHidingType = ScreenHidingType.FadeIn;
+        }
+        
         public static class Scenes
         {
             public const string MetaScenePath = "Scenes/Meta";

@@ -16,8 +16,6 @@ namespace Basis.UI.Screens
 
         private TScreen _currentScreen;
         private Stack<int> _stackScreenIds = new();
-        
-        public IScreen CurrentScreen => _currentScreen;
 
         protected ScreenService(List<TScreen> screens, SignalBus signalBus)
         {
@@ -27,11 +25,11 @@ namespace Basis.UI.Screens
 
         public void Initialize()
         {
-            _screens.ForEach(screen => screen.SetActive(false));
+            _screens.ForEach(screen => screen.Hide());
             _signalBus.Subscribe<SwitchScreenSignal>(OnChangeScreenButtonClicked);
         }
         
-        public void OnChangeScreenButtonClicked(int screenId)
+        public void SwitchScreen(int screenId)
         {
             if (screenId == -1)
             {
@@ -44,10 +42,10 @@ namespace Basis.UI.Screens
             {
                 return;
             }
-
-            _currentScreen?.SetActive(false);
+            
+            _currentScreen?.Hide();
             _currentScreen = screen;
-            _currentScreen.SetActive(true);
+            _currentScreen.Show();
             
             if (_stackScreenIds.Count > 0 && _stackScreenIds.Peek() == _currentScreen.Id)
             {
@@ -69,7 +67,7 @@ namespace Basis.UI.Screens
 
         private void OnChangeScreenButtonClicked(SwitchScreenSignal signal)
         {
-            OnChangeScreenButtonClicked(signal.ScreenId);
+            SwitchScreen(signal.ScreenId);
         }
 
         private bool HasBack(int screenId, out int countPops)
@@ -103,7 +101,7 @@ namespace Basis.UI.Screens
 
             _stackScreenIds.Pop();
             var lastScreenId = _stackScreenIds.Pop();
-            OnChangeScreenButtonClicked(lastScreenId);
+            SwitchScreen(lastScreenId);
         }
 
         private void PrintStackScreens()

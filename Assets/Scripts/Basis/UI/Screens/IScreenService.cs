@@ -2,7 +2,6 @@
 {
     public interface IScreenService
     {
-        IScreen CurrentScreen { get; }
-        void OnChangeScreenButtonClicked(int screenId);
+        void SwitchScreen(int screenId);
     }
 }
