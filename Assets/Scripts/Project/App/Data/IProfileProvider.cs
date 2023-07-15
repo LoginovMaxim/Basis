@@ -1,6 +1,6 @@
 ﻿namespace Project.App.Data
 {
-    public interface IPlayerProfileProvider
+    public interface IProfileProvider
     {
         public string Id { get; }
         public string Name { get; }

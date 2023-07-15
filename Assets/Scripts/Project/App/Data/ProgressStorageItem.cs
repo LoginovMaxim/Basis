@@ -7,7 +7,7 @@ namespace Project.App.Data
     [Serializable]
     public class ProgressStorageItem : StorageItem
     {
-        [SerializeField] private int _level;
+        [SerializeField] private int _level = 1;
         [SerializeField] private int _experience;
         
         public int Level

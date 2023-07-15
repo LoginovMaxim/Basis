@@ -14,7 +14,7 @@ namespace Project.App.Installers
             Container.BindInterfacesTo<DataStorage<ProgressStorageItem>>().AsSingle().NonLazy();
             Container.BindInterfacesTo<DataStorage<CurrencyStorageItem>>().AsSingle().NonLazy();
             
-            Container.BindInterfacesTo<PlayerProfileProvider>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ProfileProvider>().AsSingle().NonLazy();
         }
     }
 }

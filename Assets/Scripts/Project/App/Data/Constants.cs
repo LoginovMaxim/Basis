@@ -4,6 +4,21 @@ namespace Project.App.Data
 {
     public static class Constants
     {
+        public static class MetaBundleKeys
+        {
+            public const string MetaSceneKey = "Meta";
+        }
+        
+        public static class MatchBundleKeys
+        {
+            public const string MatchSceneKey = "Match";
+        }
+        
+        public static class LevelBundleKeys
+        {
+            public const string LevelSceneKey = "Level-{0}";
+        }
+        
         public static class ScreenAnimation
         {
             public const ScreenShowingType DefaultScreenShowingType = ScreenShowingType.FadeOut;

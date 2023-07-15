@@ -8,13 +8,15 @@ using UnityEngine.SceneManagement;
 
 namespace Project.App.Services
 {
-    public sealed class MetaSceneLoader : AsyncLoader, IMetaSceneLoader
+    public sealed class MatchSceneLoader : AsyncLoader, IMatchSceneLoader
     {
+        private readonly IProfileProvider _profileProvider;
         private readonly ISceneLoader _sceneLoader;
         private readonly ISplash _splash;
 
-        public MetaSceneLoader(ISceneLoader sceneLoader, ISplash splash)
+        public MatchSceneLoader(IProfileProvider profileProvider, ISceneLoader sceneLoader, ISplash splash)
         {
+            _profileProvider = profileProvider;
             _sceneLoader = sceneLoader;
             _splash = splash;
         }
@@ -22,9 +24,15 @@ namespace Project.App.Services
         public override async UniTask LoadAsync(CancellationToken token)
         {
             _splash.Show();
+
+            await _sceneLoader.LoadSceneAsync(
+                string.Format(Constants.LevelBundleKeys.LevelSceneKey, _profileProvider.Level), 
+                true, 
+                LoadSceneMode.Single, 
+                token);
             
             await _sceneLoader.LoadSceneAsync(
-                Constants.MetaBundleKeys.MetaSceneKey, 
+                Constants.MatchBundleKeys.MatchSceneKey, 
                 true, 
                 LoadSceneMode.Single, 
                 token);

@@ -2,7 +2,7 @@
 
 namespace Project.App.Data
 {
-    public class PlayerProfileProvider : IPlayerProfileProvider
+    public class ProfileProvider : IProfileProvider
     {
         private readonly IDataStorage<PersonalInfoStorageItem> _personalInfoData;
         private readonly IDataStorage<ProgressStorageItem> _progressData;
@@ -15,7 +15,7 @@ namespace Project.App.Data
         public int Soft => _currencyData.Item.Soft;
         public int Hard => _currencyData.Item.Hard;
 
-        public PlayerProfileProvider(
+        public ProfileProvider(
             IDataStorage<PersonalInfoStorageItem> personalInfoData, 
             IDataStorage<ProgressStorageItem> progressData, 
             IDataStorage<CurrencyStorageItem> currencyData)

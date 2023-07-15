@@ -31,16 +31,6 @@ namespace Basis.ResourceProviders
             return await LoadGameObjectAddressableAsset<TObject>(key);
         }
 
-        private void ReleaseAsset(AsyncOperationHandle asyncOperationHandle)
-        {
-            Addressables.Release(asyncOperationHandle);
-            
-#if DEBUG
-            Debug.Log($"[{nameof(AddressableResourceProvider)}] asset {asyncOperationHandle.DebugName} was release requested"
-                .WithColor(Color.blue));
-#endif
-        }
-
         private async Task<AddressableHandle<TObject>> LoadAddressableAsset<TObject>(string key)
         {
             var asyncOperationHandler = Addressables.LoadAssetAsync<TObject>(key);
@@ -76,6 +66,16 @@ namespace Basis.ResourceProviders
 #endif
             
             return new AddressableHandle<TObject>(asyncOperationHandler, prefab);
+        }
+
+        private void ReleaseAsset(AsyncOperationHandle asyncOperationHandle)
+        {
+            Addressables.Release(asyncOperationHandle);
+            
+#if DEBUG
+            Debug.Log($"[{nameof(AddressableResourceProvider)}] asset {asyncOperationHandle.DebugName} was release requested"
+                .WithColor(Color.blue));
+#endif
         }
         
         private struct AddressableHandle<TObject>
