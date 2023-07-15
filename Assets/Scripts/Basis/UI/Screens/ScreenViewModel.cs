@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Basis.Signals;
 using UnityEngine;
 using UnityWeld.Binding;
 using Zenject;
@@ -28,7 +29,17 @@ namespace Basis.UI.Screens
         protected virtual void Start()
         {
             _buttonViewModels = GetComponentsInChildren<ButtonChangeScreenViewModel>().ToList();
-            _buttonViewModels.ForEach(button => button.InjectSignalBus(_signalBus));
+            _buttonViewModels.ForEach(button => button.OnChanceScreenButtonClicked += HandleChangeScreen);
+        }
+
+        protected void OnDestroy()
+        {
+            _buttonViewModels.ForEach(button => button.OnChanceScreenButtonClicked -= HandleChangeScreen);
+        }
+
+        private void HandleChangeScreen(int screenId)
+        {
+            _signalBus.Fire(new SwitchScreenSignal(screenId));
         }
     }
 }

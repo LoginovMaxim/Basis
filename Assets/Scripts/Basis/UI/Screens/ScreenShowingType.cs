@@ -1,6 +1,6 @@
 ﻿namespace Basis.UI.Screens
 {
-    public enum ScreenShowingType
+    public enum ScreenShowingType : byte
     {
         None,
         FadeOut,

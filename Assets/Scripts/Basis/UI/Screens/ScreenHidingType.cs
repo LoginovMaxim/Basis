@@ -1,6 +1,6 @@
 ﻿namespace Basis.UI.Screens
 {
-    public enum ScreenHidingType
+    public enum ScreenHidingType : byte
     {
         None,
         FadeIn,

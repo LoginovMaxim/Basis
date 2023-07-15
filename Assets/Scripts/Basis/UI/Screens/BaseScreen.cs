@@ -1,12 +1,7 @@
-﻿using Basis.UI.Screens.Animations.Showing;
-
-namespace Basis.UI.Screens
+﻿namespace Basis.UI.Screens
 {
     public abstract class BaseScreen<TScreenViewModel> : IScreen where TScreenViewModel : IScreenViewModel
     {
-        private IShowingScreenAnimator _showingShowingScreenAnimator;
-        private IShowingScreenAnimator _hidingShowingScreenAnimator;
-
         private readonly IScreenAnimationService _screenAnimationService;
         protected readonly TScreenViewModel _screenViewModel;
         
