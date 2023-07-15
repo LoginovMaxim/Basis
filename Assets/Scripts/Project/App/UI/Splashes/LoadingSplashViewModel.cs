@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
+using Basis.UI.Splashes;
 using UnityEngine;
 using UnityWeld.Binding;
 
-namespace Basis.UI.Splashes
+namespace Project.App.UI.Splashes
 {
-    [Binding] public sealed class AppSplashViewModel : SplashViewModel
+    [Binding] public sealed class LoadingSplashViewModel : BaseLoadingSplashViewModel
     {
         private const float HideDelay = 0.25f;
         
@@ -53,6 +54,11 @@ namespace Basis.UI.Splashes
 
         public override void Hide()
         {
+            if (!IsActive)
+            {
+                return;
+            }
+            
             StartCoroutine(Hiding());
         }
         

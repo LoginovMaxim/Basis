@@ -13,6 +13,7 @@ namespace Project.App.Assemblers
 
         protected override void OnStartAssembly()
         {
+            _splash.Show();
         }
 
         protected override void OnFinishAssembly()

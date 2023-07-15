@@ -2,6 +2,7 @@
 using Basis.UI.Screens.Animations.Hiding;
 using Basis.UI.Screens.Animations.Showing;
 using Basis.UI.Splashes;
+using Project.App.UI.Splashes;
 using Zenject;
 
 namespace Project.App.Installers
@@ -16,8 +17,8 @@ namespace Project.App.Installers
 
         private void BindSplash()
         {
-            Container.BindInterfacesAndSelfTo<AppSplashViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();
-            Container.BindInterfacesTo<Splash<AppSplashViewModel>>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<LoadingSplashViewModel>().FromComponentInHierarchy(true).AsSingle().NonLazy();
+            Container.BindInterfacesTo<Splash<LoadingSplashViewModel>>().AsSingle().NonLazy();
         }
 
         private void BindScreenAnimators()

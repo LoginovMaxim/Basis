@@ -8,8 +8,5 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Bootstrap.unity
     guid: 67487c3c5aec7fd418a65d2c070a78bb
-  - enabled: 1
-    path: Assets/Bundles/Meta/Meta.unity
-    guid: f33cca07dd2927945b9fb67ebec2ac68
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: ff8cb6c65fb6757479747e5ec068327e, type: 2}

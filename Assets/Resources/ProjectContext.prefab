@@ -649,11 +649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4257820521179149710, guid: 2991310d3527db141acb245c9fb67967, type: 3}
       propertyPath: m_Name
-      value: AppSplash
-      objectReference: {fileID: 0}
-    - target: {fileID: 7605532746642676244, guid: 2991310d3527db141acb245c9fb67967, type: 3}
-      propertyPath: viewModelPropertyName
-      value: Basis.UI.Splashes.AppSplashViewModel.Progress
+      value: LoadingSplash
       objectReference: {fileID: 0}
     - target: {fileID: 8357176785139315684, guid: 2991310d3527db141acb245c9fb67967, type: 3}
       propertyPath: m_AnchorMax.y

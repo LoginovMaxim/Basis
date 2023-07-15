@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Basis.UI.Splashes
 {
-    public class Splash<TSplashViewModel> : ISplash where TSplashViewModel : SplashViewModel
+    public class Splash<TSplashViewModel> : ISplash where TSplashViewModel : BaseLoadingSplashViewModel
     {
         protected readonly TSplashViewModel _splashViewModel;
         protected readonly List<IAssembler> _assemblers;

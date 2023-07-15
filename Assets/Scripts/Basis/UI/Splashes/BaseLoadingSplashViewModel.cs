@@ -1,6 +1,6 @@
 ﻿namespace Basis.UI.Splashes
 {
-    public abstract class SplashViewModel : MonoViewModel
+    public abstract class BaseLoadingSplashViewModel : MonoViewModel
     {
         public abstract float Progress { get; set; }
 

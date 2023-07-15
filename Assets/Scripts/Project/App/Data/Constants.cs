@@ -4,6 +4,11 @@ namespace Project.App.Data
 {
     public static class Constants
     {
+        public static class LoadingSplashBundleKeys
+        {
+            public const string LoadingSplashBackgroundKey = "LoadingSplashBackground";
+        }
+        
         public static class MetaBundleKeys
         {
             public const string MetaSceneKey = "Meta";
