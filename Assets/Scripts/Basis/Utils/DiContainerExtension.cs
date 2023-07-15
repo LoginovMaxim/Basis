@@ -2,10 +2,8 @@
 using Basis.Assemblers;
 using Basis.Assemblers.Launchers;
 using Basis.Ecs;
-using Basis.Pool;
 using Basis.Services;
 using Basis.UI.Screens;
-using Basis.Views;
 using Project.App.Data;
 using Zenject;
 
@@ -36,21 +34,6 @@ namespace Basis.Utils
             where TAssembler : Assembler
         {
             container.BindInterfacesTo<TAssembler>().AsSingle().WithArguments(assemblerPart).NonLazy();
-        }
-        
-        public static void BindViewPool<TViewObject, TViewPool>(this DiContainer container, int initialSize = 0)
-            where TViewObject : IViewObject 
-            where TViewPool : ViewPool<TViewObject>
-        {
-            var resourcePath = typeof(TViewObject).ToString().GetTypeName();
-            
-            container.BindMemoryPool<TViewObject, TViewPool>().WithInitialSize(initialSize)
-                .FromComponentInNewPrefabResource(resourcePath).AsCached().NonLazy();
-            
-            var viewPool = container.Resolve<TViewPool>();
-            var poolService = container.Resolve<IPoolService>();
-
-            poolService.TryAddViewPool(typeof(TViewObject), viewPool);
         }
         
         public static void BindScreen<TScreen>(

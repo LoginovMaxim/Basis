@@ -1,5 +1,4 @@
-﻿using Basis.Pool;
-using Basis.Views;
+﻿using Basis.Views;
 using Zenject;
 
 namespace Project.Match.Installers
@@ -9,7 +8,6 @@ namespace Project.Match.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<ViewsProvider>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<PoolService>().AsSingle().NonLazy();
         }
     }
 }

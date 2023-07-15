@@ -1,95 +1,65 @@
-﻿using System;
-using System.Collections.Generic;
-using Basis.Utils;
-using Basis.Views;
-using Leopotam.EcsLite;
-using Project.Match.Ecs;
-using Project.Match.Ecs.Features.View.Components;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
+using Basis.ResourceProviders;
 using UnityEngine;
 
 namespace Basis.Pool
 {
-    public sealed class PoolService : IPoolService
-    { 
-        private readonly IViewsProvider _viewsProvider;
+    public sealed class PoolService : MonoBehaviour, IPoolService
+    {
+        private readonly IResourceProvider _resourceProvider;
 
-        private Dictionary<Type, IViewPool> _viewPoolsByTypes = new Dictionary<Type, IViewPool>();
-        private EcsPool<ActiveTag> _activeTagPool;
+        private readonly Dictionary<string, Stack<PoolObject>> _poolObjectsByResourceIds;
 
-        public PoolService(IViewsProvider viewsProvider, IMatchEcsWorld matchEcsWorld)
+        public PoolService(IResourceProvider resourceProvider)
         {
-            _viewsProvider = viewsProvider;
-            _activeTagPool = matchEcsWorld.World.GetPool<ActiveTag>();
+            _resourceProvider = resourceProvider;
+
+            _poolObjectsByResourceIds = new Dictionary<string, Stack<PoolObject>>();
         }
 
-        public bool TryAddViewPool(Type viewObjectType, IViewPool viewPool)
+        public async Task<TPoolObject> Spawn<TPoolObject>(string resourceId) where TPoolObject : PoolObject
         {
-            if (_viewPoolsByTypes.ContainsKey(viewObjectType))
+            if (TryGetPoolObjectFromPoolCache(resourceId, out var cachedPoolObject))
             {
-                Debug.Log($"View in type [{viewObjectType}] has already been added to the PoolService"
-                    .WithColor(LoggerColor.Orange));
-                return false;
+                cachedPoolObject.Reinitialize();
+                return (TPoolObject) cachedPoolObject;
             }
             
-            _viewPoolsByTypes.Add(viewObjectType, viewPool);
-            return true;
-        }
-
-        public bool TryRemoveViewPool(Type viewObjectType)
-        {
-            if (!_viewPoolsByTypes.ContainsKey(viewObjectType))
-            {
-                Debug.Log($"Missing ViewPool for [{viewObjectType}] view object type".WithColor(LoggerColor.Orange));
-                return false;
-            }
+            var resource = await _resourceProvider.LoadResourceAsync<TPoolObject>(resourceId, new CancellationToken());
+            var poolObject = Instantiate(resource);
             
-            _viewPoolsByTypes.Remove(viewObjectType);
-            return true;
-        }
-
-        public bool TrySpawnView<TViewObjectType>(int entityId) where TViewObjectType : IViewObject
-        {
-            return TrySpawnView<TViewObjectType>(entityId, out _);
-        }
-
-        public bool TrySpawnView<TViewObjectType>(int entityId, out IViewObject viewObject) where TViewObjectType : IViewObject
-        {
-            viewObject = default;
-            if (!_viewPoolsByTypes.TryGetValue(typeof(TViewObjectType), out var viewPool))
-            {
-                Debug.Log($"Missing ViewPool for Spawn [{typeof(TViewObjectType)}] view".WithColor(LoggerColor.Orange));
-                return false;
-            }
-
-            viewObject = viewPool.Spawn();
-            _viewsProvider.TryAdd(entityId, viewObject);
-            _activeTagPool.Add(entityId);
-            return true;
-        }
-
-        public bool TryDespawnView(int entityId)
-        {
-            if (!_viewsProvider.TryGet(entityId, out var viewObject))
-            {
-                return false;
-            }
-
-            if (!_viewPoolsByTypes.ContainsKey(viewObject.GetType()))
-            {
-                Debug.Log($"Missing ViewObject type [{viewObject.GetType()}] in PoolService".WithColor(LoggerColor.Orange));
-                return false;
-            }
+            poolObject.ResourceId = resourceId;
+            poolObject.Reinitialize();
             
-            if (!_viewPoolsByTypes.TryGetValue(viewObject.GetType(), out var viewPool))
+            return poolObject;
+        }
+
+        public void Despawn(PoolObject poolObject)
+        {
+            poolObject.Deactivate();
+            AddPoolObjectToPoolCache(poolObject.ResourceId, poolObject);
+        }
+
+        private bool TryGetPoolObjectFromPoolCache(string resourceId, out PoolObject poolObject)
+        {
+            poolObject = default;
+            return _poolObjectsByResourceIds.TryGetValue(resourceId, out var poolObjects) && poolObjects.TryPop(out poolObject);
+        }
+
+        private void AddPoolObjectToPoolCache(string resourceId, PoolObject poolObject)
+        {
+            if (_poolObjectsByResourceIds.TryGetValue(resourceId, out var poolObjects))
             {
-                Debug.Log($"Missing ViewPool for [{viewObject.GetType()}] ViewObject type".WithColor(LoggerColor.Orange));
-                return false;
+                poolObjects.Push(poolObject);
+                return;
             }
 
-            viewPool.Despawn(viewObject);
-            _viewsProvider.TryRemove(entityId);
-            _activeTagPool.Del(entityId);
-            return true;
+            var poolObjectsStack = new Stack<PoolObject>();
+            poolObjectsStack.Push(poolObject);
+            
+            _poolObjectsByResourceIds.Add(resourceId, poolObjectsStack);
         }
     }
 }

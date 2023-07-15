@@ -8,8 +8,5 @@ namespace Basis.Views
         public Quaternion Rotation { get; set; }
         public Vector3 RotationEuler { get; set; }
         public Vector3 LocalScale { get; set; }
-        
-        public void OnReinitialized();
-        public void OnDespawned();
     }
 }

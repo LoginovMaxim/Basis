@@ -27,15 +27,5 @@ namespace Basis.Views
             get => transform.localScale;
             set => transform.localScale = value;
         }
-
-        public virtual void OnReinitialized()
-        {
-            gameObject.SetActive(true);
-        }
-
-        public virtual void OnDespawned()
-        {
-            gameObject.SetActive(false);
-        }
     }
 }
