@@ -27,6 +27,7 @@ namespace Project.App.Assemblers.Launchers
             var entity = localizationConfig.GetEntity<LocalizationConfigEntity>(LocalizationConfigEntity.InstanceId);
 
             _localization.InitializeLocalizationTable(entity.ToTables());
+            await UniTask.Delay(500, cancellationToken: token);
         }
     }
 }

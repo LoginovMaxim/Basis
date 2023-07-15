@@ -17,8 +17,7 @@ namespace Project.App.Installers
 
         private void BindSplash()
         {
-            Container.BindInterfacesAndSelfTo<LoadingSplashViewModel>().FromComponentInHierarchy(true).AsSingle().NonLazy();
-            Container.BindInterfacesTo<Splash<LoadingSplashViewModel>>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<Splash>().AsSingle().NonLazy();
         }
 
         private void BindScreenAnimators()

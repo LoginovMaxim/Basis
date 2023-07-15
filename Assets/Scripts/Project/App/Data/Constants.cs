@@ -6,7 +6,7 @@ namespace Project.App.Data
     {
         public static class LoadingSplashBundleKeys
         {
-            public const string LoadingSplashBackgroundKey = "LoadingSplashBackground";
+            public const string LoadingSplashKey = "LoadingSplash";
         }
         
         public static class MetaBundleKeys

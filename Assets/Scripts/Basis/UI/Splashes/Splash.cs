@@ -1,41 +1,55 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using Basis.Assemblers;
+using Basis.SceneLoaders;
+using Project.App.Data;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Basis.UI.Splashes
 {
-    public class Splash<TSplashViewModel> : ISplash where TSplashViewModel : BaseLoadingSplashViewModel
+    public class Splash : ISplash
     {
-        protected readonly TSplashViewModel _splashViewModel;
-        protected readonly List<IAssembler> _assemblers;
+        public event Action<float> OnLoadProgressChanged;
+        
+        private readonly ISceneLoader _sceneLoader;
+        private readonly List<IAssembler> _assemblers;
         
         private float _previousLoadingProgress;
+        private bool _isShowing;
 
-        protected Splash(TSplashViewModel splashViewModel)
+        protected Splash(ISceneLoader sceneLoader)
         {
-            _splashViewModel = splashViewModel;
+            _sceneLoader = sceneLoader;
             _assemblers = new List<IAssembler>();
         }
 
-        public virtual void Show()
+        public virtual async void Show()
         {
-            if (_splashViewModel.IsActive)
+            if (_isShowing)
             {
                 return;
             }
             
-            _splashViewModel.Progress = 0;
+            _isShowing = true;
             _previousLoadingProgress = 0;
             
-            _splashViewModel.Show();
+            await _sceneLoader.LoadSceneAsync(
+                Constants.LoadingSplashBundleKeys.LoadingSplashKey,
+                true,
+                LoadSceneMode.Additive,
+                new CancellationToken());
         }
 
-        public virtual void Hide()
+        public virtual async void Hide()
         {
-            _splashViewModel.Hide();
+            await _sceneLoader.UnloadSceneAsync(Constants.LoadingSplashBundleKeys.LoadingSplashKey, new CancellationToken());
             
             _assemblers.ForEach(assembler => assembler.OnStepLoaded -= OnStepLoad);
             _assemblers.Clear();
+            
+            _isShowing = false;
         }
 
         public void AddAssembler(IAssembler assembler)
@@ -61,7 +75,8 @@ namespace Basis.UI.Splashes
             loadingProgress = Mathf.Clamp(loadingProgress, _previousLoadingProgress, 1f);
             
             _previousLoadingProgress = loadingProgress;
-            _splashViewModel.Progress = loadingProgress;
+            OnLoadProgressChanged?.Invoke(loadingProgress);
+            //_splashViewModel.Progress = loadingProgress;
         }
     }
 }
