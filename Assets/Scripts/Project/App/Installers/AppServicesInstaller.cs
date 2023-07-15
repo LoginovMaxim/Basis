@@ -1,4 +1,5 @@
 using Basis.Localizations;
+using Basis.SceneLoaders;
 using Basis.VisualEffects;
 using Project.App.Services;
 using Zenject;
@@ -10,6 +11,7 @@ namespace Project.App.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<Localization>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<SceneLoader>().AsSingle().NonLazy();
             Container.BindInterfacesTo<MetaSceneLoader>().AsSingle().NonLazy();
             Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
         }

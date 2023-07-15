@@ -8,7 +8,6 @@ namespace Project.App.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesTo<MonoUpdater>().FromComponentInHierarchy().AsSingle().NonLazy();
-            Container.BindInterfacesTo<SceneLoader>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<GameObjectFinder>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<ApplicationStatusHandler>().FromComponentInHierarchy().AsSingle().NonLazy();
         }

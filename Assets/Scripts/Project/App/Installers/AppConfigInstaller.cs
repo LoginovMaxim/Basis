@@ -1,7 +1,7 @@
 ﻿using Basis.Configs;
 using Project.App.Configs;
 using Zenject;
-using ResourceProvider = Basis.Configs.ResourceProvider;
+using ResourceProvider = Basis.ResourceProviders.ResourceProvider;
 
 namespace Project.App.Installers
 {

@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using Basis.Configs;
 using Basis.Localizations;
+using Basis.ResourceProviders;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;

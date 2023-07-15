@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
+using Basis.ResourceProviders;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
@@ -104,10 +105,9 @@ namespace Basis.Configs
 
         private async UniTask<Tuple<byte[], long>> LoadStoredConfigAsync(BinaryConfigId binaryConfigId, CancellationToken token)
         {
-            var resource = await _resourceProvider.LoadResourceAsync($"BinaryConfigs/{ GetBinaryConfigName(binaryConfigId) }", token);
+            var textAsset = await _resourceProvider.LoadResourceAsync<TextAsset>($"BinaryConfigs/{ GetBinaryConfigName(binaryConfigId) }", token);
             try
             {
-                var textAsset = (TextAsset) resource;
                 return new Tuple<byte[], long>(textAsset.bytes, 0);
             }
             catch (OperationCanceledException exception)
