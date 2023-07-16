@@ -10,24 +10,24 @@ namespace Project.App.Services
 {
     public sealed class MetaSceneLoader : AsyncLoader, IMetaSceneLoader
     {
-        private readonly ISceneLoader _sceneLoader;
+        private readonly IAddressableSceneLoader _addressableSceneLoader;
         private readonly ISplash _splash;
 
-        public MetaSceneLoader(ISceneLoader sceneLoader, ISplash splash)
+        public MetaSceneLoader(IAddressableSceneLoader addressableSceneLoader, ISplash splash)
         {
-            _sceneLoader = sceneLoader;
+            _addressableSceneLoader = addressableSceneLoader;
             _splash = splash;
         }
 
         public override async UniTask LoadAsync(CancellationToken token)
         {
-            _splash.Show();
+            await _splash.Show();
             
-            await _sceneLoader.LoadSceneAsync(
+            await _addressableSceneLoader.LoadSceneAsync(
                 Constants.MetaBundleKeys.MetaSceneKey, 
-                true, 
                 LoadSceneMode.Single, 
-                token);
+                true,
+                true);
         }
     }
 }

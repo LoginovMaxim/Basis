@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading;
 using Basis.Assemblers;
 using Basis.SceneLoaders;
+using Basis.Utils;
+using Cysharp.Threading.Tasks;
 using Project.App.Data;
 using UnityEngine;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 
 namespace Basis.UI.Splashes
@@ -13,19 +16,20 @@ namespace Basis.UI.Splashes
     {
         public event Action<float> OnLoadProgressChanged;
         
-        private readonly ISceneLoader _sceneLoader;
+        private readonly IAddressableSceneLoader _addressableSceneLoader;
         private readonly List<IAssembler> _assemblers;
-        
+
+        private AsyncOperationHandle<SceneInstance> _asyncOperationHandle;
         private float _previousLoadingProgress;
         private bool _isShowing;
 
-        protected Splash(ISceneLoader sceneLoader)
+        protected Splash(IAddressableSceneLoader addressableSceneLoader)
         {
-            _sceneLoader = sceneLoader;
+            _addressableSceneLoader = addressableSceneLoader;
             _assemblers = new List<IAssembler>();
         }
 
-        public virtual async void Show()
+        public virtual async UniTask Show()
         {
             if (_isShowing)
             {
@@ -35,21 +39,29 @@ namespace Basis.UI.Splashes
             _isShowing = true;
             _previousLoadingProgress = 0;
             
-            await _sceneLoader.LoadSceneAsync(
+            _asyncOperationHandle = await _addressableSceneLoader.LoadSceneAsync(
                 Constants.LoadingSplashBundleKeys.LoadingSplashKey,
-                true,
                 LoadSceneMode.Additive,
-                new CancellationToken());
+                true,
+                false);
+            
+            _isShowing = false;
         }
 
-        public virtual async void Hide()
+        public virtual async UniTask Hide()
         {
-            await _sceneLoader.UnloadSceneAsync(Constants.LoadingSplashBundleKeys.LoadingSplashKey, new CancellationToken());
+            if (_isShowing)
+            {
+#if DEBUG
+                Debug.Log($"[{nameof(Splash)}] Can't hide splash when active showing".WithColor(Color.yellow));
+#endif
+                return;
+            }
+            
+            await _addressableSceneLoader.UnloadSceneAsync(_asyncOperationHandle);
             
             _assemblers.ForEach(assembler => assembler.OnStepLoaded -= OnStepLoad);
             _assemblers.Clear();
-            
-            _isShowing = false;
         }
 
         public void AddAssembler(IAssembler assembler)

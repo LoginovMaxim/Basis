@@ -11,12 +11,16 @@ using UnityEngine.SceneManagement;
 
 namespace Basis.SceneLoaders
 {
-    public sealed class AddressableSceneLoader : ISceneLoader
+    public sealed class AddressableSceneLoader : IAddressableSceneLoader
     {
         private readonly Dictionary<string, AsyncOperationHandle<SceneInstance>> _activeSceneInstancesByAddressableKeys = 
             new Dictionary<string, AsyncOperationHandle<SceneInstance>>();
 
-        public async UniTask LoadSceneAsync(string sceneKey, bool isActiveScene, LoadSceneMode loadSceneMode, CancellationToken token)
+        public async UniTask<AsyncOperationHandle<SceneInstance>> LoadSceneAsync(
+            string sceneKey, 
+            LoadSceneMode loadSceneMode, 
+            bool isActiveScene, 
+            bool autoUnload)
         {
             if (loadSceneMode == LoadSceneMode.Single)
             {
@@ -34,24 +38,49 @@ namespace Basis.SceneLoaders
             Debug.Log($"[{nameof(AddressableSceneLoader)}] Scene {sceneKey} loaded successfully".WithColor(LoggerColor.Lemon));
 #endif
             
-            _activeSceneInstancesByAddressableKeys.Add(sceneKey, asyncOperationHandle);
+            if (autoUnload)
+            {
+                _activeSceneInstancesByAddressableKeys.Add(sceneKey, asyncOperationHandle);
+            }
+            
+            return asyncOperationHandle;
         }
 
-        public async UniTask UnloadSceneAsync(string sceneKey, CancellationToken token)
+        public async UniTask UnloadSceneAsync(string sceneKey)
         {
             if (!_activeSceneInstancesByAddressableKeys.TryGetValue(sceneKey, out var asyncOperationHandle))
             {
                 return;
             }
             
-            var unloadAsyncOperationHandle = Addressables.UnloadSceneAsync(asyncOperationHandle.Result);
+            var unloadAsyncOperationHandle = Addressables.UnloadSceneAsync(asyncOperationHandle);
             await unloadAsyncOperationHandle.Task;
+            if (asyncOperationHandle.Status == AsyncOperationStatus.Failed)
+            {
+                throw new Exception($"Scene {sceneKey} unload failed");
+            }
             
 #if DEBUG
             Debug.Log($"[{nameof(AddressableSceneLoader)}] Scene {sceneKey} unload successfully".WithColor(LoggerColor.Purple));
 #endif
 
             _activeSceneInstancesByAddressableKeys.Remove(sceneKey);
+        }
+
+        public async UniTask UnloadSceneAsync(AsyncOperationHandle<SceneInstance> asyncOperationHandle)
+        {
+            var sceneName = asyncOperationHandle.Result.Scene.name;
+            
+            var unloadAsyncOperationHandle = Addressables.UnloadSceneAsync(asyncOperationHandle);
+            await unloadAsyncOperationHandle.Task;
+            if (asyncOperationHandle.Status == AsyncOperationStatus.Failed)
+            {
+                throw new Exception($"Scene {sceneName} unload failed");
+            }
+            
+#if DEBUG
+            Debug.Log($"[{nameof(AddressableSceneLoader)}] Scene {sceneName} unload successfully".WithColor(LoggerColor.Purple));
+#endif
         }
 
         private async UniTask UnloadAllActiveScenes()
@@ -61,7 +90,7 @@ namespace Basis.SceneLoaders
 
             foreach (var unloadedSceneKey in unloadSceneKeys)
             {
-                await UnloadSceneAsync(unloadedSceneKey, new CancellationToken());
+                await UnloadSceneAsync(unloadedSceneKey);
             }
         }
     }
