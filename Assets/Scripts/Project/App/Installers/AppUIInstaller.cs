@@ -17,6 +17,7 @@ namespace Project.App.Installers
 
         private void BindSplash()
         {
+            Container.Bind<LoadingSplashViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<Splash>().AsSingle().NonLazy();
         }
 

@@ -4,30 +4,32 @@ using Basis.Services;
 using Basis.UI.Splashes;
 using Cysharp.Threading.Tasks;
 using Project.App.Data;
+using Project.Meta.UI;
 using UnityEngine.SceneManagement;
 
 namespace Project.App.Services
 {
     public sealed class MetaSceneLoader : AsyncLoader, IMetaSceneLoader
     {
-        private readonly IAddressableSceneLoader _addressableSceneLoader;
+        private readonly IMetaScreenService _metaScreenService;
+        private readonly ISceneLoader _sceneLoader;
         private readonly ISplash _splash;
 
-        public MetaSceneLoader(IAddressableSceneLoader addressableSceneLoader, ISplash splash)
+        public MetaSceneLoader(ISceneLoader sceneLoader, ISplash splash)
         {
-            _addressableSceneLoader = addressableSceneLoader;
+            _sceneLoader = sceneLoader;
             _splash = splash;
         }
 
         public override async UniTask LoadAsync(CancellationToken token)
         {
-            await _splash.Show();
+            _splash.Show();
             
-            await _addressableSceneLoader.LoadSceneAsync(
+            await _sceneLoader.LoadSceneAsync(
                 Constants.MetaBundleKeys.MetaSceneKey, 
                 LoadSceneMode.Single, 
                 true,
-                true);
+                token);
         }
     }
 }

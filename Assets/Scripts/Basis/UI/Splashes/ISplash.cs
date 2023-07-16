@@ -1,14 +1,11 @@
-﻿using System;
-using Basis.Assemblers;
-using Cysharp.Threading.Tasks;
+﻿using Basis.Assemblers;
 
 namespace Basis.UI.Splashes
 {
     public interface ISplash
     {
-        event Action<float> OnLoadProgressChanged; 
-        UniTask Show();
-        UniTask Hide();
+        void Show();
+        void Hide();
         void AddAssembler(IAssembler assembler);
     }
 }

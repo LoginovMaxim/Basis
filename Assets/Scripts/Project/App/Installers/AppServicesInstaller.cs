@@ -13,6 +13,7 @@ namespace Project.App.Installers
             Container.BindInterfacesTo<Localization>().AsSingle().NonLazy();
             Container.BindInterfacesTo<AddressableSceneLoader>().AsSingle().NonLazy();
             Container.BindInterfacesTo<MetaSceneLoader>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<MatchSceneLoader>().AsSingle().NonLazy();
             Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
         }
     }

@@ -11,34 +11,35 @@ namespace Project.App.Services
     public sealed class MatchSceneLoader : AsyncLoader, IMatchSceneLoader
     {
         private readonly IProfileProvider _profileProvider;
-        private readonly IAddressableSceneLoader _addressableSceneLoader;
+        private readonly ISceneLoader _sceneLoader;
         private readonly ISplash _splash;
 
         public MatchSceneLoader(
             IProfileProvider profileProvider, 
-            IAddressableSceneLoader addressableSceneLoader, 
+            ISceneLoader sceneLoader,
             ISplash splash)
         {
             _profileProvider = profileProvider;
-            _addressableSceneLoader = addressableSceneLoader;
+            _sceneLoader = sceneLoader;
             _splash = splash;
         }
 
         public override async UniTask LoadAsync(CancellationToken token)
         {
-            await _splash.Show();
-
-            await _addressableSceneLoader.LoadSceneAsync(
+            _splash.Show();
+            
+            /*var levelAsyncOperationHandle = await _addressableSceneLoader.LoadSceneAsync(
                 string.Format(Constants.LevelBundleKeys.LevelSceneKey, _profileProvider.Level), 
                 LoadSceneMode.Single, 
+                false,
                 true,
-                true);
+                true);*/
             
-            await _addressableSceneLoader.LoadSceneAsync(
+            await _sceneLoader.LoadSceneAsync(
                 Constants.MatchBundleKeys.MatchSceneKey, 
                 LoadSceneMode.Single, 
                 true,
-                true);
+                token);
         }
     }
 }

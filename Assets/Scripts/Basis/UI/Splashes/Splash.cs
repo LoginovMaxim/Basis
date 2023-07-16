@@ -1,67 +1,47 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Basis.Assemblers;
-using Basis.SceneLoaders;
-using Basis.Utils;
-using Cysharp.Threading.Tasks;
-using Project.App.Data;
+using Project.App.UI.Splashes;
 using UnityEngine;
-using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.ResourceManagement.ResourceProviders;
-using UnityEngine.SceneManagement;
 
 namespace Basis.UI.Splashes
 {
     public class Splash : ISplash
     {
-        public event Action<float> OnLoadProgressChanged;
-        
-        private readonly IAddressableSceneLoader _addressableSceneLoader;
+        private readonly LoadingSplashViewModel _loadingSplashViewModel;
         private readonly List<IAssembler> _assemblers;
 
-        private AsyncOperationHandle<SceneInstance> _asyncOperationHandle;
         private float _previousLoadingProgress;
-        private bool _isShowing;
 
-        protected Splash(IAddressableSceneLoader addressableSceneLoader)
+        protected Splash(LoadingSplashViewModel addressableSceneLoader)
         {
-            _addressableSceneLoader = addressableSceneLoader;
+            _loadingSplashViewModel = addressableSceneLoader;
             _assemblers = new List<IAssembler>();
         }
 
-        public virtual async UniTask Show()
+        public virtual void Show()
         {
-            if (_isShowing)
+            if (_loadingSplashViewModel.IsActive)
             {
                 return;
             }
             
-            _isShowing = true;
+            _loadingSplashViewModel.Progress = 0;
             _previousLoadingProgress = 0;
             
-            _asyncOperationHandle = await _addressableSceneLoader.LoadSceneAsync(
-                Constants.LoadingSplashBundleKeys.LoadingSplashKey,
-                LoadSceneMode.Additive,
-                true,
-                false);
-            
-            _isShowing = false;
+            _loadingSplashViewModel.Show();
         }
 
-        public virtual async UniTask Hide()
+        public virtual void Hide()
         {
-            if (_isShowing)
+            if (_previousLoadingProgress < 1)
             {
-#if DEBUG
-                Debug.Log($"[{nameof(Splash)}] Can't hide splash when active showing".WithColor(Color.yellow));
-#endif
                 return;
             }
-            
-            await _addressableSceneLoader.UnloadSceneAsync(_asyncOperationHandle);
             
             _assemblers.ForEach(assembler => assembler.OnStepLoaded -= OnStepLoad);
             _assemblers.Clear();
+            
+            _loadingSplashViewModel.Hide();
         }
 
         public void AddAssembler(IAssembler assembler)
@@ -86,9 +66,8 @@ namespace Basis.UI.Splashes
             loadingProgress /= _assemblers.Count;
             loadingProgress = Mathf.Clamp(loadingProgress, _previousLoadingProgress, 1f);
             
+            _loadingSplashViewModel.Progress = loadingProgress;
             _previousLoadingProgress = loadingProgress;
-            OnLoadProgressChanged?.Invoke(loadingProgress);
-            //_splashViewModel.Progress = loadingProgress;
         }
     }
 }

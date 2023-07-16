@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 21a4001a7e31464f98dfa4349a83a5b8, type: 3}
   m_Name: ScreenAnimationConfig
   m_EditorClassIdentifier: 
-  _showingFadeDuration: 0.33
+  _showingFadeDuration: 0.2
   _showingFadeEase: 8
-  _hidingFadeDuration: 0.33
+  _hidingFadeDuration: 0.2
   _hidingFadeEase: 9
   _showingMoveDuration: 0.5
   _showingMoveEase: 10

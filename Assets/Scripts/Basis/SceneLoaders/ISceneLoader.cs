@@ -6,7 +6,7 @@ namespace Basis.SceneLoaders
 {
     public interface ISceneLoader
     {
-        UniTask LoadSceneAsync(string scenePath, bool isActiveScene, bool autoUnload, LoadSceneMode loadSceneMode, CancellationToken token);
+        UniTask LoadSceneAsync(string scenePath, LoadSceneMode loadSceneMode, bool isActiveScene, CancellationToken token);
         UniTask UnloadSceneAsync(string scenePath, CancellationToken token);
     }
 }

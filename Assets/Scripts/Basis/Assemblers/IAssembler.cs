@@ -8,5 +8,6 @@ namespace Basis.Assemblers
         int ServicesCount { get; }
         int CurrentStepCount { get; }
         float Progress { get; }
+        bool Launched { get; }
     }
 }

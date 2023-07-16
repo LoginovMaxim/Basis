@@ -8,9 +8,10 @@ namespace Project.App.UI.Splashes
 {
     [Binding] public sealed class LoadingSplashViewModel : BaseLoadingSplashViewModel
     {
-        private const float HideDelay = 0.25f;
+        [SerializeField] private float _smooth;
         
         private float _progress;
+        private float _smoothProgress;
         private int _percentage;
 
         [Binding]
@@ -27,6 +28,22 @@ namespace Project.App.UI.Splashes
                 _progress = Mathf.Clamp01(value);
                 Percentage = (int)(_progress * 100);
                 OnPropertyChanged(nameof(Progress));
+            }
+        }
+
+        [Binding]
+        public float SmoothProgress
+        {
+            get => _smoothProgress;
+            set
+            {
+                if (Math.Abs(_smoothProgress - value) < Mathf.Epsilon)
+                {
+                    return;
+                }
+
+                _smoothProgress = Mathf.Clamp01(value);
+                OnPropertyChanged(nameof(SmoothProgress));
             }
         }
 
@@ -47,24 +64,19 @@ namespace Project.App.UI.Splashes
 
         [Binding] public string PercentageCaption { get; set; }
 
-        public override void Show()
+        private void Update()
         {
+            SmoothProgress = Mathf.Lerp(SmoothProgress, _progress, _smooth * Time.deltaTime);
+        }
+
+        public void Show()
+        {
+            SmoothProgress = 0;
             gameObject.SetActive(true);
         }
 
-        public override void Hide()
+        public void Hide()
         {
-            if (!IsActive)
-            {
-                return;
-            }
-            
-            StartCoroutine(Hiding());
-        }
-        
-        private IEnumerator Hiding()
-        {
-            yield return new WaitForSeconds(HideDelay);
             gameObject.SetActive(false);
         }
     }

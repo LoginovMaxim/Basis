@@ -21,6 +21,7 @@ namespace Basis.Assemblers
         public int ServicesCount { get; private set; }
         public int CurrentStepCount { get; private set; }
         public float Progress { get; private set; }
+        public bool Launched { get; private set; }
 
         protected Assembler(List<IAssemblerLauncher> assemblerParts, ISplash splash)
         {
@@ -44,7 +45,7 @@ namespace Basis.Assemblers
 
         private async UniTask LaunchAssemblerPartsAsync()
         {
-            await UniTask.Delay(200, cancellationToken: _tokenSource.Token);
+            await UniTask.Delay(100, cancellationToken: _tokenSource.Token);
             OnStartAssembly();
             
             ServicesCount = _assemblerLaunchers.Count;
@@ -80,9 +81,13 @@ namespace Basis.Assemblers
                 _assemblerLaunchers.Dequeue();
                 Debug.Log($"Service: {assemblerLauncher.GetType()} launched successfully".WithColor(LoggerColor.Green));
             }
+                
+            Progress = 1f;
+            OnStepLoaded?.Invoke(Progress);
             
-            await UniTask.Delay(200, cancellationToken: _tokenSource.Token);
+            await UniTask.Delay(300, cancellationToken: _tokenSource.Token);
             OnFinishAssembly();
+            Launched = true;
         }
 
         public void Dispose()

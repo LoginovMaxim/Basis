@@ -6,7 +6,7 @@ namespace Basis.SceneLoaders
 {
     public class SceneLoader : ISceneLoader
     {
-        public async UniTask LoadSceneAsync(string scenePath, bool isActiveScene, bool autoUnload, LoadSceneMode loadSceneMode, CancellationToken token)
+        public async UniTask LoadSceneAsync(string scenePath, LoadSceneMode loadSceneMode, bool isActiveScene, CancellationToken token)
         {
             var sceneName = scenePath.Split('/');
             var asyncOperation = SceneManager.LoadSceneAsync(scenePath, loadSceneMode);
