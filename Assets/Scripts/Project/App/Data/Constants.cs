@@ -21,7 +21,7 @@ namespace Project.App.Data
         
         public static class LevelBundleKeys
         {
-            public const string LevelSceneKey = "Level-{0}";
+            public const string LevelSceneKeyFormat = "Level-{0}";
         }
         
         public static class ScreenAnimation

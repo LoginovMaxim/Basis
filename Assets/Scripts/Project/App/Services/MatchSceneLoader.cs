@@ -28,16 +28,15 @@ namespace Project.App.Services
         {
             _splash.Show();
             
-            /*var levelAsyncOperationHandle = await _addressableSceneLoader.LoadSceneAsync(
-                string.Format(Constants.LevelBundleKeys.LevelSceneKey, _profileProvider.Level), 
+            await _sceneLoader.LoadSceneAsync(
+                string.Format(Constants.LevelBundleKeys.LevelSceneKeyFormat, _profileProvider.Level), 
                 LoadSceneMode.Single, 
-                false,
                 true,
-                true);*/
+                token);
             
             await _sceneLoader.LoadSceneAsync(
                 Constants.MatchBundleKeys.MatchSceneKey, 
-                LoadSceneMode.Single, 
+                LoadSceneMode.Additive, 
                 true,
                 token);
         }
