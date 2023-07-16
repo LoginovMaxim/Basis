@@ -45,7 +45,7 @@ namespace Basis.Assemblers
 
         private async UniTask LaunchAssemblerPartsAsync()
         {
-            await UniTask.Delay(100, cancellationToken: _tokenSource.Token);
+            await UniTask.Delay(10, cancellationToken: _tokenSource.Token);
             OnStartAssembly();
             
             ServicesCount = _assemblerLaunchers.Count;
@@ -67,7 +67,7 @@ namespace Basis.Assemblers
                 
                     OnStepLoaded?.Invoke(Progress);
                     
-                    await UniTask.Delay(200, cancellationToken: _tokenSource.Token);
+                    await UniTask.Delay(10, cancellationToken: _tokenSource.Token);
                 }
                 catch (Exception e)
                 {
@@ -85,7 +85,7 @@ namespace Basis.Assemblers
             Progress = 1f;
             OnStepLoaded?.Invoke(Progress);
             
-            await UniTask.Delay(300, cancellationToken: _tokenSource.Token);
+            await UniTask.Delay(100, cancellationToken: _tokenSource.Token);
             OnFinishAssembly();
             Launched = true;
         }

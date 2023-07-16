@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using Basis.UI.Splashes;
 using UnityEngine;
 using UnityWeld.Binding;
