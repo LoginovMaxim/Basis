@@ -1,0 +1,21 @@
+{
+    "name": "Khepri.AssetDelivery",
+    "references": [
+        "Unity.Addressables",
+        "Unity.ResourceManager",
+        "Google.Play.AssetDelivery",
+        "Google.Play.Common"
+    ],
+    "includePlatforms": [
+        "Android",
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

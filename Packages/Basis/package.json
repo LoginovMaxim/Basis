@@ -1,0 +1,17 @@
+{
+  "name": "com.harlequin.basis",
+  "version": "1.0.0",
+  "displayName": "Basis",
+  "description": "A framework for creating data oriented games",
+  "unity": "2022.1",
+  "dependencies": {
+ },
+ "keywords": [
+    "ECS",
+    "Localization"
+  ],
+  "author": {
+    "name": "Maxim Loginov",
+    "email": "visit.folin.back@gmail.com"
+  }
+}

@@ -1,0 +1,126 @@
+﻿using System.Collections.Generic;
+using Basis.Monos;
+using Basis.Services;
+using Basis.Views;
+using Leopotam.EcsLite;
+
+namespace Basis.Ecs
+{
+    public abstract class EcsService<TEcsSetup> : UpdatableService, IEcsService where TEcsSetup : IEcsSetup
+    {
+        private readonly List<TEcsSetup> _ecsSetups;
+        private readonly IViewsProvider _viewsProvider;
+        
+        private List<EcsOrderSystem> _orderSystems;
+        private EcsSystems _systems;
+        
+        private EcsWorld _world;
+
+        protected EcsService(
+            List<TEcsSetup> ecsSetups, 
+            IViewsProvider viewsProvider,
+            IEcsWorld ecsWorld, 
+            IMonoUpdater monoUpdater, 
+            UpdateType updateType) : 
+            base(monoUpdater, updateType)
+        {
+            _ecsSetups = ecsSetups;
+            _viewsProvider = viewsProvider;
+            _world = ecsWorld.World;
+        }
+
+        protected override void Init()
+        {
+            InitSystems();
+            InitSetups();
+            AddSystems();
+            BuildSystems();
+            InitSystem();
+        }
+
+        private void InitSetups()
+        {
+            foreach (var levelEcsSetups in _ecsSetups)
+            {
+                levelEcsSetups.Init(_orderSystems);
+            }
+        }
+
+        private void AddSystems()
+        {
+            foreach (var ecsSetup in _ecsSetups)
+            {
+                ecsSetup.AddSystems();
+            }
+        }
+
+        private void InitSystems()
+        {
+            _systems?.Destroy();
+            _systems = null;
+            _systems = new EcsSystems(_world);
+            
+            _orderSystems = new List<EcsOrderSystem>();
+        }
+
+        private void BuildSystems()
+        {
+            var systemsCount = _orderSystems.Count;
+            
+            for (var i = 0; i < systemsCount; i++)
+            {
+                var order = int.MaxValue;
+                var index = 0;
+                
+                for (var j = 0; j < _orderSystems.Count; j++)
+                {
+                    if (_orderSystems[j].Order >= order)
+                    {
+                        continue;
+                    }
+
+                    order = _orderSystems[j].Order;
+                    index = j;
+                }
+                
+                _systems.Add(_orderSystems[index].EcsSystem);
+                _orderSystems.Remove(_orderSystems[index]);
+            }
+        }
+
+        private void InitSystem()
+        {
+            _systems.Init();
+        }
+
+        protected override void Update()
+        {
+            _systems.Run();
+        }
+
+        protected override void Dispose()
+        {
+            base.Dispose();
+
+            var entities = new int[_world.GetEntitiesCount()];
+            _world.GetAllEntities(ref entities);
+
+            foreach (var entity in entities)
+            {
+                _viewsProvider.TryRemove(entity);
+            }
+            
+            if (_systems != null) 
+            {
+                _systems.Destroy();
+                _systems = null;
+            }
+            
+            if (_world != null) 
+            {
+                _world.Destroy();
+                _world = null;
+            }
+        }
+    }
+}
