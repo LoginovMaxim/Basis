@@ -2,11 +2,8 @@
 {
     public interface IProfileProvider
     {
-        public string Id { get; }
-        public string Name { get; }
-        public int Level { get; }
-        public int Experience { get; }
-        public int Soft { get; }
-        public int Hard { get; }
+        PersonalInfoStorageItem PersonalInfoData { get; }
+        ProgressStorageItem ProgressData { get; }
+        CurrencyStorageItem CurrencyData { get; }
     }
 }

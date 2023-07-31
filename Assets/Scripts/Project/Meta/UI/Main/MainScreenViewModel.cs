@@ -1,5 +1,5 @@
-﻿using System;
-using Basis.UI.Screens;
+﻿using Basis.UI.Screens;
+using Project.App.Signals;
 using UnityWeld.Binding;
 
 namespace Project.Meta.UI.Main
@@ -7,12 +7,10 @@ namespace Project.Meta.UI.Main
     [Binding]
     public sealed class MainScreenViewModel : ScreenViewModel
     {
-        public event Action OnPlayMatchButtonClicked;
-        
         [Binding]
         public void HandlePlayMatch()
         {
-            OnPlayMatchButtonClicked?.Invoke();
+            _signalBus.Fire<PlayMatchSignal>();
         }
     }
 }

@@ -1,5 +1,4 @@
-﻿using Project.Match.Commands;
-using Zenject;
+﻿using Zenject;
 
 namespace Project.Match.Installers
 {
@@ -7,7 +6,6 @@ namespace Project.Match.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<QuitMatchCommand>().AsSingle().NonLazy();
         }
     }
 }

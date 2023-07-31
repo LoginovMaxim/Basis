@@ -38,14 +38,21 @@ namespace Basis.Views
             return true;
         }
 
-        public bool TryGet(int entityId, out IViewObject view)
+        public bool TryGet<TViewObject>(int entityId, out TViewObject view) where TViewObject : IViewObject
         {
-            if (!_viewsByEntityIds.TryGetValue(entityId, out view))
+            view = default;
+            if (!_viewsByEntityIds.TryGetValue(entityId, out var viewObject))
             {
                 Debug.Log($"Missing ViewObject for entityId: {entityId}".WithColor(LoggerColor.Orange));
                 return false;
             }
-            
+
+            if (viewObject is not TViewObject concreteViewObject)
+            {
+                return false;
+            }
+
+            view = concreteViewObject;
             return true;
         }
     }

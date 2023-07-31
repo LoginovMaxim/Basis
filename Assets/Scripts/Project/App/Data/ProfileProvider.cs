@@ -4,25 +4,22 @@ namespace Project.App.Data
 {
     public class ProfileProvider : IProfileProvider
     {
-        private readonly IDataStorage<PersonalInfoStorageItem> _personalInfoData;
-        private readonly IDataStorage<ProgressStorageItem> _progressData;
-        private readonly IDataStorage<CurrencyStorageItem> _currencyData;
-        
-        public string Id => _personalInfoData.Item.Id;
-        public string Name => _personalInfoData.Item.Name;
-        public int Level => _progressData.Item.Level;
-        public int Experience => _progressData.Item.Experience;
-        public int Soft => _currencyData.Item.Soft;
-        public int Hard => _currencyData.Item.Hard;
+        private readonly IDataStorage<PersonalInfoStorageItem> _personalInfoStorageItem;
+        private readonly IDataStorage<ProgressStorageItem> _progressStorageItem;
+        private readonly IDataStorage<CurrencyStorageItem> _currencyStorageItem;
+
+        public PersonalInfoStorageItem PersonalInfoData => _personalInfoStorageItem.Item;
+        public ProgressStorageItem ProgressData => _progressStorageItem.Item;
+        public CurrencyStorageItem CurrencyData => _currencyStorageItem.Item;
 
         public ProfileProvider(
-            IDataStorage<PersonalInfoStorageItem> personalInfoData, 
-            IDataStorage<ProgressStorageItem> progressData, 
-            IDataStorage<CurrencyStorageItem> currencyData)
+            IDataStorage<PersonalInfoStorageItem> personalInfoStorageItem, 
+            IDataStorage<ProgressStorageItem> progressStorageItem, 
+            IDataStorage<CurrencyStorageItem> currencyStorageItem)
         {
-            _personalInfoData = personalInfoData;
-            _progressData = progressData;
-            _currencyData = currencyData;
+            _personalInfoStorageItem = personalInfoStorageItem;
+            _progressStorageItem = progressStorageItem;
+            _currencyStorageItem = currencyStorageItem;
         }
     }
 }

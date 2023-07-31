@@ -44,7 +44,7 @@ namespace Project.Match.Ecs.Features.View.Systems
         {
             foreach (var e in _rotationFilter)
             {
-                if (!_viewsProvider.TryGet(e, out var view))
+                if (!_viewsProvider.TryGet<IViewObject>(e, out var view))
                 {
                     continue;
                 }
@@ -58,7 +58,7 @@ namespace Project.Match.Ecs.Features.View.Systems
         {
             foreach (var e in _rotationSmoothFilter)
             {
-                if (!_viewsProvider.TryGet(e, out var view))
+                if (!_viewsProvider.TryGet<IViewObject>(e, out var view))
                 {
                     continue;
                 }

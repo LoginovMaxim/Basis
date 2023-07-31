@@ -25,7 +25,6 @@ namespace Basis.UI.Screens
 
         public void Initialize()
         {
-            //_screens.ForEach(screen => screen.Hide());
             _signalBus.Subscribe<SwitchScreenSignal>(OnChangeScreenButtonClicked);
         }
         

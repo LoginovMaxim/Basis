@@ -1,4 +1,5 @@
 ﻿using Basis.Signals;
+using Project.App.Signals;
 using Zenject;
 
 namespace Project.App.Installers
@@ -10,6 +11,10 @@ namespace Project.App.Installers
             SignalBusInstaller.Install(Container);
             
             Container.DeclareSignal<SwitchScreenSignal>();
+
+            Container.DeclareSignal<PlayMatchSignal>();
+            Container.DeclareSignal<QuitMatchSignal>();
+            Container.DeclareSignal<RestartMatchSignal>();
         }
     }
 }

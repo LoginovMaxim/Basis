@@ -20,7 +20,7 @@ namespace Basis.Commands
             _signalBus.Subscribe<TSignal>(Execute);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _signalBus.Unsubscribe<TSignal>(Execute);
         }
@@ -44,7 +44,7 @@ namespace Basis.Commands
             _signalBus.Subscribe<TSignal>(Execute);
         }
 
-        public void Dispose()
+        public virtual void Dispose()
         {
             _signalBus.Unsubscribe<TSignal>(Execute);
         }

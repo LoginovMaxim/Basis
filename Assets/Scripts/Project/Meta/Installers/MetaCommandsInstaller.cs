@@ -1,5 +1,4 @@
-﻿using Project.Meta.Commands;
-using Zenject;
+﻿using Zenject;
 
 namespace Project.Meta.Installers
 {
@@ -7,7 +6,6 @@ namespace Project.Meta.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<PlayMatchCommand>().AsSingle().NonLazy();
         }
     }
 }

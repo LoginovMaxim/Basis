@@ -21,7 +21,7 @@ namespace Basis.Factory
 
         public void ReleaseView(int entityId)
         {
-            _viewsProvider.TryGet(entityId, out var view);
+            _viewsProvider.TryGet<IViewObject>(entityId, out var view);
             if (view is not PoolObject poolObject)
             {
                 return;

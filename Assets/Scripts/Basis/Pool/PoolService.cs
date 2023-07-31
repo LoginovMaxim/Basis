@@ -1,23 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Basis.ResourceProviders;
 using UnityEngine;
+using Zenject;
 
 namespace Basis.Pool
 {
-    public sealed class PoolService : MonoBehaviour, IPoolService
+    public sealed class PoolService : MonoBehaviour, IPoolService, IDisposable
     {
-        private readonly IResourceProvider _resourceProvider;
+        [Inject] private readonly IResourceProvider _resourceProvider;
 
-        private readonly Dictionary<string, Stack<PoolObject>> _poolObjectsByResourceIds;
-
-        public PoolService(IResourceProvider resourceProvider)
-        {
-            _resourceProvider = resourceProvider;
-
-            _poolObjectsByResourceIds = new Dictionary<string, Stack<PoolObject>>();
-        }
+        private readonly Dictionary<string, Stack<PoolObject>> _poolObjectsByResourceIds = new Dictionary<string, Stack<PoolObject>>();
 
         public async Task<TPoolObject> Spawn<TPoolObject>(string resourceId) where TPoolObject : PoolObject
         {
@@ -60,6 +55,14 @@ namespace Basis.Pool
             poolObjectsStack.Push(poolObject);
             
             _poolObjectsByResourceIds.Add(resourceId, poolObjectsStack);
+        }
+
+        public void Dispose()
+        {
+            foreach (var poolObjectsByResourceId in _poolObjectsByResourceIds)
+            {
+                _resourceProvider.UnloadResource(poolObjectsByResourceId.Key);
+            }
         }
     }
 }

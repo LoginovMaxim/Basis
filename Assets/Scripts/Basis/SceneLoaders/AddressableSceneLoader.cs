@@ -13,20 +13,42 @@ namespace Basis.SceneLoaders
 {
     public sealed class AddressableSceneLoader : ISceneLoader
     {
-        private readonly Dictionary<string, AsyncOperationHandle<SceneInstance>> _activeSceneInstancesByAddressableKeys = 
-            new Dictionary<string, AsyncOperationHandle<SceneInstance>>();
+        private readonly List<KeyValuePair<string, SceneInstance>> _activeSceneInstancesByKeys;
+        private readonly List<string> _currentLoadingSceneKeys;
+        private readonly List<string> _currentUnloadingSceneKeys;
 
-        public async UniTask LoadSceneAsync(
-            string sceneKey, 
-            LoadSceneMode loadSceneMode, 
-            bool isActiveScene,
-            CancellationToken token)
+        public AddressableSceneLoader()
         {
-            if (loadSceneMode == LoadSceneMode.Single)
+            _activeSceneInstancesByKeys = new List<KeyValuePair<string, SceneInstance>>();
+            _currentLoadingSceneKeys = new List<string>();
+            _currentUnloadingSceneKeys = new List<string>();
+        }
+
+        public async UniTask LoadSceneAsync(string sceneKey, LoadSceneMode loadSceneMode, bool isActiveScene, CancellationToken token)
+        {
+            if (TryGetSceneInstanceByKey(sceneKey, out _))
             {
-                await UnloadAllActiveScenes();
+#if DEBUG
+                Debug.Log($"[{nameof(AddressableSceneLoader)}] The scene {sceneKey} is already loaded."
+                    .WithColor(LoggerColor.Red));
+#endif
+                return;
             }
+
+            lock (_currentLoadingSceneKeys)
+            {
+                if (_currentLoadingSceneKeys.Contains(sceneKey))
+                {
+#if DEBUG
+                    Debug.Log($"[{nameof(AddressableSceneLoader)}] You cannot load a scene {sceneKey} " +
+                              $"that is already loading at the moment".WithColor(LoggerColor.Red));
+#endif
+                    return;
+                }
             
+                _currentLoadingSceneKeys.Add(sceneKey);
+            }
+
             var asyncOperationHandle = Addressables.LoadSceneAsync(sceneKey, loadSceneMode, isActiveScene);
             await asyncOperationHandle.Task;
             if (asyncOperationHandle.Status == AsyncOperationStatus.Failed)
@@ -37,35 +59,76 @@ namespace Basis.SceneLoaders
 #if DEBUG
             Debug.Log($"[{nameof(AddressableSceneLoader)}] Scene {sceneKey} loaded successfully".WithColor(LoggerColor.Lemon));
 #endif
-            _activeSceneInstancesByAddressableKeys.Add(sceneKey, asyncOperationHandle);
+            
+            lock (_activeSceneInstancesByKeys)
+            {
+                _activeSceneInstancesByKeys.Add(
+                    new KeyValuePair<string, SceneInstance>(sceneKey, asyncOperationHandle.Result));
+            }
+
+            lock (_currentLoadingSceneKeys)
+            {
+                _currentLoadingSceneKeys.Remove(sceneKey);
+            }
         }
 
         public async UniTask UnloadSceneAsync(string sceneKey, CancellationToken token)
         {
-            if (!_activeSceneInstancesByAddressableKeys.TryGetValue(sceneKey, out var asyncOperationHandle))
+            if (!TryGetSceneInstanceByKey(sceneKey, out var sceneInstanceByKey))
             {
-                return;
+                throw new Exception($"Can't unload the scene {sceneKey}. The scene has not loaded before.");
             }
             
-            var unloadAsyncOperationHandle = Addressables.UnloadSceneAsync(asyncOperationHandle);
+            lock (_currentUnloadingSceneKeys)
+            {
+                if (_currentUnloadingSceneKeys.Contains(sceneKey))
+                {
+#if DEBUG
+                    Debug.Log($"[{nameof(AddressableSceneLoader)}] You cannot unload a scene {sceneKey} " +
+                              $"that is already unloading at the moment".WithColor(LoggerColor.Red));
+#endif
+                    return;
+                }
+
+                _currentUnloadingSceneKeys.Add(sceneKey);
+            }
+            
+            var unloadAsyncOperationHandle = Addressables.UnloadSceneAsync(sceneInstanceByKey.Value);
             await unloadAsyncOperationHandle.Task;
             
 #if DEBUG
             Debug.Log($"[{nameof(AddressableSceneLoader)}] Scene {sceneKey} unload successfully".WithColor(LoggerColor.Purple));
 #endif
 
-            _activeSceneInstancesByAddressableKeys.Remove(sceneKey);
+            lock (_activeSceneInstancesByKeys)
+            {
+                _activeSceneInstancesByKeys.Remove(sceneInstanceByKey);
+            }
+
+            lock (_currentUnloadingSceneKeys)
+            {
+                _currentUnloadingSceneKeys.Remove(sceneKey);
+            }
         }
 
-        private async UniTask UnloadAllActiveScenes()
+        private bool TryGetSceneInstanceByKey(string sceneKey, out KeyValuePair<string, SceneInstance> sceneInstanceByKey)
         {
-            var unloadSceneKeys = new List<string>(_activeSceneInstancesByAddressableKeys.Keys);
-            unloadSceneKeys.Reverse();
-
-            foreach (var unloadedSceneKey in unloadSceneKeys)
+            lock (_activeSceneInstancesByKeys)
             {
-                await UnloadSceneAsync(unloadedSceneKey, new CancellationToken());
+                foreach (var activeSceneInstancesByAddressableKey in _activeSceneInstancesByKeys)
+                {
+                    if (activeSceneInstancesByAddressableKey.Key != sceneKey)
+                    {
+                        continue;
+                    }
+
+                    sceneInstanceByKey = activeSceneInstancesByAddressableKey;
+                    return true;
+                } 
             }
+
+            sceneInstanceByKey = default;
+            return false;
         }
     }
 }

@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace Project.App.Services
 {
-    public sealed class MatchSceneLoader : AsyncLoader, IMatchSceneLoader
+    public sealed class MatchSceneLoader : IMatchSceneLoader
     {
         private readonly IProfileProvider _profileProvider;
         private readonly ISceneLoader _sceneLoader;
@@ -24,12 +24,12 @@ namespace Project.App.Services
             _splash = splash;
         }
 
-        public override async UniTask LoadAsync(CancellationToken token)
+        public async UniTask LoadAsync(CancellationToken token)
         {
             _splash.Show();
             
             await _sceneLoader.LoadSceneAsync(
-                string.Format(Constants.LevelBundleKeys.LevelSceneKeyFormat, _profileProvider.Level), 
+                string.Format(Constants.LevelBundleKeys.LevelSceneKeyFormat, _profileProvider.ProgressData.Level), 
                 LoadSceneMode.Single, 
                 true,
                 token);
@@ -38,6 +38,16 @@ namespace Project.App.Services
                 Constants.MatchBundleKeys.MatchSceneKey, 
                 LoadSceneMode.Additive, 
                 true,
+                token);
+        }
+
+        public async UniTask UnloadAsync(CancellationToken token)
+        {
+            _splash.Show();
+            
+            await _sceneLoader.UnloadSceneAsync(Constants.MatchBundleKeys.MatchSceneKey, token);
+            await _sceneLoader.UnloadSceneAsync(
+                string.Format(Constants.LevelBundleKeys.LevelSceneKeyFormat, _profileProvider.ProgressData.Level), 
                 token);
         }
     }

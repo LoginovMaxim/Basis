@@ -2,7 +2,7 @@
 
 namespace Basis.Pool
 {
-    public class PoolObject : BaseView, IPoolObject
+    public abstract class PoolObject : BaseView, IPoolObject
     {
         public string ResourceId { get; set; }
         
