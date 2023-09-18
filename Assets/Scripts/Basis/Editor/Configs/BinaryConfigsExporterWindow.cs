@@ -3,6 +3,7 @@ using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
 using Basis.Configs;
+using Basis.Configs.BinaryConfigs;
 using UnityEditor;
 using UnityEngine;
 

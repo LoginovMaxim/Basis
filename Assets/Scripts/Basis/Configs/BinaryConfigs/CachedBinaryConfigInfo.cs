@@ -1,4 +1,4 @@
-﻿namespace Basis.Configs
+﻿namespace Basis.Configs.BinaryConfigs
 {
     public struct CachedBinaryConfigInfo
     {

@@ -2,7 +2,7 @@
 using System.Threading;
 using Cysharp.Threading.Tasks;
 
-namespace Basis.Configs
+namespace Basis.Configs.BinaryConfigs
 {
     public interface IBinaryConfigManager
     {

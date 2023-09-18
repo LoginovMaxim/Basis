@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Basis.Configs
+namespace Basis.Configs.BinaryConfigs
 {
     [Serializable] public abstract class ConfigEntity : IConfigEntity
     {

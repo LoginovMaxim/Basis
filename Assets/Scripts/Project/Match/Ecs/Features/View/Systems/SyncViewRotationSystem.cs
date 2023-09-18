@@ -27,8 +27,17 @@ namespace Project.Match.Ecs.Features.View.Systems
         {
             _world = systems.GetWorld();
             
-            _rotationFilter = _world.Filter<Scale>().Inc<ActiveTag>().End();
-            _rotationSmoothFilter = _world.Filter<ScaleSmooth>().Inc<ActiveTag>().End();
+            _rotationFilter = _world
+                .Filter<Rotation>()
+                .Inc<ViewTag>()
+                .Inc<ActiveTag>()
+                .End();
+            
+            _rotationSmoothFilter = _world
+                .Filter<RotationSmooth>()
+                .Inc<ViewTag>()
+                .Inc<ActiveTag>()
+                .End();
             
             _rotationPool = _world.GetPool<Rotation>();
             _rotationSmoothPool = _world.GetPool<RotationSmooth>();

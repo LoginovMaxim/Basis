@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Basis.Fsm
 {
@@ -8,5 +9,6 @@ namespace Basis.Fsm
         void OnUpdate();
         void OnExit();    
         List<ITransition<TStateType>> GetTransitions();
+        List<Func<bool>> GetBlockingConditions();
     }
 }

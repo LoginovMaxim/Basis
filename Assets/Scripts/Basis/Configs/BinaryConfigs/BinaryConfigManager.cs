@@ -7,7 +7,7 @@ using Basis.ResourceProviders;
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 
-namespace Basis.Configs
+namespace Basis.Configs.BinaryConfigs
 {
     public sealed class BinaryConfigManager : IBinaryConfigManager, IDisposable
     {

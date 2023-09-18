@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Basis.Configs.BinaryConfigs;
 
-namespace Basis.Configs
+namespace Basis.Configs.Localization
 {
     [Serializable] public sealed class LocalizationConfigEntity : ConfigEntity
     {

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Basis.Configs;
+using Basis.Configs.BinaryConfigs;
+using Basis.Configs.Localization;
 using Basis.Localizations;
 
 namespace Basis.Editor.Configs

@@ -13,10 +13,6 @@ namespace Basis.ResourceProviders
             return resource;
         }
 
-        public void UnloadResource<TObject>(TObject resourceObject) where TObject : Object
-        {
-        }
-
         public void UnloadResource(string resourceId)
         {
         }

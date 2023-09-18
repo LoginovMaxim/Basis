@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Basis.Configs
+namespace Basis.Configs.BinaryConfigs
 {
     public sealed class SerializationBinder : System.Runtime.Serialization.SerializationBinder
     {

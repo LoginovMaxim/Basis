@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityWeld.Binding;
 using UnityWeld.Binding.Internal;
 
-namespace Bindings
+namespace Basis.Bindings
 {
     [AddComponentMenu("Unity Weld/ToggleActive By Int Condition Binding")]
 	public sealed class IntConditionToToggleActiveBinding : AbstractMemberBinding

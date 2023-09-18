@@ -3,7 +3,7 @@ using System.IO;
 using System.Reflection;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace Basis.Configs
+namespace Basis.Configs.BinaryConfigs
 {
     public static class SerializationUtils
     {

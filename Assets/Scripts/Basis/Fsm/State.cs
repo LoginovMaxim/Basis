@@ -10,12 +10,14 @@ namespace Basis.Fsm
         private readonly TStateType _stateCode;
         private readonly IStateBehaviour<TStateType> _stateBehaviour;
         private readonly List<ITransition<TStateType>> _transitions;
+        private readonly List<Func<bool>> _blockingConditions;
         
         private State(TStateType stateCode, IStateBehaviour<TStateType> stateBehaviour)
         {
             _stateCode = stateCode;
             _stateBehaviour = stateBehaviour;
             _transitions = stateBehaviour.GetTransitions();
+            _blockingConditions = stateBehaviour.GetBlockingConditions();
         }
 
         public static IState<TStateType> NewInstance(TStateType stateCode, IStateBehaviour<TStateType> stateBehaviour)
@@ -41,6 +43,15 @@ namespace Basis.Fsm
         public bool TrySwitchOtherState(out TStateType otherStateCode)
         {
             otherStateCode = default;
+            
+            foreach (var blockingCondition in _blockingConditions)
+            {
+                if (!blockingCondition.Invoke())
+                {
+                    return false;
+                }
+            }
+            
             foreach (var transition in _transitions)
             {
                 if (!transition.IsTransition())

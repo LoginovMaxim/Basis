@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Basis.Configs
+namespace Basis.Configs.Localization
 {
     [Serializable] public class LocalizationRecord
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
-namespace Basis.Configs
+namespace Basis.Configs.BinaryConfigs
 {
     public sealed class BinaryConfig : IBinaryConfig
     {

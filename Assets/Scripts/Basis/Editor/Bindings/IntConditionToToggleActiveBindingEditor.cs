@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Reflection;
-using Bindings;
+using Basis.Bindings;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityWeld_Editor;
 using UnityWeld.Binding;
 using UnityWeld.Binding.Internal;
-using UnityWeld_Editor;
 
-namespace Editor.Bindings
+namespace Basis.Editor.Bindings
 {
     [CustomEditor(typeof(IntConditionToToggleActiveBinding))]
     public class IntConditionToToggleActiveBindingEditor : BaseBindingEditor

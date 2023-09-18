@@ -19,56 +19,46 @@ namespace Basis.ResourceProviders
 
         public async UniTask<TObject> LoadResourceAsync<TObject>(string key, CancellationToken token) where TObject : Object
         {
-            if (_cachedObjectsByKeys.TryGetValue(key, out var cachedObject))
+            lock (_cachedObjectsByKeys)
             {
-                return (TObject)cachedObject;
+                if (_cachedObjectsByKeys.TryGetValue(key, out var cachedObject))
+                {
+                    return (TObject)cachedObject;
+                }
             }
 
-            if (_cachedGameObjectsByKeys.TryGetValue(key, out var cachedGameObject) && 
-                cachedGameObject.TryGetComponent<TObject>(out var cachedComponent))
+            lock (_cachedGameObjectsByKeys)
             {
-                return cachedComponent;
+                if (_cachedGameObjectsByKeys.TryGetValue(key, out var cachedGameObject) && 
+                    cachedGameObject.TryGetComponent<TObject>(out var cachedComponent))
+                {
+                    return cachedComponent;
+                }
             }
-            
+
             return await LoadResourceAsync<TObject>(key);
-        }
-
-        public void UnloadResource<TObject>(TObject resourceObject) where TObject : Object
-        {
-            var resourceKey = _cachedObjectsByKeys.FirstOrDefault(c => c.Value.Equals(resourceObject)).Key;
-            if (!string.IsNullOrEmpty(resourceKey))
-            {
-                UnloadResource(resourceKey);
-                return;
-            }
-            
-            var gameObjectResourceKey = _cachedGameObjectsByKeys.FirstOrDefault(c => c.Value.Equals(resourceObject)).Key;
-            if (!string.IsNullOrEmpty(gameObjectResourceKey))
-            {
-                UnloadResource(gameObjectResourceKey);
-                return;
-            }
-            
-#if DEBUG
-            Debug.Log($"[{nameof(AddressableResourceProvider)}] Missing asset with type '{resourceObject.GetType()}' in cache for release"
-                .WithColor(LoggerColor.Red));
-#endif
         }
 
         public void UnloadResource(string resourceId)
         {
-            if (_cachedObjectsByKeys.TryGetValue(resourceId, out var resource))
+            lock (_cachedObjectsByKeys)
             {
-                UnLoadAddressableResource(resourceId, resource);
-                return;
+                if (_cachedObjectsByKeys.TryGetValue(resourceId, out var resource))
+                {
+                    UnloadAddressableResource(resourceId, resource);
+                    return;
+                }
             }
 
-            if (_cachedGameObjectsByKeys.TryGetValue(resourceId, out var gameObjectResource))
+            lock (_cachedGameObjectsByKeys)
             {
-                UnloadGameObjectAddressableResource(resourceId, gameObjectResource);
-                return;
+                if (_cachedGameObjectsByKeys.TryGetValue(resourceId, out var gameObjectResource))
+                {
+                    UnloadGameObjectAddressableResource(resourceId, gameObjectResource);
+                    return;
+                }
             }
-            
+
 #if DEBUG
             Debug.Log($"[{nameof(AddressableResourceProvider)}] Missing asset with key '{resourceId}' in cache for release"
                 .WithColor(LoggerColor.Red));
@@ -77,22 +67,19 @@ namespace Basis.ResourceProviders
 
         private async UniTask<TObject> LoadResourceAsync<TObject>(string key) where TObject : Object
         {
-            var isComponent = typeof(TObject).IsSubclassOf(typeof(Component));
-            var isGameObject = typeof(TObject).IsSubclassOf(typeof(GameObject));
-
-            if (!isComponent && !isGameObject)
+            if (typeof(TObject).IsSubclassOf(typeof(Component)) || typeof(TObject).IsSubclassOf(typeof(GameObject)))
             {
-                return await LoadAddressableResource<TObject>(key);
+                return await LoadGameObjectAddressableResource<TObject>(key);
             }
-
-            return await LoadGameObjectAddressableResource<TObject>(key);
+            
+            return await LoadAddressableResource<TObject>(key);
         }
 
-        private void UnLoadAddressableResource(string resourceId, Object resource)
+        private void UnloadAddressableResource(string resourceId, Object resource)
         {
             Addressables.Release(resource);
             _cachedObjectsByKeys.Remove(resourceId);
-            
+
 #if DEBUG
             Debug.Log($"[{nameof(AddressableResourceProvider)}] Asset with key '{resourceId}' was release requested"
                 .WithColor(LoggerColor.Purple));
@@ -118,15 +105,25 @@ namespace Basis.ResourceProviders
             {
                 throw new Exception($"Failed to load addressable asset with key {key}");
             }
-            
+
 #if DEBUG
             Debug.Log($"[{nameof(AddressableResourceProvider)}] asset with key {key} was loaded".WithColor(Color.cyan));
 #endif
+
+            lock (_cachedObjectsByKeys)
+            {
+                if (_cachedObjectsByKeys.TryGetValue(key, out var result))
+                {
+                    Addressables.Release(asyncOperationHandler.Result);
+                    return (TObject) result;
+                }
+                
+                _cachedObjectsByKeys.Add(key, asyncOperationHandler.Result);
+            }
             
-            _cachedObjectsByKeys.Add(key, asyncOperationHandler.Result);
             return asyncOperationHandler.Result;
         }
-        
+
         private async UniTask<TObject> LoadGameObjectAddressableResource<TObject>(string key)
         {
             var asyncOperationHandler = Addressables.LoadAssetAsync<GameObject>(key);
@@ -144,17 +141,39 @@ namespace Basis.ResourceProviders
 #if DEBUG
             Debug.Log($"[{nameof(AddressableResourceProvider)}] asset with key {key} was loaded like gameObject prefab".WithColor(Color.cyan));
 #endif
+
+            lock (_cachedGameObjectsByKeys)
+            {
+                if (_cachedGameObjectsByKeys.ContainsKey(key))
+                {
+                    Addressables.Release(asyncOperationHandler.Result);
+                    return prefab;
+                }
+                
+                _cachedGameObjectsByKeys.Add(key, asyncOperationHandler.Result);
+            }
             
-            _cachedGameObjectsByKeys.Add(key, asyncOperationHandler.Result);
             return prefab;
         }
 
         public void Dispose()
         {
-            var removeCacheKeys = new List<string>(_cachedObjectsByKeys.Keys);
-            foreach (var removeCacheKey in removeCacheKeys)
+            lock (_cachedObjectsByKeys)
             {
-                UnloadResource(removeCacheKey);
+                var removeCacheObjectKeys = new List<string>(_cachedObjectsByKeys.Keys);
+                foreach (var removeCacheObjectKey in removeCacheObjectKeys)
+                {
+                    UnloadResource(removeCacheObjectKey);
+                }
+            }
+
+            lock (_cachedGameObjectsByKeys)
+            {
+                var removeCacheGameObjectKeys = new List<string>(_cachedGameObjectsByKeys.Keys);
+                foreach (var removeCacheGameObjectKey in removeCacheGameObjectKeys)
+                {
+                    UnloadResource(removeCacheGameObjectKey);
+                }
             }
         }
     }

@@ -27,8 +27,17 @@ namespace Project.Match.Ecs.Features.View.Systems
         {
             _world = systems.GetWorld();
             
-            _scaleFilter = _world.Filter<Scale>().Inc<ActiveTag>().End();
-            _scaleSmoothFilter = _world.Filter<ScaleSmooth>().Inc<ActiveTag>().End();
+            _scaleFilter = _world
+                .Filter<Scale>()
+                .Inc<ViewTag>()
+                .Inc<ActiveTag>()
+                .End();
+            
+            _scaleSmoothFilter = _world
+                .Filter<ScaleSmooth>()
+                .Inc<ViewTag>()
+                .Inc<ActiveTag>()
+                .End();
             
             _scalePool = _world.GetPool<Scale>();
             _scaleSmoothPool = _world.GetPool<ScaleSmooth>();

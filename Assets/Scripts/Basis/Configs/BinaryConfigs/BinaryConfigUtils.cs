@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Basis.Configs
+namespace Basis.Configs.BinaryConfigs
 {
     public static class BinaryConfigUtils
     {
