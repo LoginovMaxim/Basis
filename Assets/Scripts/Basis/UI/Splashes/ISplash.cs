@@ -1,11 +1,8 @@
-﻿using Basis.Assemblers;
-
-namespace Basis.UI.Splashes
+﻿namespace Basis.UI.Splashes
 {
     public interface ISplash
     {
         void Show();
-        void Hide();
-        void AddAssembler(IAssembler assembler);
+        void AddProgressService(IProgress progress);
     }
 }

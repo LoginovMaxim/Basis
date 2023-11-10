@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Basis.Assemblers;
 using Project.App.UI.Splashes;
 using UnityEngine;
 
@@ -8,14 +7,14 @@ namespace Basis.UI.Splashes
     public class Splash : ISplash
     {
         private readonly LoadingSplashViewModel _loadingSplashViewModel;
-        private readonly List<IAssembler> _assemblers;
+        private readonly List<IProgress> _progresses;
 
         private float _previousLoadingProgress;
 
         protected Splash(LoadingSplashViewModel addressableSceneLoader)
         {
             _loadingSplashViewModel = addressableSceneLoader;
-            _assemblers = new List<IAssembler>();
+            _progresses = new List<IProgress>();
         }
 
         public virtual void Show()
@@ -31,43 +30,48 @@ namespace Basis.UI.Splashes
             _loadingSplashViewModel.Show();
         }
 
-        public virtual void Hide()
+        public void AddProgressService(IProgress progress)
         {
-            if (_previousLoadingProgress < 1)
+            if (_progresses.Contains(progress))
             {
                 return;
             }
             
-            _assemblers.ForEach(assembler => assembler.OnStepLoaded -= OnStepLoad);
-            _assemblers.Clear();
-            
-            _loadingSplashViewModel.Hide();
+            progress.OnProgressChanged += HandleChangeProgress;
+            _progresses.Add(progress);
         }
 
-        public void AddAssembler(IAssembler assembler)
-        {
-            if (_assemblers.Contains(assembler))
-            {
-                return;
-            }
-            
-            assembler.OnStepLoaded += OnStepLoad;
-            _assemblers.Add(assembler);
-        }
-
-        private void OnStepLoad(float progress)
+        private void HandleChangeProgress(float progress)
         {
             var loadingProgress = 0f;
-            foreach (var appAssembler in _assemblers)
+            foreach (var appAssembler in _progresses)
             {
                 loadingProgress += appAssembler.Progress;
             }
             
-            loadingProgress /= _assemblers.Count;
+            loadingProgress /= _progresses.Count;
             loadingProgress = Mathf.Clamp(loadingProgress, _previousLoadingProgress, 1f);
             
             _loadingSplashViewModel.Progress = loadingProgress;
             _previousLoadingProgress = loadingProgress;
+
+            TryHide();
+        }
+
+        private void TryHide()
+        {
+            foreach (var progress in _progresses)
+            {
+                if (progress.Progress < 1f)
+                {
+                    return;
+                }
+            }
+            
+            _progresses.ForEach(assembler => assembler.OnProgressChanged -= HandleChangeProgress);
+            _progresses.Clear();
+            
+            _loadingSplashViewModel.Hide();
         }
     }
 }

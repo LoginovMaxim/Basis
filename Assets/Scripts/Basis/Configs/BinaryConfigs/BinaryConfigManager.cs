@@ -105,13 +105,11 @@ namespace Basis.Configs.BinaryConfigs
 
         private async UniTask<Tuple<byte[], long>> LoadStoredConfigAsync(BinaryConfigId binaryConfigId, CancellationToken token)
         {
-            var localizationAssetKey = $"{GetBinaryConfigName(binaryConfigId)}";
-            var textAsset = await _resourceProvider.LoadResourceAsync<TextAsset>(localizationAssetKey, token);
+            var resource = await Resources.LoadAsync<TextAsset>($"BinaryConfigs/{ GetBinaryConfigName(binaryConfigId) }");
             try
             {
-                var tuple = new Tuple<byte[], long>(textAsset.bytes, 0);
-                _resourceProvider.UnloadResource(localizationAssetKey);
-                return tuple;
+                var textAsset = (TextAsset)resource;
+                return new Tuple<byte[], long>(textAsset.bytes, 0);
             }
             catch (OperationCanceledException exception)
             {

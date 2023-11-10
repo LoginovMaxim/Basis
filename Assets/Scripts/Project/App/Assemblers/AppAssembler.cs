@@ -18,7 +18,6 @@ namespace Project.App.Assemblers
 
         protected override void OnFinishAssembly()
         {
-            _splash.Hide();
         }
     }
 }

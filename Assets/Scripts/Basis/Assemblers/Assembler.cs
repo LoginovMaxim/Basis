@@ -10,18 +10,18 @@ using Zenject;
 
 namespace Basis.Assemblers
 {
-    public abstract class Assembler : IAssembler, IInitializable, IDisposable
+    public abstract class Assembler : IAssembler, IProgress, IInitializable, IDisposable
     {
         private readonly Queue<IAssemblerLauncher> _assemblerLaunchers = new();
         private readonly CancellationTokenSource _tokenSource = new();
         
         protected readonly ISplash _splash;
 
-        public event Action<float> OnStepLoaded;
+        public event Action<float> OnProgressChanged;
         public int ServicesCount { get; private set; }
         public int CurrentStepCount { get; private set; }
-        public float Progress { get; private set; }
         public bool Launched { get; private set; }
+        public float Progress { get; private set; }
 
         protected Assembler(List<IAssemblerLauncher> assemblerParts, ISplash splash)
         {
@@ -35,7 +35,7 @@ namespace Basis.Assemblers
 
         public async void Initialize()
         {
-            _splash.AddAssembler(this);
+            _splash.AddProgressService(this);
             await LaunchAssemblerPartsAsync();
         }
 
@@ -65,7 +65,7 @@ namespace Basis.Assemblers
                     CurrentStepCount++;
                     Progress = (float) CurrentStepCount / ServicesCount;
                 
-                    OnStepLoaded?.Invoke(Progress);
+                    OnProgressChanged?.Invoke(Progress);
                     
                     await UniTask.Delay(10, cancellationToken: _tokenSource.Token);
                 }
@@ -83,7 +83,7 @@ namespace Basis.Assemblers
             }
                 
             Progress = 1f;
-            OnStepLoaded?.Invoke(Progress);
+            OnProgressChanged?.Invoke(Progress);
             
             await UniTask.Delay(100, cancellationToken: _tokenSource.Token);
             OnFinishAssembly();

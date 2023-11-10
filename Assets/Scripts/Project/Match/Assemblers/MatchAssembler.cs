@@ -25,7 +25,6 @@ namespace Project.Match.Assemblers
 
         protected override void OnFinishAssembly()
         {
-            _splash.Hide();
             _matchScreenService.SwitchScreen((int) MatchScreenId.Gameplay);
         }
     }

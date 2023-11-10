@@ -26,7 +26,6 @@ namespace Project.Meta.Assemblers
 
         protected override void OnFinishAssembly()
         {
-            _splash.Hide();
             _metaScreenService.SwitchScreen((int)MetaScreenId.Main);
         }
     }
