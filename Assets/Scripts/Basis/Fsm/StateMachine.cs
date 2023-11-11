@@ -29,7 +29,7 @@ namespace Basis.Fsm
 
         public void AddState(TStateType valueType, IStateBehaviour<TStateType> stateBehaviour)
         {
-            var state = State<TStateType>.NewInstance(valueType, stateBehaviour);
+            var state = new State<TStateType>(valueType, stateBehaviour);
             if (_states.ContainsKey(state.StateType))
             {
                 return;

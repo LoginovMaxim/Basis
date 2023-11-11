@@ -12,17 +12,12 @@ namespace Basis.Fsm
         private readonly List<ITransition<TStateType>> _transitions;
         private readonly List<Func<bool>> _blockingConditions;
         
-        private State(TStateType stateCode, IStateBehaviour<TStateType> stateBehaviour)
+        public State(TStateType stateCode, IStateBehaviour<TStateType> stateBehaviour)
         {
             _stateCode = stateCode;
             _stateBehaviour = stateBehaviour;
             _transitions = stateBehaviour.GetTransitions();
             _blockingConditions = stateBehaviour.GetBlockingConditions();
-        }
-
-        public static IState<TStateType> NewInstance(TStateType stateCode, IStateBehaviour<TStateType> stateBehaviour)
-        {
-            return new State<TStateType>(stateCode, stateBehaviour);
         }
 
         public void OnEnter()
