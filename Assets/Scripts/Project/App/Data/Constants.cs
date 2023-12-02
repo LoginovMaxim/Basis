@@ -24,12 +24,6 @@ namespace Project.App.Data
             public const string LevelSceneKeyFormat = "Level-{0}";
         }
         
-        public static class ScreenAnimation
-        {
-            public const ScreenShowingType DefaultScreenShowingType = ScreenShowingType.FadeOut;
-            public const ScreenHidingType DefaultScreenHidingType = ScreenHidingType.FadeIn;
-        }
-        
         public static class Scenes
         {
             public const string MetaScenePath = "Scenes/Meta";

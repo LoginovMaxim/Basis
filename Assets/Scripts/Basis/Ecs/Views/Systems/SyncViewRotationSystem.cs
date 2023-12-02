@@ -1,10 +1,9 @@
-﻿using Basis.Ecs;
+﻿using Basis.Ecs.Views.Components;
 using Basis.Views;
 using Leopotam.EcsLite;
-using Project.Match.Ecs.Features.View.Components;
 using UnityEngine;
 
-namespace Project.Match.Ecs.Features.View.Systems
+namespace Basis.Ecs.Views.Systems
 {
     public sealed class SyncViewRotationSystem : IEcsInitSystem, IEcsRunSystem
     {
@@ -13,7 +12,6 @@ namespace Project.Match.Ecs.Features.View.Systems
         
         private EcsWorld _world;
         private EcsFilter _rotationFilter;
-        private EcsFilter _rotationSmoothFilter;
         private EcsPool<Rotation> _rotationPool;
         private EcsPool<RotationSmooth> _rotationSmoothPool;
 
@@ -29,14 +27,8 @@ namespace Project.Match.Ecs.Features.View.Systems
             
             _rotationFilter = _world
                 .Filter<Rotation>()
-                .Inc<ViewTag>()
                 .Inc<ActiveTag>()
-                .End();
-            
-            _rotationSmoothFilter = _world
-                .Filter<RotationSmooth>()
-                .Inc<ViewTag>()
-                .Inc<ActiveTag>()
+                .Exc<AnimationTag>()
                 .End();
             
             _rotationPool = _world.GetPool<Rotation>();
@@ -44,12 +36,6 @@ namespace Project.Match.Ecs.Features.View.Systems
         }
 
         public void Run(IEcsSystems systems)
-        {
-            SyncRotation();
-            SyncRotationSmooth();
-        }
-
-        private void SyncRotation()
         {
             foreach (var e in _rotationFilter)
             {
@@ -59,22 +45,16 @@ namespace Project.Match.Ecs.Features.View.Systems
                 }
                 
                 var rotation = _rotationPool.Get(e);
-                view.Rotation = rotation.Value;
-            }
-        }
-
-        private void SyncRotationSmooth()
-        {
-            foreach (var e in _rotationSmoothFilter)
-            {
-                if (!_viewsProvider.TryGet<IViewObject>(e, out var view))
+                
+                if (!_rotationSmoothPool.Has(e))
                 {
-                    continue;
+                    view.Rotation = rotation.Value;
                 }
-
-                var rotationSmooth = _rotationSmoothPool.Get(e);
-                var delta = _engineApi.DeltaTime * rotationSmooth.Smooth;
-                view.Rotation = Quaternion.Lerp(view.Rotation, rotationSmooth.Value, delta);
+                else
+                {
+                    var delta = _engineApi.DeltaTime * _rotationSmoothPool.Get(e).Value;
+                    view.Rotation = Quaternion.Lerp(view.Rotation, rotation.Value, delta);
+                }
             }
         }
     }

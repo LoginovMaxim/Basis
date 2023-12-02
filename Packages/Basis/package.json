@@ -1,5 +1,5 @@
 {
-  "name": "com.harlequin.basis",
+  "name": "com.loginov.basis",
   "version": "1.0.0",
   "displayName": "Basis",
   "description": "A framework for creating data oriented games",
@@ -7,8 +7,7 @@
   "dependencies": {
  },
  "keywords": [
-    "ECS",
-    "Localization"
+    "ECS"
   ],
   "author": {
     "name": "Maxim Loginov",

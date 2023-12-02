@@ -1,10 +1,9 @@
-﻿using Basis.Ecs;
+﻿using Basis.Ecs.Views.Components;
 using Basis.Views;
 using Leopotam.EcsLite;
-using Project.Match.Ecs.Features.View.Components;
 using UnityEngine;
 
-namespace Project.Match.Ecs.Features.View.Systems
+namespace Basis.Ecs.Views.Systems
 {
     public sealed class SyncViewScaleSystem : IEcsInitSystem, IEcsRunSystem
     {
@@ -13,7 +12,6 @@ namespace Project.Match.Ecs.Features.View.Systems
         
         private EcsWorld _world;
         private EcsFilter _scaleFilter;
-        private EcsFilter _scaleSmoothFilter;
         private EcsPool<Scale> _scalePool;
         private EcsPool<ScaleSmooth> _scaleSmoothPool;
 
@@ -29,14 +27,8 @@ namespace Project.Match.Ecs.Features.View.Systems
             
             _scaleFilter = _world
                 .Filter<Scale>()
-                .Inc<ViewTag>()
                 .Inc<ActiveTag>()
-                .End();
-            
-            _scaleSmoothFilter = _world
-                .Filter<ScaleSmooth>()
-                .Inc<ViewTag>()
-                .Inc<ActiveTag>()
+                .Exc<AnimationTag>()
                 .End();
             
             _scalePool = _world.GetPool<Scale>();
@@ -44,12 +36,6 @@ namespace Project.Match.Ecs.Features.View.Systems
         }
 
         public void Run(IEcsSystems systems)
-        {
-            SyncScale();
-            SyncScaleSmooth();
-        }
-
-        private void SyncScale()
         {
             foreach (var e in _scaleFilter)
             {
@@ -59,22 +45,16 @@ namespace Project.Match.Ecs.Features.View.Systems
                 }
 
                 var scale = _scalePool.Get(e);
-                view.LocalScale = scale.Value;
-            }
-        }
-
-        private void SyncScaleSmooth()
-        {
-            foreach (var e in _scaleSmoothFilter)
-            {
-                if (!_viewsProvider.TryGet<IViewObject>(e, out var view))
+                
+                if (!_scaleSmoothPool.Has(e))
                 {
-                    continue;
+                    view.LocalScale = scale.Value;
                 }
-
-                var scaleSmooth = _scaleSmoothPool.Get(e);
-                var delta = _engineApi.DeltaTime * scaleSmooth.Smooth;
-                view.LocalScale = Vector3.Lerp(view.LocalScale, scaleSmooth.Value, delta);
+                else
+                {
+                    var delta = _engineApi.DeltaTime * _scaleSmoothPool.Get(e).Value;
+                    view.LocalScale = Vector3.Lerp(view.LocalScale, scale.Value, delta);
+                }
             }
         }
     }

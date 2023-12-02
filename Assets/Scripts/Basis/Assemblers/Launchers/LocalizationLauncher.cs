@@ -1,12 +1,10 @@
 ﻿using System.Threading;
-using Basis.Assemblers.Launchers;
-using Basis.Configs;
 using Basis.Configs.BinaryConfigs;
 using Basis.Configs.Localization;
 using Basis.Localizations;
 using Cysharp.Threading.Tasks;
 
-namespace Project.App.Assemblers.Launchers
+namespace Basis.Assemblers.Launchers
 {
     public sealed class LocalizationLauncher : IAssemblerLauncher
     {

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using Basis.Assemblers;
 using Basis.Assemblers.Launchers;
+using Basis.Configs;
 using Basis.Ecs;
 using Basis.Services;
 using Basis.UI.Screens;
-using Project.App.Data;
 using Zenject;
 
 namespace Basis.Utils
@@ -39,8 +39,8 @@ namespace Basis.Utils
         public static void BindScreen<TScreen>(
             this DiContainer container, 
             int id, 
-            ScreenShowingType screenShowingType = Constants.ScreenAnimation.DefaultScreenShowingType, 
-            ScreenHidingType screenHidingType = Constants.ScreenAnimation.DefaultScreenHidingType)
+            ScreenShowingType screenShowingType = BasisConstants.ScreenAnimation.DefaultScreenShowingType, 
+            ScreenHidingType screenHidingType = BasisConstants.ScreenAnimation.DefaultScreenHidingType)
             where TScreen : IScreen
         {
             container.BindInterfacesAndSelfTo<TScreen>().AsSingle().NonLazy();

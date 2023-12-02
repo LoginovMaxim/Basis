@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Project.Match.Ecs.Features.View.Components
+namespace Basis.Ecs.Views.Components
 {
     public struct Rotation
     {

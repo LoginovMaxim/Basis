@@ -1,6 +1,6 @@
 ﻿using Basis.Ecs;
+using Basis.Ecs.Views.Systems;
 using Basis.Views;
-using Project.Match.Ecs.Features.View.Systems;
 
 namespace Project.Match.Ecs.Setups
 {

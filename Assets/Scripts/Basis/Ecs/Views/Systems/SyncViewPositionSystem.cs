@@ -1,10 +1,9 @@
-﻿using Basis.Ecs;
+﻿using Basis.Ecs.Views.Components;
 using Basis.Views;
 using Leopotam.EcsLite;
-using Project.Match.Ecs.Features.View.Components;
 using UnityEngine;
 
-namespace Project.Match.Ecs.Features.View.Systems
+namespace Basis.Ecs.Views.Systems
 {
     public sealed class SyncViewPositionSystem : IEcsInitSystem, IEcsRunSystem
     {
@@ -13,7 +12,6 @@ namespace Project.Match.Ecs.Features.View.Systems
         
         private EcsWorld _world;
         private EcsFilter _positionFilter;
-        private EcsFilter _positionSmoothFilter;
         private EcsPool<Position> _positionPool;
         private EcsPool<PositionSmooth> _positionSmoothPool;
 
@@ -29,14 +27,8 @@ namespace Project.Match.Ecs.Features.View.Systems
             
             _positionFilter = _world
                 .Filter<Position>()
-                .Inc<ViewTag>()
                 .Inc<ActiveTag>()
-                .End();
-            
-            _positionSmoothFilter = _world
-                .Filter<PositionSmooth>()
-                .Inc<ViewTag>()
-                .Inc<ActiveTag>()
+                .Exc<AnimationTag>()
                 .End();
             
             _positionPool = _world.GetPool<Position>();
@@ -44,12 +36,6 @@ namespace Project.Match.Ecs.Features.View.Systems
         }
 
         public void Run(IEcsSystems systems)
-        {
-            SyncPosition();
-            SyncPositionSmooth();
-        }
-
-        private void SyncPosition()
         {
             foreach (var e in _positionFilter)
             {
@@ -59,22 +45,16 @@ namespace Project.Match.Ecs.Features.View.Systems
                 }
 
                 var position = _positionPool.Get(e);
-                view.Position = position.Value;
-            }
-        }
-
-        private void SyncPositionSmooth()
-        {
-            foreach (var e in _positionSmoothFilter)
-            {
-                if (!_viewsProvider.TryGet<IViewObject>(e, out var view))
+                
+                if (!_positionSmoothPool.Has(e))
                 {
-                    continue;
+                    view.Position = position.Value;
                 }
-
-                var positionSmooth = _positionSmoothPool.Get(e);
-                var delta = _engineApi.DeltaTime * positionSmooth.Smooth;
-                view.Position = Vector3.Lerp(view.Position, positionSmooth.Value, delta);
+                else
+                {
+                    var delta = _engineApi.DeltaTime * _positionSmoothPool.Get(e).Value;
+                    view.Position = Vector3.Lerp(view.Position, position.Value, delta);
+                }
             }
         }
     }
