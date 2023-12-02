@@ -1,6 +1,6 @@
 ﻿using DG.Tweening;
 
-namespace Project.App.Configs
+namespace Basis.Configs.UI
 {
     public interface IScreenAnimationConfig
     {

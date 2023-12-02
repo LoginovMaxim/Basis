@@ -1,4 +1,4 @@
-﻿using Project.App.Configs;
+﻿using Basis.Configs.UI;
 using UnityEngine;
 
 namespace Basis.UI.Screens.Animations.Showing

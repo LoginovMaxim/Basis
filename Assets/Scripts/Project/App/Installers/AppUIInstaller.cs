@@ -2,7 +2,6 @@
 using Basis.UI.Screens.Animations.Hiding;
 using Basis.UI.Screens.Animations.Showing;
 using Basis.UI.Splashes;
-using Project.App.UI.Splashes;
 using Zenject;
 
 namespace Project.App.Installers

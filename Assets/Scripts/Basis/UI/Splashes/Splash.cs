@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Project.App.UI.Splashes;
 using UnityEngine;
 
 namespace Basis.UI.Splashes

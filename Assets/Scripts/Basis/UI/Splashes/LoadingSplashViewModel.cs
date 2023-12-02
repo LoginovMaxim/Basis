@@ -1,9 +1,8 @@
 ﻿using System;
-using Basis.UI.Splashes;
 using UnityEngine;
 using UnityWeld.Binding;
 
-namespace Project.App.UI.Splashes
+namespace Basis.UI.Splashes
 {
     [Binding] public sealed class LoadingSplashViewModel : BaseLoadingSplashViewModel
     {

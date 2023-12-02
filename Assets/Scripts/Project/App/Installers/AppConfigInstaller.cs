@@ -1,7 +1,7 @@
 ﻿using Basis.Configs;
 using Basis.Configs.BinaryConfigs;
+using Basis.Configs.UI;
 using Basis.ResourceProviders;
-using Project.App.Configs;
 using Zenject;
 using ResourceProvider = Basis.ResourceProviders.ResourceProvider;
 

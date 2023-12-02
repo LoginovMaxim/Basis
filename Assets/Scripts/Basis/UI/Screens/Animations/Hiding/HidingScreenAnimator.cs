@@ -1,5 +1,5 @@
-﻿using DG.Tweening;
-using Project.App.Configs;
+﻿using Basis.Configs.UI;
+using DG.Tweening;
 
 namespace Basis.UI.Screens.Animations.Hiding
 {

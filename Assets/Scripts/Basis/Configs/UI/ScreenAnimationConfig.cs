@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using UnityEngine;
 
-namespace Project.App.Configs
+namespace Basis.Configs.UI
 {
     [CreateAssetMenu(fileName = "ScreenAnimationConfig", menuName = "Project/App/ScreenAnimationConfig", order = 1)]
     public sealed class ScreenAnimationConfig : ScriptableObject, IScreenAnimationConfig
