@@ -1,5 +1,6 @@
 ﻿using Basis.Utils;
 using Project.Meta.UI;
+using Project.Meta.UI.Auth;
 using Project.Meta.UI.Main;
 using Project.Meta.UI.Shop;
 using Zenject;
@@ -19,12 +20,14 @@ namespace Project.Meta.Installers
         {
             Container.Bind<MainScreenViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();  
             Container.Bind<ShopScreenViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();  
+            Container.Bind<AuthScreenViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();  
         }
 
         private void BindScreens()
         {
             Container.BindScreen<MainScreen>((int) MetaScreenId.Main);
             Container.BindScreen<ShopScreen>((int) MetaScreenId.Shop);
+            Container.BindScreen<AuthScreen>((int) MetaScreenId.Chat);
         }
 
         private void BindScreenService()

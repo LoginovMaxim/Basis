@@ -5,5 +5,6 @@
         Back = -1,
         Main,
         Shop,
+        Chat,
     }
 }
