@@ -1,0 +1,3 @@
+[submodule "Assets/BasisCore"]
+	path = Assets/BasisCore
+	url = https://github.com/LoginovMaxim/basis-core.git
