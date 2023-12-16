@@ -1,6 +1,4 @@
-﻿using Basis.UI.Screens;
-
-namespace Project.App.Data
+﻿namespace Project.App.Data
 {
     public static class Constants
     {

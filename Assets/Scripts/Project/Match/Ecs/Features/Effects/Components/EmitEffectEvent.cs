@@ -1,4 +1,4 @@
-﻿using Basis.VisualEffects;
+﻿using BasisCore.Runtime.VisualEffects;
 using UnityEngine;
 
 namespace Project.Match.Ecs.Features.Effects.Components

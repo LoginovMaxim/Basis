@@ -1,4 +1,4 @@
-﻿using Basis.Ecs;
+﻿using BasisLeoEcsWrapper.Runtime;
 
 namespace Project.Match.Ecs.Setups
 {

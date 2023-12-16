@@ -1,6 +1,6 @@
-﻿using Basis.Ecs;
-using Basis.Services;
-using Basis.Utils;
+﻿using BasisCore.Runtime.Services;
+using BasisCore.Runtime.Utils;
+using BasisLeoEcsWrapper.Runtime;
 using Project.Match.Ecs;
 using Project.Match.Ecs.Setups;
 using Zenject;

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Basis.Assemblers;
-using Basis.Assemblers.Launchers;
-using Basis.UI.Splashes;
+using BasisCore.Runtime.Assemblers;
+using BasisCore.Runtime.Assemblers.Launchers;
+using BasisCore.Runtime.UI.Splashes;
 using Project.Match.UI;
 
 namespace Project.Match.Assemblers

@@ -1,6 +1,6 @@
-using Basis.Localizations;
-using Basis.SceneLoaders;
-using Basis.VisualEffects;
+using BasisCore.Runtime.Localizations;
+using BasisCore.Runtime.SceneLoaders;
+using BasisCore.Runtime.VisualEffects;
 using Project.App.Services;
 using Zenject;
 

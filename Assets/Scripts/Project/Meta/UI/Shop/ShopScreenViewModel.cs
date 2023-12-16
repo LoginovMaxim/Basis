@@ -1,4 +1,4 @@
-﻿using Basis.UI.Screens;
+﻿using BasisCore.Runtime.UI.Screens;
 using UnityWeld.Binding;
 
 namespace Project.Meta.UI.Shop

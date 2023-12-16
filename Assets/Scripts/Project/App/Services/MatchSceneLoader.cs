@@ -1,7 +1,6 @@
 ﻿using System.Threading;
-using Basis.SceneLoaders;
-using Basis.Services;
-using Basis.UI.Splashes;
+using BasisCore.Runtime.SceneLoaders;
+using BasisCore.Runtime.UI.Splashes;
 using Cysharp.Threading.Tasks;
 using Project.App.Data;
 using UnityEngine.SceneManagement;

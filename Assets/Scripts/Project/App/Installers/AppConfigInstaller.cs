@@ -1,9 +1,8 @@
-﻿using Basis.Configs;
-using Basis.Configs.BinaryConfigs;
-using Basis.Configs.UI;
-using Basis.ResourceProviders;
+﻿using BasisCore.Runtime.Configs.BinaryConfigs;
+using BasisCore.Runtime.Configs.UI;
+using BasisCore.Runtime.ResourceProviders;
 using Zenject;
-using ResourceProvider = Basis.ResourceProviders.ResourceProvider;
+using ResourceProvider = BasisCore.Runtime.ResourceProviders.ResourceProvider;
 
 namespace Project.App.Installers
 {

@@ -1,4 +1,4 @@
-﻿using Basis.Signals;
+﻿using BasisCore.Runtime.Signals;
 using Project.App.Signals;
 using Zenject;
 

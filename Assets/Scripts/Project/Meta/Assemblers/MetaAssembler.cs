@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Basis.Assemblers;
-using Basis.Assemblers.Launchers;
-using Basis.UI.Splashes;
+using BasisCore.Runtime.Assemblers;
+using BasisCore.Runtime.Assemblers.Launchers;
+using BasisCore.Runtime.UI.Splashes;
 using Project.Meta.UI;
 
 namespace Project.Meta.Assemblers

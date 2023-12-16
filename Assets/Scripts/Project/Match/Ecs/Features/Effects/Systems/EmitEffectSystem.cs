@@ -1,4 +1,4 @@
-﻿using Basis.VisualEffects;
+﻿using BasisCore.Runtime.VisualEffects;
 using Leopotam.EcsLite;
 using Project.Match.Ecs.Features.Effects.Components;
 

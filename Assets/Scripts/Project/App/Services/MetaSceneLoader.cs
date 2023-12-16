@@ -1,6 +1,7 @@
-﻿using System.Threading;
-using Basis.SceneLoaders;
-using Basis.UI.Splashes;
+﻿using System;
+using System.Threading;
+using BasisCore.Runtime.SceneLoaders;
+using BasisCore.Runtime.UI.Splashes;
 using Cysharp.Threading.Tasks;
 using Project.App.Data;
 using Project.Meta.UI;

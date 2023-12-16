@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Basis.Ecs;
+using BasisLeoEcsWrapper.Runtime;
 using Leopotam.EcsLite;
 
 namespace Project.Match.Ecs.Features.Utils.Systems

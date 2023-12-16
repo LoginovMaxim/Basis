@@ -1,4 +1,4 @@
-﻿using Basis.Monos;
+﻿using BasisCore.Runtime.Monos;
 using Zenject;
 
 namespace Project.App.Installers

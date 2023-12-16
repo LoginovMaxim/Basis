@@ -1,4 +1,4 @@
-﻿using Basis.Data;
+﻿using BasisCore.Runtime.Data;
 
 namespace Project.App.Data
 {

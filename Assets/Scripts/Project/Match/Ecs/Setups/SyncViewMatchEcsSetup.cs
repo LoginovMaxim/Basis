@@ -1,6 +1,6 @@
-﻿using Basis.Ecs;
-using Basis.Ecs.Views.Systems;
-using Basis.Views;
+﻿using BasisCore.Runtime.Views;
+using BasisLeoEcsWrapper.Runtime;
+using BasisLeoEcsWrapper.Runtime.Views.Systems;
 
 namespace Project.Match.Ecs.Setups
 {

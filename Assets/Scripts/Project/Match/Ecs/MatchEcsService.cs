@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using Basis.Ecs;
-using Basis.Monos;
-using Basis.Services;
-using Basis.Views;
+using BasisCore.Runtime.Monos;
+using BasisCore.Runtime.Services;
+using BasisCore.Runtime.Views;
+using BasisLeoEcsWrapper.Runtime;
 using Project.Match.Ecs.Setups;
 
 namespace Project.Match.Ecs

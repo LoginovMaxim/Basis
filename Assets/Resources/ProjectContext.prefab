@@ -167,6 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc0c54782bc5479297a7a580e9750361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _slider: {fileID: 3625206758233543307}
+  _loadingPercentageText: {fileID: 4799817279597162132}
   _smooth: 25
 --- !u!114 &1819803891126430349
 MonoBehaviour:
@@ -609,7 +611,6 @@ GameObject:
   m_Component:
   - component: {fileID: 602789098941340606}
   - component: {fileID: 3625206758233543307}
-  - component: {fileID: 6292983581593325052}
   m_Layer: 0
   m_Name: Slider
   m_TagString: Untagged
@@ -689,22 +690,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &6292983581593325052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4583869027267091713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1670825535, guid: 6a3c0ff4d5ec7054ea0a000b188748bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewAdapterTypeName: 
-  viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: Basis.UI.Splashes.LoadingSplashViewModel.SmoothProgress
-  viewPropertyName: UnityEngine.UI.Slider.value
 --- !u!1 &5125840642651040953
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1023,6 @@ GameObject:
   - component: {fileID: 7895945662345319175}
   - component: {fileID: 5591981406567875338}
   - component: {fileID: 4799817279597162132}
-  - component: {fileID: 2577700165719186012}
   m_Layer: 0
   m_Name: ProgressPercent
   m_TagString: Untagged
@@ -1162,22 +1146,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &2577700165719186012
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8019134374372248055}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1670825535, guid: 6a3c0ff4d5ec7054ea0a000b188748bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewAdapterTypeName: 
-  viewAdapterOptions: {fileID: 0}
-  viewModelPropertyName: Basis.UI.Splashes.LoadingSplashViewModel.PercentageCaption
-  viewPropertyName: TMPro.TextMeshProUGUI.text
 --- !u!1 &8411968178386929393
 GameObject:
   m_ObjectHideFlags: 0

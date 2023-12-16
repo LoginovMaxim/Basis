@@ -1,4 +1,4 @@
-﻿using Basis.Assemblers;
+﻿using BasisCore.Runtime.Assemblers;
 
 namespace Project.Match.Assemblers
 {

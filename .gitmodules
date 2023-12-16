@@ -1,3 +1,6 @@
 [submodule "Assets/BasisCore"]
 	path = Assets/BasisCore
 	url = https://github.com/LoginovMaxim/basis-core.git
+[submodule "Assets/BasisLeoEcsWrapper"]
+	path = Assets/BasisLeoEcsWrapper
+	url = https://github.com/LoginovMaxim/basis-leoecs-wrapper.git
