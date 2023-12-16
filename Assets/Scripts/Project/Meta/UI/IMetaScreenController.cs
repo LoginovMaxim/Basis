@@ -2,7 +2,7 @@
 
 namespace Project.Meta.UI
 {
-    public interface IMetaScreen : IScreen
+    public interface IMetaScreenController : IScreenController
     {
     }
 }

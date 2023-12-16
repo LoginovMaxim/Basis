@@ -238,8 +238,6 @@ GameObject:
   - component: {fileID: 423380221}
   - component: {fileID: 423380220}
   - component: {fileID: 423380219}
-  - component: {fileID: 423380223}
-  - component: {fileID: 423380222}
   m_Layer: 5
   m_Name: ShopButton
   m_TagString: Untagged
@@ -349,33 +347,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423380217}
   m_CullTransparentMesh: 1
---- !u!114 &423380222
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423380217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1360956885, guid: 6a3c0ff4d5ec7054ea0a000b188748bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewModelMethodName: Project.Meta.UI.ButtonChangeMetaScreenViewModel.OnChangeScreenButtonClicked
-  viewEventName: UnityEngine.UI.Button.onClick
---- !u!114 &423380223
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423380217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e314fdd63bf4ca299dcb543dc3ac22d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _metaScreenId: 1
 --- !u!1 &481149224
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +359,6 @@ GameObject:
   - component: {fileID: 481149229}
   - component: {fileID: 481149228}
   - component: {fileID: 481149227}
-  - component: {fileID: 481149226}
   m_Layer: 5
   m_Name: PlayMatchButton
   m_TagString: Untagged
@@ -416,20 +386,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 320, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &481149226
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 481149224}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1360956885, guid: 6a3c0ff4d5ec7054ea0a000b188748bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewModelMethodName: Project.Meta.UI.Main.MainScreenViewModel.HandlePlayMatch
-  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!114 &481149227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -563,7 +519,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -945,7 +901,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1042,6 +998,7 @@ GameObject:
   - component: {fileID: 1239407561}
   - component: {fileID: 1239407563}
   - component: {fileID: 1239407564}
+  - component: {fileID: 1239407565}
   - component: {fileID: 1239407560}
   m_Layer: 0
   m_Name: SceneContext
@@ -1078,6 +1035,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 1239407563}
   - {fileID: 1239407564}
+  - {fileID: 1239407565}
   - {fileID: 1239407560}
   _installerPrefabs: []
   _autoRun: 1
@@ -1133,6 +1091,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4d7bc0aaa8f4d438d98ab8219cbeee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1239407565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1239407559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac866ccdde2e4efaae87f4cd902614f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1808346489
@@ -1336,7 +1306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1470,6 +1440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 683558b387994449b94249ea6351de5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playButton: {fileID: 481149227}
+  _shopButton: {fileID: 423380219}
 --- !u!225 &2077753485
 CanvasGroup:
   m_ObjectHideFlags: 0

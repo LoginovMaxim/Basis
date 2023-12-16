@@ -237,6 +237,7 @@ GameObject:
   - component: {fileID: 1651116477}
   - component: {fileID: 1651116476}
   - component: {fileID: 1651116479}
+  - component: {fileID: 1651116480}
   - component: {fileID: 1651116474}
   m_Layer: 0
   m_Name: SceneContext
@@ -285,6 +286,7 @@ MonoBehaviour:
   _monoInstallers:
   - {fileID: 1651116476}
   - {fileID: 1651116479}
+  - {fileID: 1651116480}
   - {fileID: 1651116474}
   _installerPrefabs: []
   _autoRun: 1
@@ -328,6 +330,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc6ca05a62864e3683732cf972e689de, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1651116480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1651116473}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f08ff2180ab4333966e23df3a9c59fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1675874690
@@ -380,6 +394,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e44bb5c0e274995a4d4defbcc1f13a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _quitButton: {fileID: 2026613843}
 --- !u!225 &1675874693
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -404,7 +419,6 @@ GameObject:
   - component: {fileID: 2026613845}
   - component: {fileID: 2026613844}
   - component: {fileID: 2026613843}
-  - component: {fileID: 2026613846}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -514,20 +528,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2026613841}
   m_CullTransparentMesh: 1
---- !u!114 &2026613846
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2026613841}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: -1360956885, guid: 6a3c0ff4d5ec7054ea0a000b188748bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewModelMethodName: Project.Match.UI.Gameplay.GameplayScreenViewModel.HandleQuitMatch
-  viewEventName: UnityEngine.UI.Button.onClick
 --- !u!1 &2143751436
 GameObject:
   m_ObjectHideFlags: 0

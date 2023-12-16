@@ -1,6 +1,4 @@
-﻿using BasisCore.Runtime.Utils;
-using Project.Match.UI;
-using Project.Match.UI.Gameplay;
+﻿using Project.Match.UI.Gameplay;
 using Zenject;
 
 namespace Project.Match.Installers
@@ -9,24 +7,18 @@ namespace Project.Match.Installers
     {
         public override void InstallBindings()
         {
-            BindViewModels();
-            BindScreens();
-            BindScreenService();
+            BindModels();
+            BindViews();
         }
 
-        private void BindViewModels()
+        private void BindModels()
         {
-            Container.Bind<GameplayScreenViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();  
+            Container.Bind<GameplayScreenModel>().AsSingle().NonLazy();  
         }
 
-        private void BindScreens()
+        private void BindViews()
         {
-            Container.BindScreen<GameplayScreen>((int) MatchScreenId.Gameplay);
-        }
-
-        private void BindScreenService()
-        {
-            Container.BindInterfacesTo<MatchScreenService>().AsSingle().NonLazy();
+            Container.Bind<GameplayScreenView>().FromComponentInHierarchy().AsSingle().NonLazy();  
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Project.Match.UI
 {
-    public interface IMatchScreen : IScreen
+    public interface IMatchScreenController : IScreenController
     {
     }
 }

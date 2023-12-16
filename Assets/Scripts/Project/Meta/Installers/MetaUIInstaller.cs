@@ -1,6 +1,4 @@
-﻿using BasisCore.Runtime.Utils;
-using Project.Meta.UI;
-using Project.Meta.UI.Main;
+﻿using Project.Meta.UI.Main;
 using Project.Meta.UI.Shop;
 using Zenject;
 
@@ -10,26 +8,20 @@ namespace Project.Meta.Installers
     {
         public override void InstallBindings()
         {
-            BindViewModels();
-            BindScreens();
-            BindScreenService();
+            BindModels();
+            BindViews();
         }
 
-        private void BindViewModels()
+        private void BindModels()
         {
-            Container.Bind<MainScreenViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();  
-            Container.Bind<ShopScreenViewModel>().FromComponentInHierarchy().AsSingle().NonLazy();  
+            Container.Bind<MainScreenModel>().AsSingle().NonLazy();  
+            Container.Bind<ShopScreenModel>().AsSingle().NonLazy();  
         }
 
-        private void BindScreens()
+        private void BindViews()
         {
-            Container.BindScreen<MainScreen>((int) MetaScreenId.Main);
-            Container.BindScreen<ShopScreen>((int) MetaScreenId.Shop);
-        }
-
-        private void BindScreenService()
-        {
-            Container.BindInterfacesTo<MetaScreenService>().AsSingle().NonLazy();
+            Container.Bind<MainScreenView>().FromComponentInHierarchy().AsSingle().NonLazy();  
+            Container.Bind<ShopScreenView>().FromComponentInHierarchy().AsSingle().NonLazy();  
         }
     }
 }
