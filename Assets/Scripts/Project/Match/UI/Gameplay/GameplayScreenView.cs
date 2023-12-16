@@ -1,5 +1,4 @@
 ﻿using BasisCore.Runtime.UI.Screens;
-using Project.App.Signals;
 using UnityEngine;
 using UnityEngine.UI;
 
