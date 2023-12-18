@@ -13,7 +13,7 @@ namespace Project.App.Installers
         {
             Container.BindInterfacesTo<ScreenAnimationConfig>().FromScriptableObject(ScreenAnimationConfig).AsSingle().NonLazy();
             Container.BindInterfacesTo<AddressableResourceProvider>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<ProjectBinaryConfigManager>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ProjectBaseBinaryConfigManager>().AsSingle().NonLazy();
         }
     }
 }

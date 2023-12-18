@@ -9,22 +9,22 @@ namespace Project.App.Assemblers.Launchers
 {
     public sealed class LocalizationLauncher : IAssemblerLauncher
     {
-        private readonly IProjectBinaryConfigManager _binaryConfigManager;
+        private readonly IProjectBaseBinaryConfigManager _baseBinaryConfigManager;
         private readonly ILocalization _localization;
 
         private Language _language = Language.English;
         
-        public LocalizationLauncher(IProjectBinaryConfigManager binaryConfigManager, ILocalization localization)
+        public LocalizationLauncher(IProjectBaseBinaryConfigManager baseBinaryConfigManager, ILocalization localization)
         {
-            _binaryConfigManager = binaryConfigManager;
+            _baseBinaryConfigManager = baseBinaryConfigManager;
             _localization = localization;
         }
 
         public async UniTask Launch(CancellationToken token)
         {
-            await _binaryConfigManager.LoadLocalAsync(true, new CancellationToken());
+            await _baseBinaryConfigManager.LoadLocalAsync(true, new CancellationToken());
             
-            var localizationConfig = _binaryConfigManager.GetConfig(BinaryConfigId.Localization);
+            var localizationConfig = _baseBinaryConfigManager.GetConfig(BinaryConfigId.Localization);
             var entity = localizationConfig.GetEntity<LocalizationConfigEntity>(LocalizationConfigEntity.InstanceId);
 
             _localization.InitializeLocalizationTable(entity.ToTables());

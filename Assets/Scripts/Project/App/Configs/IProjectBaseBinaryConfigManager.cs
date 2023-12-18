@@ -2,7 +2,7 @@
 
 namespace Project.App.Configs
 {
-    public interface IProjectBinaryConfigManager : IBinaryConfigManager<BinaryConfigId>
+    public interface IProjectBaseBinaryConfigManager : IBaseBinaryConfigManager<BinaryConfigId>
     {
     }
 }
