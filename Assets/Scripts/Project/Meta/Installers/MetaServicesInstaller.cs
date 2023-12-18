@@ -1,4 +1,4 @@
-﻿using BasisCore.Runtime.Utils;
+﻿using BasisCore.Runtime.Extensions;
 using Project.Meta.UI;
 using Project.Meta.UI.Main;
 using Project.Meta.UI.Shop;

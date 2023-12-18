@@ -1,8 +1,7 @@
-﻿using BasisCore.Runtime.Configs.BinaryConfigs;
-using BasisCore.Runtime.Configs.UI;
+﻿using BasisCore.Runtime.Configs.UI;
 using BasisCore.Runtime.ResourceProviders;
+using Project.App.Configs;
 using Zenject;
-using ResourceProvider = BasisCore.Runtime.ResourceProviders.ResourceProvider;
 
 namespace Project.App.Installers
 {
@@ -14,7 +13,7 @@ namespace Project.App.Installers
         {
             Container.BindInterfacesTo<ScreenAnimationConfig>().FromScriptableObject(ScreenAnimationConfig).AsSingle().NonLazy();
             Container.BindInterfacesTo<AddressableResourceProvider>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<BinaryConfigManager>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ProjectBinaryConfigManager>().AsSingle().NonLazy();
         }
     }
 }

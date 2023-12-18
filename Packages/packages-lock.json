@@ -14,12 +14,6 @@
       "dependencies": {},
       "hash": "65affd1090e235d8441582903dd95f7e86587849"
     },
-    "com.loginov.basis": {
-      "version": "file:Basis",
-      "depth": 0,
-      "source": "embedded",
-      "dependencies": {}
-    },
     "com.mathijsbakker.extenject": {
       "version": "file:../Assets/Plugins/Zenject",
       "depth": 0,
