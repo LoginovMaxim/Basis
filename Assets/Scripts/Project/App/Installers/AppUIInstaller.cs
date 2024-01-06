@@ -1,7 +1,7 @@
-﻿using BasisCore.Runtime.UI.Screens;
+﻿using BasisCore.Runtime.UI.LoadingSplash;
+using BasisCore.Runtime.UI.Screens;
 using BasisCore.Runtime.UI.Screens.Animations.Hiding;
 using BasisCore.Runtime.UI.Screens.Animations.Showing;
-using BasisCore.Runtime.UI.Splashes;
 using Zenject;
 
 namespace Project.App.Installers
@@ -16,9 +16,8 @@ namespace Project.App.Installers
 
         private void BindSplash()
         {
-            Container.Bind<LoadingSplashModel>().AsSingle().NonLazy();
-            Container.Bind<LoadingSplashView>().FromComponentInHierarchy().AsSingle().NonLazy();
-            Container.BindInterfacesTo<Splash>().AsSingle().NonLazy();
+            Container.Bind<LoadingSplashWindowModel>().AsSingle().NonLazy();
+            Container.Bind<LoadingSplashWindowController>().AsSingle().NonLazy();
         }
 
         private void BindScreenAnimators()

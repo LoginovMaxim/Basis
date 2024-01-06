@@ -1,9 +1,13 @@
 ﻿using System.Collections.Generic;
 using BasisCore.Runtime.Assemblers.Launchers;
+using BasisCore.Runtime.Assemblers.Launchers.Window;
 using BasisCore.Runtime.Extensions;
-using BasisCore.Runtime.Utils;
+using BasisCore.Runtime.UI.LoadingSplash;
+using BasisCore.Runtime.UI.Window;
 using Project.App.Assemblers;
 using Project.App.Assemblers.Launchers;
+using Project.App.Assemblers.Launchers.Windows;
+using Project.App.UI;
 using Zenject;
 
 namespace Project.App.Installers
@@ -12,10 +16,15 @@ namespace Project.App.Installers
     {
         public override void InstallBindings()
         {
+            Container.BindWindowLauncher<LoadingSplashWindowLauncher, LoadingSplashWindowController>(
+                windowPrefabResourceKey: WindowNames.App.LoadingSplash, 
+                windowLayer: WindowLayer.LoadingSplash);
+            
             var assemblerLaunchers = new List<IAssemblerLauncher>()
             {
+                Container.BindAssemblerLauncher<WindowsLauncher<IAppWindowLauncher>>(),
                 Container.BindAssemblerLauncher<LocalizationLauncher>(),
-                Container.BindAssemblerLauncher<MetaSceneLauncher>()
+                Container.BindAssemblerLauncher<MetaSceneLauncher>(),
             };
             
             Container.BindAssembler<AppAssembler>(assemblerLaunchers);

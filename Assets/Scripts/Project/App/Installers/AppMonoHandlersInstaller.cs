@@ -1,4 +1,5 @@
 ﻿using BasisCore.Runtime.Monos;
+using BasisCore.Runtime.UI.Window.Factory;
 using Zenject;
 
 namespace Project.App.Installers
@@ -9,6 +10,7 @@ namespace Project.App.Installers
         {
             Container.BindInterfacesTo<MonoUpdater>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<GameObjectFinder>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<WindowViewFactory>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<ApplicationStatusHandler>().FromComponentInHierarchy().AsSingle().NonLazy();
         }
     }

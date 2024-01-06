@@ -6,7 +6,7 @@ namespace Project.Match.UI.Gameplay
     {
         public GameplayScreenBinder(GameplayScreenModel model, GameplayScreenView view) : base(model, view)
         {
-            Bind(_view.QuitButton, _model.QuitCommand);
+            Bind(WindowView.QuitButton, WindowModel.QuitCommand);
         }
     }
 }

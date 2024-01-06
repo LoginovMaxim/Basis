@@ -1,6 +1,6 @@
 ﻿using System.Threading;
 using BasisCore.Runtime.SceneLoaders;
-using BasisCore.Runtime.UI.Splashes;
+using BasisCore.Runtime.UI.LoadingSplash;
 using Cysharp.Threading.Tasks;
 using Project.App.Data;
 using UnityEngine.SceneManagement;
@@ -11,21 +11,21 @@ namespace Project.App.Services
     {
         private readonly IProfileProvider _profileProvider;
         private readonly ISceneLoader _sceneLoader;
-        private readonly ISplash _splash;
+        private readonly LoadingSplashWindowController _loadingSplashWindowController;
 
         public MatchSceneLoader(
             IProfileProvider profileProvider, 
             ISceneLoader sceneLoader,
-            ISplash splash)
+            LoadingSplashWindowController loadingSplashWindowController)
         {
             _profileProvider = profileProvider;
             _sceneLoader = sceneLoader;
-            _splash = splash;
+            _loadingSplashWindowController = loadingSplashWindowController;
         }
 
         public async UniTask LoadAsync(CancellationToken token)
         {
-            _splash.Show();
+            _loadingSplashWindowController.Show();
             
             await _sceneLoader.LoadSceneAsync(
                 string.Format(Constants.LevelBundleKeys.LevelSceneKeyFormat, _profileProvider.ProgressData.Level), 
@@ -42,7 +42,7 @@ namespace Project.App.Services
 
         public async UniTask UnloadAsync(CancellationToken token)
         {
-            _splash.Show();
+            _loadingSplashWindowController.Show();
             
             await _sceneLoader.UnloadSceneAsync(Constants.MatchBundleKeys.MatchSceneKey, token);
             await _sceneLoader.UnloadSceneAsync(

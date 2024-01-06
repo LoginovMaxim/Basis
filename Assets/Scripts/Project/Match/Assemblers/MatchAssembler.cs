@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BasisCore.Runtime.Assemblers;
 using BasisCore.Runtime.Assemblers.Launchers;
-using BasisCore.Runtime.UI.Splashes;
+using BasisCore.Runtime.UI.LoadingSplash;
 using Project.Match.UI;
 
 namespace Project.Match.Assemblers
@@ -13,8 +13,8 @@ namespace Project.Match.Assemblers
         public MatchAssembler(
             IMatchScreenService matchScreenService, 
             List<IAssemblerLauncher> assemblerParts, 
-            ISplash splash) : 
-            base(assemblerParts, splash)
+            LoadingSplashWindowController loadingSplashWindowController) : 
+            base(assemblerParts, loadingSplashWindowController)
         {
             _matchScreenService = matchScreenService;
         }

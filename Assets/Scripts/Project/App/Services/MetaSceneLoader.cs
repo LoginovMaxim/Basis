@@ -1,7 +1,6 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using BasisCore.Runtime.SceneLoaders;
-using BasisCore.Runtime.UI.Splashes;
+using BasisCore.Runtime.UI.LoadingSplash;
 using Cysharp.Threading.Tasks;
 using Project.App.Data;
 using Project.Meta.UI;
@@ -13,17 +12,17 @@ namespace Project.App.Services
     {
         private readonly IMetaScreenService _metaScreenService;
         private readonly ISceneLoader _sceneLoader;
-        private readonly ISplash _splash;
+        private readonly LoadingSplashWindowController _loadingSplashWindowController;
 
-        public MetaSceneLoader(ISceneLoader sceneLoader, ISplash splash)
+        public MetaSceneLoader(ISceneLoader sceneLoader, LoadingSplashWindowController loadingSplashWindowController)
         {
             _sceneLoader = sceneLoader;
-            _splash = splash;
+            _loadingSplashWindowController = loadingSplashWindowController;
         }
 
         public async UniTask LoadAsync(CancellationToken token)
         {
-            _splash.Show();
+            _loadingSplashWindowController.Show();
             
             await _sceneLoader.LoadSceneAsync(
                 Constants.MetaBundleKeys.MetaSceneKey, 
@@ -34,7 +33,7 @@ namespace Project.App.Services
 
         public async UniTask UnloadAsync(CancellationToken token)
         {
-            _splash.Show();
+            _loadingSplashWindowController.Show();
             
             await _sceneLoader.UnloadSceneAsync(Constants.MetaBundleKeys.MetaSceneKey, token);
         }

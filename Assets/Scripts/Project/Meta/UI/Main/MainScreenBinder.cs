@@ -6,8 +6,8 @@ namespace Project.Meta.UI.Main
     {
         public MainScreenBinder(MainScreenModel model, MainScreenView view) : base(model, view)
         {
-            Bind(_view.PlayButton, _model.PlayCommand);
-            Bind(_view.ShopButton, _model.ShopOpenCommand);
+            Bind(WindowView.PlayButton, WindowModel.PlayCommand);
+            Bind(WindowView.ShopButton, WindowModel.ShopOpenCommand);
         }
     }
 }

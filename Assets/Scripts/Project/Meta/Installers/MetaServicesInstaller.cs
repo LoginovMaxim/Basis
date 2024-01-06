@@ -10,8 +10,8 @@ namespace Project.Meta.Installers
     {
         public override void InstallBindings()
         {
-            BindScreens();
-            BindScreenService();
+            //BindScreens();
+            //BindScreenService();
         }
 
         private void BindScreens()
