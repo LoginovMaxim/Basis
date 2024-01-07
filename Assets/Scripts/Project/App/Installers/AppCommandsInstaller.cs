@@ -1,4 +1,5 @@
-﻿using Project.App.Commands;
+﻿using BasisCore.Runtime.Commands;
+using Project.App.Commands;
 using Zenject;
 
 namespace Project.App.Installers
@@ -10,6 +11,7 @@ namespace Project.App.Installers
             Container.BindInterfacesTo<PlayMatchCommand>().AsSingle().NonLazy();
             Container.BindInterfacesTo<QuitMatchCommand>().AsSingle().NonLazy();
             Container.BindInterfacesTo<RestartMatchCommand>().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ProgressServiceAddCommand>().AsSingle().NonLazy();
         }
     }
 }

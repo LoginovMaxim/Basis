@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BasisCore.Runtime.Assemblers;
 using BasisCore.Runtime.Assemblers.Launchers;
-using BasisCore.Runtime.UI.LoadingSplash;
+using Zenject;
 
 namespace Project.Meta.Assemblers
 {
@@ -9,8 +9,8 @@ namespace Project.Meta.Assemblers
     {
         public MetaAssembler(
             List<IAssemblerLauncher> assemblerParts, 
-            LoadingSplashWindowController loadingSplashWindowController) : 
-            base(assemblerParts, loadingSplashWindowController)
+            SignalBus signalBus) : 
+            base(assemblerParts, signalBus)
         {
         }
 

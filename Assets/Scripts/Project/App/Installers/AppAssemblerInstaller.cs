@@ -16,7 +16,7 @@ namespace Project.App.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindWindowLauncher<LoadingSplashWindowLauncher, LoadingSplashWindowController>(
+            Container.BindWindowLauncher<LoadingSplashWindowLauncher, LoadingSplashWindow>(
                 windowPrefabResourceKey: WindowNames.App.LoadingSplash, 
                 windowLayer: WindowLayer.LoadingSplash);
             

@@ -13,7 +13,7 @@ namespace Project.Meta.Installers
         private void BindModels()
         {
             Container.Bind<MetaMainWindowModel>().AsSingle().NonLazy();  
-            Container.Bind<MetaMainWindowController>().AsSingle().NonLazy();  
+            Container.Bind<MetaMainWindow>().AsSingle().NonLazy();  
         }
     }
 }

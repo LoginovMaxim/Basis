@@ -15,6 +15,7 @@ namespace Project.App.Installers
             Container.DeclareSignal<PlayMatchSignal>();
             Container.DeclareSignal<QuitMatchSignal>();
             Container.DeclareSignal<RestartMatchSignal>();
+            Container.DeclareSignal<ProgressServiceAddSignal>();
         }
     }
 }

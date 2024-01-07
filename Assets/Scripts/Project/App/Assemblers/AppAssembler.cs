@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BasisCore.Runtime.Assemblers;
 using BasisCore.Runtime.Assemblers.Launchers;
-using BasisCore.Runtime.UI.LoadingSplash;
+using Zenject;
 
 namespace Project.App.Assemblers
 {
@@ -9,14 +9,13 @@ namespace Project.App.Assemblers
     {
         public AppAssembler(
             List<IAssemblerLauncher> assemblerParts, 
-            LoadingSplashWindowController loadingSplashWindowController) : 
-            base(assemblerParts, loadingSplashWindowController)
+            SignalBus signalBus) : 
+            base(assemblerParts, signalBus)
         {
         }
 
         protected override void OnStartAssembly()
         {
-            _loadingSplashWindowController.Show();
         }
 
         protected override void OnFinishAssembly()

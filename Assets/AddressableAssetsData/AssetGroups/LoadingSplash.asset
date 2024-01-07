@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
   m_Name: LoadingSplash
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets
+  m_GroupName: LoadingSplash
   m_Data:
     m_SerializedData: []
   m_GUID: da0aa5300159c4943a9643c86de7e6f1
-  m_SerializeEntries: []
+  m_SerializeEntries:
+  - m_GUID: cd6dba0e7554ef047ba1ab7624c8b581
+    m_Address: LoadingSplashWindow
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 394e65ed55d2bb548a1fd846621caeb5, type: 2}
   m_SchemaSet:

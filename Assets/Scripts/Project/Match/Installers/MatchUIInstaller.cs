@@ -1,5 +1,4 @@
-﻿using Project.Match.UI.Gameplay;
-using Zenject;
+﻿using Zenject;
 
 namespace Project.Match.Installers
 {
@@ -7,18 +6,16 @@ namespace Project.Match.Installers
     {
         public override void InstallBindings()
         {
-            BindModels();
-            BindViews();
+            BindWindowModels();
+            BindWindowControllers();
         }
 
-        private void BindModels()
+        private void BindWindowModels()
         {
-            Container.Bind<GameplayScreenModel>().AsSingle().NonLazy();  
         }
 
-        private void BindViews()
+        private void BindWindowControllers()
         {
-            Container.Bind<GameplayScreenView>().FromComponentInHierarchy().AsSingle().NonLazy();  
         }
     }
 }

@@ -1,8 +1,4 @@
-﻿using BasisCore.Runtime.Extensions;
-using BasisCore.Runtime.Utils;
-using Project.Match.UI;
-using Project.Match.UI.Gameplay;
-using Zenject;
+﻿using Zenject;
 
 namespace Project.Match.Installers
 {
@@ -16,12 +12,10 @@ namespace Project.Match.Installers
 
         private void BindScreens()
         {
-            Container.BindScreenController<GameplayScreenController>((int) MatchScreenId.Gameplay);
         }
 
         private void BindScreenService()
         {
-            Container.BindInterfacesTo<MatchBaseScreenService>().AsSingle().NonLazy();
         }
     }
 }

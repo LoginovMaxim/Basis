@@ -15,7 +15,7 @@ namespace Project.Meta.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindWindowLauncher<MainWindowLauncher, MetaMainWindowController>(
+            Container.BindWindowLauncher<MainWindowLauncher, MetaMainWindow>(
                 windowPrefabResourceKey: WindowNames.Meta.Main, 
                 windowLayer: WindowLayer.Main);
             

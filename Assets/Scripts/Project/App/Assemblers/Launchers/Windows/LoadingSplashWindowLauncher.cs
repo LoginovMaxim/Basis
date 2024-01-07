@@ -5,14 +5,14 @@ using BasisCore.Runtime.UI.Window.Factory;
 
 namespace Project.App.Assemblers.Launchers.Windows
 {
-    public sealed class LoadingSplashWindowLauncher : WindowLauncher<LoadingSplashWindowController>, IAppWindowLauncher
+    public sealed class LoadingSplashWindowLauncher : WindowLauncher<LoadingSplashWindow>, IAppWindowLauncher
     {
         public LoadingSplashWindowLauncher(
             IWindowViewFactory windowViewFactory, 
-            LoadingSplashWindowController windowController, 
+            LoadingSplashWindow window, 
             string windowPrefabResourceKey, 
             WindowLayer windowLayer) : 
-            base(windowViewFactory, windowController, windowPrefabResourceKey, windowLayer)
+            base(windowViewFactory, window, windowPrefabResourceKey, windowLayer)
         {
         }
     }

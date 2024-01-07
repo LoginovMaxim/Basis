@@ -17,7 +17,7 @@ namespace Project.App.Installers
         private void BindSplash()
         {
             Container.Bind<LoadingSplashWindowModel>().AsSingle().NonLazy();
-            Container.Bind<LoadingSplashWindowController>().AsSingle().NonLazy();
+            Container.Bind<LoadingSplashWindow>().AsSingle().NonLazy();
         }
 
         private void BindScreenAnimators()

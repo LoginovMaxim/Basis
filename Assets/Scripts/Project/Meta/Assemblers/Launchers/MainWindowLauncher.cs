@@ -5,14 +5,14 @@ using Project.Meta.UI.Main;
 
 namespace Project.Meta.Assemblers.Launchers
 {
-    public sealed class MainWindowLauncher : WindowLauncher<MetaMainWindowController>, IMetaWindowLauncher
+    public sealed class MainWindowLauncher : WindowLauncher<MetaMainWindow>, IMetaWindowLauncher
     {
         public MainWindowLauncher(
             IWindowViewFactory windowViewFactory, 
-            MetaMainWindowController windowController, 
+            MetaMainWindow window, 
             string windowPrefabResourceKey, 
             WindowLayer windowLayer) : 
-            base(windowViewFactory, windowController, windowPrefabResourceKey, windowLayer)
+            base(windowViewFactory, window, windowPrefabResourceKey, windowLayer)
         {
         }
     }
