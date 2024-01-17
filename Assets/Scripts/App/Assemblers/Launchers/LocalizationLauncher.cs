@@ -20,7 +20,7 @@ namespace App.Assemblers.Launchers
             _localization = localization;
         }
 
-        public async UniTask Launch(CancellationToken token)
+        public async UniTask LaunchAsync(CancellationToken token)
         {
             await _baseBinaryConfigManager.LoadLocalAsync(true, new CancellationToken());
             

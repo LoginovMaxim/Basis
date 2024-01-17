@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.Assemblers;
 using App.Assemblers.Launchers;
-using App.Assemblers.Launchers.Windows;
 using App.UI;
 using BasisCore.Runtime.Assemblers.Launchers;
 using BasisCore.Runtime.Assemblers.Launchers.Window;
@@ -16,13 +15,9 @@ namespace App.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindWindowLauncher<LoadingSplashWindowLauncher, LoadingSplashWindow>(
-                windowPrefabResourceKey: WindowNames.App.LoadingSplash, 
-                windowLayer: WindowLayer.LoadingSplash);
-            
             var assemblerLaunchers = new List<IAssemblerLauncher>()
             {
-                Container.BindAssemblerLauncher<WindowsLauncher<IAppWindowLauncher>>(),
+                Container.BindWindowAssemblerLauncher<WindowAssemblerLauncher, LoadingSplashWindow>(WindowNames.App.LoadingSplash, WindowLayer.LoadingSplash),
                 Container.BindAssemblerLauncher<LocalizationLauncher>(),
                 Container.BindAssemblerLauncher<MetaSceneLauncher>(),
             };

@@ -14,7 +14,7 @@ namespace App.Assemblers.Launchers
             _metaSceneLoader = metaSceneLoader;
         }
 
-        public async UniTask Launch(CancellationToken token)
+        public async UniTask LaunchAsync(CancellationToken token)
         {
             await UniTask.Delay(500, cancellationToken: token);
             await _metaSceneLoader.LoadAsync(token);
