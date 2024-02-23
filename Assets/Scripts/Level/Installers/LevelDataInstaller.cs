@@ -1,5 +1,5 @@
 ﻿using BasisCore.Runtime.Pool;
-using BasisCore.Runtime.Views;
+using BasisLeoEcsWrapper.Runtime.Views;
 using Level.Providers;
 using UnityEngine;
 using Zenject;
@@ -15,7 +15,7 @@ namespace Level.Installers
             Container.BindInterfacesTo<CameraProvider>().AsSingle().WithArguments(MainCamera).NonLazy();
             
             Container.BindInterfacesTo<PoolService>().FromComponentInHierarchy().AsSingle().NonLazy();
-            Container.BindInterfacesTo<ViewsProvider>().AsSingle().NonLazy();
+            //Container.BindInterfacesTo<EcsViewsProvider>().AsSingle().NonLazy();
             
             Container.BindInterfacesTo<LevelViewsProvider>().FromComponentInHierarchy().AsSingle().NonLazy();
 

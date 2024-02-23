@@ -3,7 +3,6 @@ using App.Assemblers;
 using App.Assemblers.Launchers;
 using App.UI;
 using BasisCore.Runtime.Assemblers.Launchers;
-using BasisCore.Runtime.Assemblers.Launchers.Window;
 using BasisCore.Runtime.Extensions;
 using BasisCore.Runtime.UI.LoadingSplash;
 using BasisCore.Runtime.UI.Window;
@@ -17,7 +16,7 @@ namespace App.Installers
         {
             var assemblerLaunchers = new List<IAssemblerLauncher>()
             {
-                Container.BindWindowAssemblerLauncher<WindowAssemblerLauncher, LoadingSplashWindow>(WindowNames.App.LoadingSplash, WindowLayer.LoadingSplash),
+                Container.BindWindowAssemblerLauncher<LoadingSplashWindow>(WindowNames.App.LoadingSplash, WindowLayer.LoadingSplash),
                 Container.BindAssemblerLauncher<LocalizationLauncher>(),
                 Container.BindAssemblerLauncher<MetaSceneLauncher>(),
             };

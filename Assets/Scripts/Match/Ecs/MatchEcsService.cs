@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using BasisCore.Runtime.Monos;
 using BasisCore.Runtime.Services;
-using BasisCore.Runtime.Views;
 using BasisLeoEcsWrapper.Runtime;
+using BasisLeoEcsWrapper.Runtime.Views;
 using Match.Ecs.Setups;
 
 namespace Match.Ecs
@@ -11,11 +11,10 @@ namespace Match.Ecs
     {
         public MatchEcsService(
             List<IMatchEcsSetup> ecsSetups, 
-            IViewsProvider viewsProvider, 
             IEcsWorld ecsWorld, 
             IMonoUpdater monoUpdater, 
             UpdateType updateType) : 
-            base(ecsSetups, viewsProvider, ecsWorld, monoUpdater, updateType)
+            base(ecsSetups, ecsWorld, monoUpdater, updateType)
         {
         }
     }

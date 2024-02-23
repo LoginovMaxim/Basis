@@ -10,6 +10,7 @@ namespace App.Installers
         {
             Container.BindInterfacesTo<MonoUpdater>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<GameObjectFinder>().FromComponentInHierarchy().AsSingle().NonLazy();
+            Container.BindInterfacesTo<ViewFactory>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<WindowViewFactory>().FromComponentInHierarchy().AsSingle().NonLazy();
             Container.BindInterfacesTo<ApplicationStatusHandler>().FromComponentInHierarchy().AsSingle().NonLazy();
         }

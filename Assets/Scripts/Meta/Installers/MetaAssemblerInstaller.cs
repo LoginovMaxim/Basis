@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using App.UI;
 using BasisCore.Runtime.Assemblers.Launchers;
-using BasisCore.Runtime.Assemblers.Launchers.Window;
 using BasisCore.Runtime.Extensions;
 using BasisCore.Runtime.UI.Window;
 using Meta.Assemblers;
@@ -16,7 +15,7 @@ namespace Meta.Installers
         {
             var assemblerLaunchers = new List<IAssemblerLauncher>()
             {
-                Container.BindWindowAssemblerLauncher<WindowAssemblerLauncher, MetaMainWindow>(WindowNames.Meta.Main, WindowLayer.Main),
+                Container.BindWindowAssemblerLauncher<MetaMainWindow>(WindowNames.Meta.Main, WindowLayer.Main),
             };
             
             Container.BindAssembler<MetaAssembler>(assemblerLaunchers);
