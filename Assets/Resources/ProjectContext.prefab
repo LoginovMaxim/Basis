@@ -193,6 +193,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb6a964a0804b82b2fc264d45f0996c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _hudWindowsContainer: {fileID: 906092928334961246}
+  _mainWindowsContainer: {fileID: 8083197184019978642}
+  _popupWindowsContainer: {fileID: 4571777155083403110}
+  _loadingSplashWindowsContainer: {fileID: 2822089860744938835}
 --- !u!1 &2108271377576788153
 GameObject:
   m_ObjectHideFlags: 0
