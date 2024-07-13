@@ -1,6 +1,6 @@
-﻿using BasisCore.Runtime.Services;
+﻿using BasisCore.Runtime.Extensions;
+using BasisCore.Runtime.Services;
 using BasisLeoEcsWrapper.Runtime;
-using BasisLeoEcsWrapper.Runtime.Extensions;
 using Match.Ecs;
 using Match.Ecs.Setups;
 using Zenject;
@@ -15,7 +15,7 @@ namespace Match.Installers
 
             Container.BindInterfacesTo<SyncViewMatchEcsSetup>().AsSingle().NonLazy();
             
-            Container.BindEcsService<MatchEcsService>(UpdateType.Update);
+            Container.BindService<MatchEcsService>(UpdateType.Update);
         }
     }
 }
