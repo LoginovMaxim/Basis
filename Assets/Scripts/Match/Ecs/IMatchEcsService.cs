@@ -1,8 +1,8 @@
-﻿using BasisCore.Runtime.Services;
+﻿using BasisLeoEcsWrapper.Runtime;
 
 namespace Match.Ecs
 {
-    public interface IMatchEcsService : IUpdatableService
+    public interface IMatchEcsService : IEcsService
     {
     }
 }
