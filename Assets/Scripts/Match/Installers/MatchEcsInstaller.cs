@@ -13,6 +13,7 @@ namespace Match.Installers
         {
             Container.BindInterfacesTo<EngineApi>().AsSingle().NonLazy();
 
+            Container.BindInterfacesTo<MatchEcsWorldProvider>().AsSingle().NonLazy();
             Container.BindInterfacesTo<SyncViewMatchEcsSetup>().AsSingle().NonLazy();
             
             Container.BindService<MatchEcsService>(UpdateType.Update);

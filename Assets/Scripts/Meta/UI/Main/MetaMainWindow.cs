@@ -1,18 +1,15 @@
-﻿using BasisCore.Runtime.UI.Window;
+﻿using BasisCore.Runtime.UI;
+using BasisCore.Runtime.UI.Window;
 
 namespace Meta.UI.Main
 {
-    public sealed class MetaMainWindow : Window<MetaMainWindowModel, MetaMainWindowView, MetaMainWindowController>
+    public sealed class MetaMainWindow : Window<MetaMainWindowModel, MetaMainWindowView>
     {
-        public MetaMainWindow(MetaMainWindowModel windowModel) : base(windowModel)
+        public MetaMainWindow(MetaMainWindowModel windowModel, BindersFactory bindersFactory) : base(windowModel, bindersFactory)
         {
         }
 
-        protected override void InitWindowController()
-        {
-        }
-
-        protected override void DeinitWindowController()
+        protected override void AddBinders()
         {
         }
     }

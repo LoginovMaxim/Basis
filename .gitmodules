@@ -4,3 +4,6 @@
 [submodule "Assets/BasisLeoEcsWrapper"]
 	path = Assets/BasisLeoEcsWrapper
 	url = https://github.com/LoginovMaxim/basis-leoecs-wrapper.git
+[submodule "Assets/BasisNetwork"]
+	path = Assets/BasisNetwork
+	url = https://github.com/LoginovMaxim/basis-network.git

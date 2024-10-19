@@ -8,6 +8,7 @@ namespace App.Installers
     {
         public override void InstallBindings()
         {
+            Container.BindInterfacesTo<LoadingSplashProcessCommand>().AsSingle().NonLazy();
             Container.BindInterfacesTo<ProgressServiceAddCommand>().AsSingle().NonLazy();
             Container.BindInterfacesTo<PlayMatchCommand>().AsSingle().NonLazy();
             Container.BindInterfacesTo<QuitMatchCommand>().AsSingle().NonLazy();

@@ -10,9 +10,10 @@ namespace Match.Ecs
     {
         public MatchEcsService(
             List<IMatchEcsSetup> ecsSetups, 
+            IMatchEcsWorldProvider matchEcsWorldProvider,
             IMonoUpdater monoUpdater, 
             UpdateType updateType) : 
-            base(ecsSetups, monoUpdater, updateType)
+            base(ecsSetups, matchEcsWorldProvider, monoUpdater, updateType)
         {
         }
     }
