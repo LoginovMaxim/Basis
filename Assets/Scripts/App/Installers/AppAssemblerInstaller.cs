@@ -17,7 +17,6 @@ namespace App.Installers
             var assemblerLaunchers = new List<IAssemblerLauncher>()
             {
                 Container.BindWindowAssemblerLauncher<LoadingSplashWindow>(WindowNames.App.LoadingSplash, WindowLayer.LoadingSplash),
-                Container.BindAssemblerLauncher<LocalizationLauncher>(),
                 Container.BindAssemblerLauncher<MetaSceneLauncher>(),
             };
             
