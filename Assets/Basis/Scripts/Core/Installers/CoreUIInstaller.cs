@@ -1,21 +1,21 @@
-﻿using Zenject;
+﻿using BasisCore.UI.WindowManager;
+using UnityEngine;
+using Zenject;
 
 namespace Basis.Core.Installers
 {
     public sealed class CoreUIInstaller : MonoInstaller
     {
+        [SerializeField] private UIRoot _uiRootPrefab;
+
         public override void InstallBindings()
         {
-            BindSplash();
-            BindScreenAnimators();
-        }
+            var windowManagerSettings = new WindowManagerSettings
+            {
+                RootPrefab = _uiRootPrefab
+            };
 
-        private void BindSplash()
-        {
-        }
-
-        private void BindScreenAnimators()
-        {
+            Container.BindInstance(windowManagerSettings);
         }
     }
 }

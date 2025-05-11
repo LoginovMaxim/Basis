@@ -1,5 +1,5 @@
-﻿using Basis.Gameplay.Ecs.Features.Effects.Components;
-using BasisCore.VisualEffects;
+﻿using Basis.Deprecated.VisualEffects;
+using Basis.Gameplay.Ecs.Features.Effects.Components;
 using Leopotam.EcsLite;
 
 namespace Basis.Gameplay.Ecs.Features.Effects.Systems

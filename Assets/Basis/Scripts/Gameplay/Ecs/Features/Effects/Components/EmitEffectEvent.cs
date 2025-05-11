@@ -1,4 +1,4 @@
-﻿using BasisCore.VisualEffects;
+﻿using Basis.Deprecated.VisualEffects;
 using UnityEngine;
 
 namespace Basis.Gameplay.Ecs.Features.Effects.Components

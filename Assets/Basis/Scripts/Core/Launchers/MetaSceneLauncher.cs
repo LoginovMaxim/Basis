@@ -1,5 +1,5 @@
 ﻿using System.Threading;
-using Basis.Core.Services;
+using BasisCore.GameState;
 using BasisCore.Launchers;
 using Cysharp.Threading.Tasks;
 
@@ -7,16 +7,16 @@ namespace Basis.Core.Launchers
 {
     public sealed class MetaSceneLauncher : ILauncher
     {
-        private readonly IMetaSceneLoader _metaSceneLoader;
+        private readonly IGameStateController _gameStateController;
 
-        public MetaSceneLauncher(IMetaSceneLoader metaSceneLoader)
+        public MetaSceneLauncher(IGameStateController gameStateController)
         {
-            _metaSceneLoader = metaSceneLoader;
+            _gameStateController = gameStateController;
         }
 
         public async UniTask LaunchAsync(CancellationToken token)
         {
-            await _metaSceneLoader.LoadAsync(token);
+            await _gameStateController.SwitchStateAsync(GameStateType.Meta);
         }
     }
 }

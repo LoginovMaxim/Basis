@@ -1,7 +1,5 @@
-using Basis.Core.Services;
-using BasisCore.Localizations;
-using BasisCore.SceneLoaders;
-using BasisCore.VisualEffects;
+using BasisCore.GameState;
+using BasisCore.Services;
 using Zenject;
 
 namespace Basis.Core.Installers
@@ -10,11 +8,11 @@ namespace Basis.Core.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<Localization>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<AddressableSceneLoader>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<MetaSceneLoader>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<MatchSceneLoader>().AsSingle().NonLazy();
-            Container.BindInterfacesTo<EffectEmitter>().AsSingle().NonLazy();
+            Container.Bind<SceneLoader>().FromComponentInHierarchy().AsSingle().NonLazy();
+            
+            Container.Bind<IGameState>().To<MetaState>().AsSingle();
+            Container.Bind<IGameState>().To<GameplayState>().AsSingle();
+            Container.Bind<IGameStateController>().To<GameStateController>().AsSingle();
         }
     }
 }
