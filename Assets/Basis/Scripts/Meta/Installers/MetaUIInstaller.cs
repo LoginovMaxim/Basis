@@ -1,4 +1,5 @@
-﻿using Zenject;
+﻿using Basis.Meta.UI;
+using Zenject;
 
 namespace Basis.Meta.Installers
 {
@@ -6,11 +7,9 @@ namespace Basis.Meta.Installers
     {
         public override void InstallBindings()
         {
-            BindModels();
-        }
-
-        private void BindModels()
-        {
+            Container.Bind<MetaMainWindowModel>().AsSingle();
+            Container.Bind<IMetaMainWindowViewModel>().To<MetaMainWindowViewModel>().AsSingle();
+            Container.Bind<IMetaSettingsPopupViewModel>().To<MetaSettingsPopupViewModel>().AsSingle();
         }
     }
 }

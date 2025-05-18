@@ -1,3 +1,4 @@
+using Basis.Core.UI;
 using Zenject;
 
 namespace Basis.Core.Installers
@@ -6,6 +7,7 @@ namespace Basis.Core.Installers
     {
         public override void InstallBindings()
         {
+            Container.Bind<LoadingSplashModel>().AsSingle();
         }
     }
 }

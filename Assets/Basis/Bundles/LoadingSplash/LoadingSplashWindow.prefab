@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3844581980340408205}
   - component: {fileID: 4205350387453272595}
   m_Layer: 0
-  m_Name: ProgressPercent
+  m_Name: Text - ProgressPercent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -495,8 +495,7 @@ GameObject:
   - component: {fileID: 7042269447115670204}
   - component: {fileID: 499652057650891671}
   - component: {fileID: 3935447971434874162}
-  - component: {fileID: 8825785909216014011}
-  - component: {fileID: 7025961182530463242}
+  - component: {fileID: 5869004222017247406}
   m_Layer: 0
   m_Name: LoadingSplashWindow
   m_TagString: Untagged
@@ -564,7 +563,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &8825785909216014011
+--- !u!114 &5869004222017247406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -573,25 +572,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 9011626124079230689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc0c54782bc5479297a7a580e9750361, type: 3}
+  m_Script: {fileID: 11500000, guid: 57b314bc4a644fdab01432d0bafda0f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _slider: {fileID: 5372607239914036748}
-  _loadingPercentageText: {fileID: 4205350387453272595}
-  _smooth: 25
---- !u!114 &7025961182530463242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9011626124079230689}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a6e17c0718954cf7a1b8553857394f0e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _images:
-  - {fileID: 8420406811016539164}
-  - {fileID: 887798139790342254}
-  _smooth: 0.66
+  _progressSlider: {fileID: 5372607239914036748}
+  _progressText: {fileID: 4205350387453272595}
